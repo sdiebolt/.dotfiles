@@ -1,0 +1,11 @@
+export EDITOR="vim"
+export TERMINAL="alacritty"
+export PATH="$HOME/.local/bin":$PATH
+export PATH="$HOME/.local/share/zap":$PATH
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+# Fix pip SSL cert validation.
+export NODE_TLS_REJECT_UNAUTHORIZED='0'
+
+source "$HOME/.rye/env"

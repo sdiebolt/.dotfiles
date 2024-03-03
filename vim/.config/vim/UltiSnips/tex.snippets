@@ -1,0 +1,86 @@
+snippet "b(egin)?" "begin{} / end{}" br
+\begin{${1:something}}
+	${0:${VISUAL}}
+\end{$1}
+endsnippet
+
+snippet fig "Figure environment" b
+\begin{figure}[${1:htpb}]
+	\centering
+	\includegraphics[width=${2:0.8}\linewidth]{${3:name.ext}}
+	\caption{${3/(\w+)\.\w+/\u$1/}$0}%
+	\label{fig:${3/(\w+)\.\w+/$1/}}
+\end{figure}
+endsnippet
+
+snippet enum "Enumerate environment" b
+\begin{enumerate}
+	\item ${0:${VISUAL}}
+\end{enumerate}
+endsnippet
+
+snippet item "Itemize environment" b
+\begin{itemize}
+	\item ${0:${VISUAL}}
+\end{itemize}
+endsnippet
+
+snippet eq "Equation environment" b
+\begin{equation}
+	${0:${VISUAL}}
+\end{equation}
+endsnippet
+
+snippet eqn "Equation environment without numbering" b
+\begin{equation*}
+	${0:${VISUAL}}
+\end{equation}
+endsnippet
+
+snippet al "Align environment" b
+\begin{align}
+	${0:${VISUAL}}
+\end{align}
+endsnippet
+
+snippet aln "Align environment without numbering" b
+\begin{align*}
+	${0:${VISUAL}}
+\end{align*}
+endsnippet
+
+snippet "sp(lit)?" "Split environment" br
+\begin{split}
+	${0:${VISUAL}}
+\end{split}
+endsnippet
+
+snippet "ca(ses)?" "Cases environment" br
+\begin{cases}
+	${0:${VISUAL}}
+\end{cases}
+endsnippet
+
+snippet "c(hapter)?" "chapter" br
+\chapter{${1:chapter}}
+
+$0
+endsnippet
+
+snippet "s(ection)?" "section" br
+\section{${1:section}}
+
+$0
+endsnippet
+
+snippet ss "subsection" b
+\subsection{${1:subsection}}
+
+$0
+endsnippet
+
+snippet sss "subsubsection" b
+\subsubsection{${1:subsubsection}}
+
+$0
+endsnippet
