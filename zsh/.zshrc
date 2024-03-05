@@ -3,7 +3,6 @@
 # Plugins
 plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
-plug "zap-zsh/fzf"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zsh-users/zsh-history-substring-search"
 
@@ -20,5 +19,3 @@ SAVEHIST=$HISTSIZE
 # Enable vim mode in zsh
 bindkey -v
 
-# Starship prompt
-eval "$(starship init zsh)"
