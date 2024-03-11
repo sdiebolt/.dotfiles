@@ -23,13 +23,18 @@ bindsym $mod+Ctrl+Shift+F12 exec setxkbmap -layout us
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl s +5%
 
+# Screenshots
+bindsym Print exec --no-startup-id maim "/$HOME/Pictures/screenshot_$(date +'%Y-%m-%d_%H:%M:%S').png"
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/$HOME/Pictures/screenshot_$(date +'%Y-%m-%d_%H:%M:%S').png"
+bindsym Shift+Print exec --no-startup-id maim --select "/$HOME/Pictures/screenshot_$(date +'%Y-%m-%d_%H:%M:%S').png"
+
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xset dpms 240 360 0
+exec --no-startup-id xset dpms 0 0 0
 exec --no-startup-id xss-lock -l -- ~/.config/i3/scripts/lock.sh
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
