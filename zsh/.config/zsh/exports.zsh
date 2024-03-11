@@ -3,6 +3,7 @@ export TERMINAL="alacritty"
 export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.local/share/zap":$PATH
 export PATH="$HOME/.cargo/bin":$PATH
+export PATH="/opt/zotero":$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
