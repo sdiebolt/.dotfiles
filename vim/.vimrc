@@ -78,7 +78,7 @@ set fileformat=unix
 set encoding=utf8 
 set fileencoding=utf-8
 
-" Set a margin at 80 characters
+" Set a margin at 88 characters
 set colorcolumn=88
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
