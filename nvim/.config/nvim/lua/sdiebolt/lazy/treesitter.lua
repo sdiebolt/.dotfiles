@@ -4,7 +4,7 @@ return {
     build = function()
         require("nvim-treesitter.install").update({ with_sync = true })()
     end,
-    config = function () 
+    config = function ()
         require("nvim-treesitter.configs").setup({
             ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "javascript", "html", "python", "typescript" },
             sync_install = false,
