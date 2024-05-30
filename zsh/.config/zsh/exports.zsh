@@ -1,5 +1,5 @@
 export EDITOR="vim"
-export TERMINAL="alacritty"
+export TERMINAL="kitty"
 export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.local/share/zap":$PATH
 export PATH="$HOME/.cargo/bin":$PATH
