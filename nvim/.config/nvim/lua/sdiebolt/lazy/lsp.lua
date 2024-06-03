@@ -22,10 +22,55 @@ return {
             lsp_zero.default_keymaps({buffer = bufnr})
         end)
 
+        lsp_zero.format_on_save({
+            format_opts = {
+                async = false,
+                timeout_ms = 10000,
+            },
+            servers = {
+                ["tsserver"] = { "javascript", "typescript" },
+                ["rust_analyzer"] = { "rust" },
+                ["ruff"] = { "python" },
+            }
+        })
+
+        require("lspconfig").ruff.setup {
+            on_attach = function(client, bufnr)
+                -- Disable hover in favor of Pyright
+                client.server_capabilities.hoverProvider = false
+
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.code_action({
+                            context = { only = { "source.organizeImports.ruff" } },
+                            apply = true,
+                        })
+                        vim.wait(100)
+                    end,
+                })
+            end
+        }
+
+        require("lspconfig").pyright.setup {
+            settings = {
+                pyright = {
+                    -- Using Ruff"s import organizer
+                    disableOrganizeImports = true,
+                },
+                python = {
+                    analysis = {
+                        -- Ignore all files for analysis to exclusively use Ruff for linting
+                        ignore = { "*" },
+                    },
+                },
+            },
+        }
+
         require("fidget").setup({})
         require("mason").setup({})
         require("mason-lspconfig").setup({
-            ensure_installed = { "rust_analyzer", "pyright", "lua_ls" },
+            ensure_installed = { "rust_analyzer", "pyright", "lua_ls", "ruff" },
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup({})
