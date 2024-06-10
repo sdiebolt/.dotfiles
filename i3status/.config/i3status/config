@@ -1,0 +1,62 @@
+general {
+    output_format = "i3bar"
+    colors = true
+    color_good = "#50FA7B"
+    color_degraded = "#F1FA8C"
+    color_bad = "#FF5555"
+}
+
+
+order += "wireless wlo1"
+order += "load"
+order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "disk /"
+order += "battery 1"
+order += "volume master"
+order += "tztime local"
+
+battery 1 {
+  last_full_capacity = true
+  format = "  %percentage"
+  format_down = "No battery"
+  status_chr = "󱐋 CHR"
+  status_bat = "󰢝  BAT"
+  status_unk = "? UNK"
+  status_full = "󰁹 FULL"
+  path = "/sys/class/power_supply/BAT%d/uevent"
+}
+
+wireless wlo1 {
+  format_up = " wlan1  %quality   %essid   %bitrate  %ip"
+  format_down = " wlo1 "
+}
+
+tztime local {
+  format = "  %a, %d %b %H:%M"
+}
+
+load {
+  format = " %1min"
+}
+
+cpu_usage {
+  format = " %usage"
+}
+
+cpu_temperature 0 {
+  format = " %degrees °C"
+  max_threshold = "65"
+}
+
+disk "/" {
+  format = "  %free %avail"
+}
+
+volume master {
+  format = "  %volume"
+  format_muted = " %volume"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
