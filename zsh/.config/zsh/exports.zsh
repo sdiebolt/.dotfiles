@@ -1,14 +1,16 @@
 export EDITOR="nvim"
-export TERMINAL="kitty"
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.local/share/zap":$PATH
 export PATH="$HOME/.cargo/bin":$PATH
 export PATH="/opt/zotero":$PATH
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
+export TERMINAL="kitty"
+
 # Fix pip SSL cert validation.
 export NODE_TLS_REJECT_UNAUTHORIZED='0'
+
 # zellij
 export ZELLIJ_AUTO_ATTACH=true
 
