@@ -11,9 +11,6 @@ export TERMINAL="kitty"
 # Fix pip SSL cert validation.
 export NODE_TLS_REJECT_UNAUTHORIZED='0'
 
-# zellij
-export ZELLIJ_AUTO_ATTACH=true
-
 # Rye
 source "$HOME/.rye/env"
 
