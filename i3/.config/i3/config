@@ -16,8 +16,7 @@ set $mod Mod4
 font pango:MesloLGS Nerd Font 10
 
 # Set keyboard layout to US and FR, with Alt+Shift toggle.
-bindsym $mod+Ctrl+Shift+F11 exec setxkbmap -layout fr
-bindsym $mod+Ctrl+Shift+F12 exec setxkbmap -layout us
+exec --no-startup-id "setxkbmap -layout us,fr -option 'grp:alt_caps_toggle'"
 
 # Setup brightness control using brightnessctl.
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
@@ -71,7 +70,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+a kill
 
 # Start rofi as application launcher
-bindsym $mod+d exec --no-startup-id "rofi -show run"
+bindsym $mod+d exec --no-startup-id "rofi -modi drun -show drun"
 
 # change focus
 bindsym $mod+j focus left
