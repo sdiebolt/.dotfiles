@@ -31,6 +31,7 @@ return {
                 ["tsserver"] = { "javascript", "typescript" },
                 ["rust_analyzer"] = { "rust" },
                 ["ruff"] = { "python" },
+                ["texlab"] = { "tex", "plaintex", "bib" },
             }
         })
 
