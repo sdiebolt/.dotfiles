@@ -28,7 +28,7 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "88"
+vim.opt.colorcolumn = "89"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
