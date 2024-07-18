@@ -21,7 +21,7 @@ return {
         local lsp_zero = require("lsp-zero")
 
         lsp_zero.on_attach(function(client, bufnr)
-            lsp_zero.default_keymaps({buffer = bufnr})
+            lsp_zero.default_keymaps({ buffer = bufnr })
         end)
 
         lsp_zero.format_on_save({
@@ -30,53 +30,68 @@ return {
                 timeout_ms = 10000,
             },
             servers = {
-                ["tsserver"] = { "javascript", "typescript" },
                 ["rust_analyzer"] = { "rust" },
                 ["ruff"] = { "python" },
                 ["texlab"] = { "tex", "plaintex", "bib" },
+                ["lua_ls"] = { "lua" },
+                ["matlab_ls"] = { "matlab" },
             }
         })
-
-        require("lspconfig").ruff.setup {
-            on_attach = function(client, bufnr)
-                -- Disable hover in favor of Pyright
-                client.server_capabilities.hoverProvider = false
-
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    buffer = bufnr,
-                    callback = function()
-                        vim.lsp.buf.code_action({
-                            context = { only = { "source.organizeImports.ruff" } },
-                            apply = true,
-                        })
-                        vim.wait(100)
-                    end,
-                })
-            end
-        }
-
-        require("lspconfig").pyright.setup {
-            settings = {
-                pyright = {
-                    -- Using Ruff"s import organizer
-                    disableOrganizeImports = true,
-                },
-                python = {
-                    analysis = {
-                        -- Ignore all files for analysis to exclusively use Ruff for linting
-                        ignore = { "*" },
-                    },
-                },
-            },
-        }
 
         require("fidget").setup({})
         require("mason").setup({})
         require("mason-lspconfig").setup({
-            ensure_installed = { "rust_analyzer", "pyright", "lua_ls", "ruff" },
+            ensure_installed = { "rust_analyzer", "basedpyright", "lua_ls", "ruff", "matlab_ls" },
             handlers = {
-                function(server_name)
-                    require("lspconfig")[server_name].setup({})
+                lsp_zero.default_setup,
+                ruff = function()
+                    require("lspconfig").ruff.setup {
+                        on_attach = function(client, bufnr)
+                            -- Disable hover in favor of Pyright
+                            client.server_capabilities.hoverProvider = false
+
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = bufnr,
+                                callback = function()
+                                    vim.lsp.buf.code_action({
+                                        context = { only = { "source.organizeImports.ruff" } },
+                                        apply = true,
+                                    })
+                                    vim.wait(100)
+                                end,
+                            })
+                        end
+                    }
+                end,
+                basedpyright = function()
+                    require("lspconfig").basedpyright.setup({
+                        settings = {
+                            basedpyright = {
+                                -- Using Ruff"s import organizer.
+                                disableOrganizeImports = true,
+                                -- I use too many packages that don't have stubs.
+                                typeCheckingMode = "off",
+                            },
+                            python = {
+                                analysis = {
+                                    -- Ignore all files for analysis to exclusively use
+                                    -- Ruff for linting.
+                                    ignore = { "*" },
+                                },
+                            },
+                        },
+                    })
+                end,
+                matlab_ls = function()
+                    require("lspconfig").matlab_ls.setup({
+                        filetypes = { "matlab" },
+                        settings = {
+                            matlab = {
+                                installPath = "/usr/local/MATLAB/R2022a",
+                            },
+                        },
+                        single_file_support = true,
+                    })
                 end,
             },
         })
@@ -85,14 +100,14 @@ return {
         cmp.setup({
             sources = {
                 { name = "nvim_lsp", group_index = 1 },
-                { name = "path", group_index = 1 },
-                { name = "buffer", group_index = 2 },
+                { name = "path",     group_index = 1 },
+                { name = "buffer",   group_index = 2 },
             },
             mapping = {
                 ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
                 ["<C-n>"] = cmp.mapping.select_next_item({ behavior = "select" }),
                 ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete({ }),
+                ["<C-Space>"] = cmp.mapping.complete({}),
             },
         })
 
