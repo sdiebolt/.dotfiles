@@ -34,7 +34,6 @@ return {
                 ["ruff"] = { "python" },
                 ["texlab"] = { "tex", "plaintex", "bib" },
                 ["lua_ls"] = { "lua" },
-                ["matlab_ls"] = { "matlab" },
             }
         })
 
