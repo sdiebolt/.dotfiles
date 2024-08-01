@@ -34,13 +34,21 @@ return {
                 ["ruff"] = { "python" },
                 ["texlab"] = { "tex", "plaintex", "bib" },
                 ["lua_ls"] = { "lua" },
+                ["tinymist"] = { "typst" },
             }
         })
 
         require("fidget").setup({})
         require("mason").setup({})
         require("mason-lspconfig").setup({
-            ensure_installed = { "rust_analyzer", "basedpyright", "lua_ls", "ruff", "matlab_ls" },
+            ensure_installed = {
+                "rust_analyzer",
+                "basedpyright",
+                "lua_ls",
+                "ruff",
+                "matlab_ls",
+                "tinymist",
+            },
             handlers = {
                 lsp_zero.default_setup,
                 ruff = function()
@@ -90,6 +98,13 @@ return {
                             },
                         },
                         single_file_support = true,
+                    })
+                end,
+                tinymist = function()
+                    require("lspconfig").tinymist.setup({
+                        settings = {
+                            formatterMode = "typstyle",
+                        },
                     })
                 end,
             },
