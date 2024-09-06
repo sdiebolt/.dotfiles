@@ -51,6 +51,23 @@ return {
             },
             handlers = {
                 lsp_zero.default_setup,
+                rust_analyzer = function()
+                    require("lspconfig").rust_analyzer.setup({
+                        on_attach = function(client, bufnr)
+                            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                        end,
+                        settings = {
+                            ["rust-analyzer"] = {
+                                checkOnSave = {
+                                    command = "clippy",
+                                },
+                                procMacro = {
+                                    enable = true,
+                                },
+                            },
+                        },
+                    })
+                end,
                 ruff = function()
                     require("lspconfig").ruff.setup {
                         on_attach = function(client, bufnr)
@@ -102,6 +119,10 @@ return {
                 end,
                 tinymist = function()
                     require("lspconfig").tinymist.setup({
+                        single_file_support = true,
+                        root_dir = function()
+                            return vim.fn.getcwd()
+                        end,
                         settings = {
                             formatterMode = "typstyle",
                         },
