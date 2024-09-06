@@ -9,15 +9,12 @@ pre_lock() {
     scrot -o $img
     convert $img -scale 10% -scale 1000% $img
 
-    xset dpms 30 60 0
     return
 }
 
 post_lock() {
     dunstctl set-paused false
 
-    xset dpms 240 360 0
-    xset dpms force on
     return
 }
 
