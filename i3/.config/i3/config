@@ -13,7 +13,7 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:MesloLGS Nerd Font 10
+font pango:JetBrainsMono Nerd Font 10
 
 # Set keyboard layout to US and FR, with Alt+Shift toggle.
 exec --no-startup-id "setxkbmap -layout us,fr -option 'grp:alt_caps_toggle'"
