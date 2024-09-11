@@ -1,5 +1,8 @@
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
+# Enable vim mode in zsh
+bindkey -v
+
 # Plugins
 plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
@@ -15,9 +18,6 @@ plug "$HOME/.config/zsh/functions.zsh"
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=$HISTSIZE
-
-# Enable vim mode in zsh
-bindkey -v
 
 # Enable line search using up/down arrows
 autoload -U up-line-or-beginning-search

@@ -21,7 +21,8 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="$HOME/.fzf/bin:$PATH"
+source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='fdfind --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 
 # Python virtual environments
