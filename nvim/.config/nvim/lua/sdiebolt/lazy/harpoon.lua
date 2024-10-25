@@ -3,7 +3,7 @@ return {
 
     branch = "harpoon2",
 
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim"},
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
 
     opts = {},
 
@@ -42,7 +42,7 @@ return {
                     return true
                 end,
             })
-            :find()
+                :find()
         end
 
         return {
@@ -100,7 +100,7 @@ return {
                 end,
                 desc = "Harpoon: select buffer 4"
             },
-            -- Toggle previous & next buffers stored within Harpoon list
+
             {
                 "<C-p>",
                 function()
