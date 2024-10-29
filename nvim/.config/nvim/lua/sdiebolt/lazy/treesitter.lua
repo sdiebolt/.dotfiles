@@ -6,7 +6,20 @@ return {
     end,
 
     opts = {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "javascript", "html", "python", "typescript", "rust", "markdown" },
+        ensure_installed = {
+            "c",
+            "lua",
+            "vim",
+            "vimdoc",
+            "query",
+            "javascript",
+            "html",
+            "python",
+            "typescript",
+            "rust",
+            "markdown",
+            "typst"
+        },
         sync_install = false,
         auto_install = true,
         indent = { enable = true },
