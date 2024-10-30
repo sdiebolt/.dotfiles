@@ -18,6 +18,9 @@ font pango:JetBrainsMono Nerd Font 10
 # Set keyboard layout to US and FR, with Alt+Shift toggle.
 exec --no-startup-id "setxkbmap -layout us,fr -option 'grp:alt_caps_toggle'"
 
+# Set wallpaper.
+exec --no-startup-id "feh --bg-fill ~/.config/wallpapers"
+
 # Setup brightness control using brightnessctl.
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl s +5%
