@@ -1,7 +1,7 @@
 return {
     "VonHeikemen/lsp-zero.nvim",
 
-    branch = "v3.x",
+    branch = "v4.x",
 
     dependencies = {
         "williamboman/mason.nvim",
@@ -20,9 +20,18 @@ return {
     config = function()
         local lsp_zero = require("lsp-zero")
 
-        lsp_zero.on_attach(function(client, bufnr)
+        local lsp_attach = function(client, bufnr)
+            -- see :help lsp-zero-keybindings
+            -- to learn the available actions
             lsp_zero.default_keymaps({ buffer = bufnr })
-        end)
+        end
+
+        lsp_zero.extend_lspconfig({
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            lsp_attach = lsp_attach,
+            float_border = "rounded",
+            sign_text = true,
+        })
 
         lsp_zero.format_on_save({
             format_opts = {
@@ -38,6 +47,11 @@ return {
             }
         })
 
+        local handlers = {
+            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+        }
+
         require("fidget").setup({})
         require("mason").setup({})
         require("mason-lspconfig").setup({
@@ -50,9 +64,12 @@ return {
                 "tinymist",
             },
             handlers = {
-                lsp_zero.default_setup,
+                function(server_name)
+                    require('lspconfig')[server_name].setup({ handlers = handlers })
+                end,
                 rust_analyzer = function()
                     require("lspconfig").rust_analyzer.setup({
+                        handlers = handlers,
                         on_attach = function(client, bufnr)
                             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                         end,
@@ -70,6 +87,7 @@ return {
                 end,
                 ruff = function()
                     require("lspconfig").ruff.setup {
+                        handlers = handlers,
                         on_attach = function(client, bufnr)
                             -- Disable hover in favor of Pyright
                             client.server_capabilities.hoverProvider = false
@@ -89,6 +107,7 @@ return {
                 end,
                 basedpyright = function()
                     require("lspconfig").basedpyright.setup({
+                        handlers = handlers,
                         settings = {
                             basedpyright = {
                                 -- Using Ruff"s import organizer.
@@ -108,6 +127,7 @@ return {
                 end,
                 matlab_ls = function()
                     require("lspconfig").matlab_ls.setup({
+                        handlers = handlers,
                         filetypes = { "matlab" },
                         settings = {
                             matlab = {
@@ -119,6 +139,7 @@ return {
                 end,
                 tinymist = function()
                     require("lspconfig").tinymist.setup({
+                        handlers = handlers,
                         single_file_support = true,
                         root_dir = function()
                             return vim.fn.getcwd()
@@ -138,11 +159,24 @@ return {
                 { name = "path",     group_index = 1 },
                 { name = "buffer",   group_index = 2 },
             },
+            snippet = {
+                expand = function(args)
+                    require('luasnip').lsp_expand(args.body)
+                end,
+            },
             mapping = {
                 ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
                 ["<C-n>"] = cmp.mapping.select_next_item({ behavior = "select" }),
-                ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete({}),
+            },
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
+            preselect = 'item',
+            completion = {
+                completeopt = 'menu,menuone,noinsert'
             },
         })
 
