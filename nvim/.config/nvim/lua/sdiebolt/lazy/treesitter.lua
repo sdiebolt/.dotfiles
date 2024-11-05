@@ -18,7 +18,8 @@ return {
             "typescript",
             "rust",
             "markdown",
-            "typst"
+            "typst",
+            "latex",
         },
         sync_install = false,
         auto_install = true,
