@@ -6,7 +6,8 @@ export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.local/share/zap":$PATH
 export PATH="$HOME/.cargo/bin":$PATH
 export PATH="/opt/zotero":$PATH
-export TERMINAL="kitty"
+export TERMINAL="wezterm"
+export TERM=xterm-256color
 
 # Fix pip SSL cert validation.
 export NODE_TLS_REJECT_UNAUTHORIZED='0'
