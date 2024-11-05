@@ -113,7 +113,7 @@ return {
                                 -- Using Ruff"s import organizer.
                                 disableOrganizeImports = true,
                                 -- I use too many packages that don't have stubs.
-                                typeCheckingMode = "off",
+                                typeCheckingMode = "basic",
                             },
                             python = {
                                 analysis = {
