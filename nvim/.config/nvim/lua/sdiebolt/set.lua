@@ -55,3 +55,26 @@ vim.opt.showmode = false
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
+
+-- If we are in a SSH session, use OSC 52 for clipboard.
+-- See https://github.com/wez/wezterm/discussions/5231
+if os.getenv "SSH_CLIENT" ~= nil or os.getenv "SSH_TTY" ~= nil then
+    local function my_paste(_)
+        return function(_)
+            local content = vim.fn.getreg '"'
+            return vim.split(content, "\n")
+        end
+    end
+
+    vim.g.clipboard = {
+        name = "OSC 52",
+        copy = {
+            ["+"] = require("vim.ui.clipboard.osc52").copy "+",
+            ["*"] = require("vim.ui.clipboard.osc52").copy "*",
+        },
+        paste = {
+            ["+"] = my_paste "+",
+            ["*"] = my_paste "*",
+        },
+    }
+end
