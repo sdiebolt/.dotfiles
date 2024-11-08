@@ -20,9 +20,6 @@ return {
                     opts.buffer = bufnr
                     vim.keymap.set(mode, l, r, opts)
                 end
-
-                -- Blame line.
-                map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end)
             end,
         })
 
