@@ -29,7 +29,7 @@ return {
         lsp_zero.extend_lspconfig({
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
             lsp_attach = lsp_attach,
-            float_border = "rounded",
+            float_border = border,
             sign_text = true,
         })
 
@@ -47,9 +47,20 @@ return {
             }
         })
 
+
+        local border = "single"
+
+        -- Add border to the diagnostic popup window
+        vim.diagnostic.config({
+            virtual_text = {
+                prefix = '■ ', -- Could be '●', '▎', 'x', '■', , 
+            },
+            float = { border = border },
+        })
+
         local handlers = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
         }
 
         require("fidget").setup({})
@@ -65,7 +76,7 @@ return {
             },
             handlers = {
                 function(server_name)
-                    require('lspconfig')[server_name].setup({ handlers = handlers })
+                    require("lspconfig")[server_name].setup({ handlers = handlers })
                 end,
                 rust_analyzer = function()
                     require("lspconfig").rust_analyzer.setup({
@@ -112,7 +123,7 @@ return {
                             basedpyright = {
                                 -- Using Ruff"s import organizer.
                                 disableOrganizeImports = true,
-                                -- I use too many packages that don't have stubs.
+                                -- I use too many packages that don"t have stubs.
                                 typeCheckingMode = "basic",
                             },
                             python = {
@@ -161,22 +172,22 @@ return {
             },
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body)
+                    require("luasnip").lsp_expand(args.body)
                 end,
             },
             mapping = {
                 ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
                 ["<C-n>"] = cmp.mapping.select_next_item({ behavior = "select" }),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                ["<CR>"] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete({}),
             },
             window = {
                 completion = cmp.config.window.bordered(),
                 documentation = cmp.config.window.bordered(),
             },
-            preselect = 'item',
+            preselect = "item",
             completion = {
-                completeopt = 'menu,menuone,noinsert'
+                completeopt = "menu,menuone,noinsert"
             },
         })
 
