@@ -1,29 +1,33 @@
 [user]
-	name = Samuel Le Meur-Diebolt
-	email = samuel@diebolt.io
+  name = Samuel Le Meur-Diebolt
+  email = samuel@diebolt.io
 [credential]
   helper = store
-[pager]
-  diff = diff-so-fancy | less --tabs=1,5 -RFX
-  show = diff-so-fancy | less --tabs=1,5 -RFX
 [core]
   editor = nvim
+  pager = delta
 [diff]
-	submodule = log
+  submodule = log
 [diff "jupyternotebook"]
-	command = git-nbdiffdriver diff
+  command = git-nbdiffdriver diff
 [merge "jupyternotebook"]
-	driver = git-nbmergedriver merge %O %A %B %L %P
-	name = jupyter notebook merge driver
+  driver = git-nbmergedriver merge %O %A %B %L %P
+  name = jupyter notebook merge driver
 [difftool "nbdime"]
-	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+  cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
 [difftool]
-	prompt = false
+  prompt = false
 [mergetool "nbdime"]
-	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+  cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
-	prompt = false
+  prompt = false
 [rerere]
-	enabled = true
+  enabled = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+[merge]
+  conflictStyle = zdiff3
