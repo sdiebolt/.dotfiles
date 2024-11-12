@@ -8,6 +8,8 @@ plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zsh-users/zsh-history-substring-search"
+zstyle :plugins:ssh-agent lifetime 4h
+plug "sdiebolt/zsh-ssh-agent"
 
 # Source
 plug "$HOME/.config/zsh/aliases.zsh"
