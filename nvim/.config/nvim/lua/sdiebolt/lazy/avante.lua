@@ -3,12 +3,10 @@ return {
 
     event = "VeryLazy",
 
-    lazy = false,
-
     version = false, -- set this if you want to always pull the latest change
 
     opts = {},
-    --
+
     build = "make",
 
     dependencies = {
@@ -42,6 +40,7 @@ return {
             opts = {
                 file_types = { "markdown", "Avante" },
             },
+
             ft = { "markdown", "Avante" },
         },
     },
