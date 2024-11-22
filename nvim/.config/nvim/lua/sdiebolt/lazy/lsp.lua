@@ -71,7 +71,6 @@ return {
                 "basedpyright",
                 "lua_ls",
                 "ruff",
-                "matlab_ls",
                 "tinymist",
             },
             handlers = {
@@ -134,18 +133,6 @@ return {
                                 },
                             },
                         },
-                    })
-                end,
-                matlab_ls = function()
-                    require("lspconfig").matlab_ls.setup({
-                        handlers = handlers,
-                        filetypes = { "matlab" },
-                        settings = {
-                            matlab = {
-                                installPath = "/usr/local/MATLAB/R2022a",
-                            },
-                        },
-                        single_file_support = true,
                     })
                 end,
                 tinymist = function()
