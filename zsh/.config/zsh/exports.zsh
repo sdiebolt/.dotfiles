@@ -12,9 +12,6 @@ export TERM=xterm-256color
 # Fix pip SSL cert validation.
 export NODE_TLS_REJECT_UNAUTHORIZED='0'
 
-# Rye
-source "$HOME/.rye/env"
-
 # Starship prompt
 eval "$(starship init zsh)"
 

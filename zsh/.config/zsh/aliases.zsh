@@ -1,5 +1,5 @@
 # bat
-alias cat="batcat --theme "Dracula" --color always"
+alias cat="bat --theme "Dracula" --color always"
 
 # ncdu
 alias du="ncdu --color dark -rr -x"
