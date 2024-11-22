@@ -1,9 +1,0 @@
-[behavior]
-use-uv = true
-global-python = true
-
-[default]
-requires-python = ">= 3.11"
-toolchain = "cpython@3.12"
-author = "Samuel Le Meur-Diebolt <samuel@diebolt.io>"
-dependency-operator = "~="
