@@ -1,6 +1,8 @@
 return {
     "lewis6991/gitsigns.nvim",
 
+    event = "VeryLazy",
+
     config = function()
         require("gitsigns").setup({
             current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
@@ -11,16 +13,6 @@ return {
                 ignore_whitespace = true,
                 virt_text_priority = 100,
             },
-
-            on_attach = function(bufnr)
-                local gitsigns = require('gitsigns')
-
-                local function map(mode, l, r, opts)
-                    opts = opts or {}
-                    opts.buffer = bufnr
-                    vim.keymap.set(mode, l, r, opts)
-                end
-            end,
         })
 
         require("scrollbar.handlers.gitsigns").setup()

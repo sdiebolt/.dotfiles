@@ -8,13 +8,41 @@ return {
     ---@type snacks.Config
     opts = {
         bigfile = { enabled = true },
+
+        dashboard = {
+            enabled = true,
+            preset = {
+                header = table.concat({
+                    "   ▄████████ ████████▄   ▄█     ▄████████ ▀█████████▄   ▄██████▄   ▄█           ███    ",
+                    "  ███    ███ ███   ▀███ ███    ███    ███   ███    ███ ███    ███ ███       ▀█████████▄",
+                    "  ███    █▀  ███    ███ ███▌   ███    █▀    ███    ███ ███    ███ ███          ▀███▀▀██",
+                    "  ███        ███    ███ ███▌  ▄███▄▄▄      ▄███▄▄▄██▀  ███    ███ ███           ███   ▀",
+                    "▀███████████ ███    ███ ███▌ ▀▀███▀▀▀     ▀▀███▀▀▀██▄  ███    ███ ███           ███    ",
+                    "         ███ ███    ███ ███    ███    █▄    ███    ██▄ ███    ███ ███           ███    ",
+                    "   ▄█    ███ ███   ▄███ ███    ███    ███   ███    ███ ███    ███ ███▌    ▄     ███    ",
+                    " ▄████████▀  ████████▀  █▀     ██████████ ▄█████████▀   ▀██████▀  █████▄▄██    ▄████▀  \n",
+                }, "\n"),
+            },
+            sections = {
+                { section = "header" },
+                { section = "keys", gap = 1, padding = 1 },
+                { pane = 1, icon = " ", title = "Recent Files", section = "recent_files", indent = 4, padding = 1 },
+                { pane = 1, icon = " ", title = "Projects", section = "projects", indent = 4, padding = 1 },
+                { section = "startup" },
+            },
+        },
+
         notifier = {
             enabled = true,
             timeout = 3000,
         },
+
         quickfile = { enabled = true },
+
         statuscolumn = { enabled = true },
+
         words = { enabled = true },
+
         styles = {
             notification = {
                 wo = { wrap = true } -- Wrap notifications
@@ -24,6 +52,7 @@ return {
 
     keys = {
         { "<leader>un", function() Snacks.notifier.hide() end,           desc = "Dismiss All Notifications" },
+        { "<leader>NH", function() Snacks.notifier.show_history() end,   desc = "Show All Notifications" },
         { "<leader>bd", function() Snacks.bufdelete() end,               desc = "Delete Buffer" },
         { "<leader>gg", function() Snacks.lazygit() end,                 desc = "Lazygit" },
         { "<leader>gb", function() Snacks.git.blame_line() end,          desc = "Git Blame Line" },
@@ -36,7 +65,7 @@ return {
         { "]]",         function() Snacks.words.jump(vim.v.count1) end,  desc = "Next Reference" },
         { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference" },
         {
-            "<leader>N",
+            "<leader>NN",
             desc = "Neovim News",
             function()
                 Snacks.win({

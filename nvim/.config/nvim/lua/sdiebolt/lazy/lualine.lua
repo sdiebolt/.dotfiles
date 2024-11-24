@@ -5,7 +5,8 @@ return {
 
     opts = {
         options = {
-            disabled_filetypes = { "packer", "NVimTree", "neo-tree" }
+            theme = "catppuccin",
+            disabled_filetypes = { "packer", "NVimTree", "neo-tree" },
         },
         sections = {
             lualine_a = { 'filename', 'mode' },
