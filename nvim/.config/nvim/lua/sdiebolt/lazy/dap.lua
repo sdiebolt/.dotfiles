@@ -9,11 +9,11 @@ return {
         },
 
         keys = {
-            { "<leader>ds", function() require("dap").continue() end,          desc = "Continue/start debug" },
-            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-            { "<leader>dx", function() require("dap").terminate() end,         desc = "Terminate debug" },
-            { "<leader>do", function() require("dap").step_over() end,         desc = "Step over" },
-            { "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
+            { "<leader>ds", function() require("dap").continue() end,          desc = "DAP: Continue/start debug" },
+            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "DAP: Toggle breakpoint" },
+            { "<leader>dx", function() require("dap").terminate() end,         desc = "DAP: Terminate debug" },
+            { "<leader>do", function() require("dap").step_over() end,         desc = "DAP: Step over" },
+            { "<leader>di", function() require("dap").step_into() end,         desc = "DAP: Step into" },
         },
 
         config = function()

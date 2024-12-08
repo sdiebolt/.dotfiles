@@ -15,6 +15,7 @@ return {
             { "<leader>fp", builtin.git_files,  desc = "Telescope: git" },
             { "<leader>fg", builtin.live_grep,  desc = "Telescope: grep" },
             { "<leader>fb", builtin.buffers,    desc = "Telescope: buffers" },
+            { "<leader>fk", builtin.keymaps,    desc = "Telescope: keymaps" },
         }
     end,
 }
