@@ -5,7 +5,7 @@ alias cat="bat --theme "Dracula" --color always"
 alias du="ncdu --color dark -rr -x"
 
 # fzf 
-alias pfzf="fzf --preview "fzf-preview.sh {}""
+alias pfzf="fzf --preview 'bat -n --color=always {}'"
 
 # lsd
 alias ls="lsd"
