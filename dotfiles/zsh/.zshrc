@@ -11,10 +11,15 @@ plug "zsh-users/zsh-history-substring-search"
 zstyle :plugins:ssh-agent lifetime 4h
 plug "sdiebolt/zsh-ssh-agent"
 
-# Source
+# Source aliases, exports, functions, and secrets. Do not store important secrets, as
+# this method is not secure! This is intended for things like unimportant API keys and
+# the like. secrets.zsh is not tracked by git.
 plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/exports.zsh"
 plug "$HOME/.config/zsh/functions.zsh"
+if [ -f "$HOME/.config/zsh/secrets.zsh" ]; then
+  plug "$HOME/.config/zsh/secrets.zsh"
+fi
 
 # History
 HISTFILE=$HOME/.zsh_history
