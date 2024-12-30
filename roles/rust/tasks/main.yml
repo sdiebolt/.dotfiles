@@ -2,3 +2,7 @@
 - name: Install Rust in Ubuntu
   import_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
+
+- name: Add Cargo to PATH for all subsequent tasks
+  ansible.builtin.set_fact:
+    ansible_env: "{{ ansible_env | combine({'PATH': ansible_env.PATH + ':' + ansible_env.HOME + '/.cargo/bin'}) }}"
