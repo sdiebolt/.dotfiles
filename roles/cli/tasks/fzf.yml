@@ -1,0 +1,6 @@
+---
+- name: Install fzf
+  ansible.builtin.command:
+    chdir: "{{ ansible_env.HOME }}/.fzf"
+    cmd: ./install --bin
+    creates: "{{ ansible_env.HOME }}/.fzf/bin/fzf"

@@ -1,0 +1,4 @@
+---
+- name: Install Rust in Ubuntu
+  import_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"

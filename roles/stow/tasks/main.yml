@@ -1,0 +1,33 @@
+---
+- name: Install GNU Stow in Ubuntu
+  import_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: Build directories list
+  find:
+    paths: [dotfiles/]
+    recurse: no
+    file_type: directory
+  register: files
+
+- name: Deploy dotfiles
+  become: true
+  with_items: '{{ files.files }}'
+  shell: |
+    STOW_PATH={{ item.path | replace("dotfiles/", "") }}
+    OVERRIDE_TARGET=$(cat ${STOW_PATH}/.override 2>/dev/null)
+    TARGET=${OVERRIDE_TARGET:-{{ ansible_env.HOME }}}
+    stow -v -t ${TARGET} ${STOW_PATH}
+  args:
+    chdir: ./dotfiles
+    executable: /bin/bash
+  loop_control:
+    label: |-
+      {% if output.stderr|length > 1 %}
+      {{ item.path }}
+      {{ output.stderr }}
+      {%- else %}
+      {{ item.path }}
+      {%- endif %}
+  register: output
+  changed_when: '"LINK" in output.stderr'

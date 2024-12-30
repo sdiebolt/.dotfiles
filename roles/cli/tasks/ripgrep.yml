@@ -1,0 +1,6 @@
+---
+- name: Install ripgrep in Ubuntu
+  community.general.cargo:
+    name: ripgrep
+    version: "{{ ripgrep_version }}"
+  when: ansible_distribution == "Ubuntu"

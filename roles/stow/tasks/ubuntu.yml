@@ -1,0 +1,7 @@
+---
+- name: Install GNU Stow in Ubuntu
+  become: true
+  apt:
+    name:
+      - stow
+    state: present

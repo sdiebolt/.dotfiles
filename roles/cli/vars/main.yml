@@ -1,0 +1,8 @@
+---
+git_delta_version: 0.18.2
+bat_version: 0.24.0
+zoxide_version: 0.9.6
+fd_version: 10.2.0
+ripgrep_version: 14.1.1
+btop_version: 1.4.0
+lsd_version: 1.1.5

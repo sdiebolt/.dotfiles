@@ -1,0 +1,9 @@
+---
+- name: Check if uv is installed
+  shell: command -v uv
+  register: uv_exists
+  ignore_errors: yes
+
+- name: Install uv
+  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+  when: uv_exists is failed

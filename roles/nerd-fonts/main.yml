@@ -1,0 +1,19 @@
+---
+- name: ensure fonts directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.fonts"
+    state: directory
+
+- name: JetBrainsMono exists
+  shell: "ls {{ lookup('env', 'HOME') }}/.fonts/JetBrainsMonoNerdFont*"
+  register: font_exists
+  ignore_errors: yes
+
+- name: Download JetBrainsMono font
+  when: font_exists is failed
+  ansible.builtin.unarchive:
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/JetBrainsMono.zip
+    dest: "{{ lookup('env', 'HOME') }}/.fonts/"
+    remote_src: yes
+
+

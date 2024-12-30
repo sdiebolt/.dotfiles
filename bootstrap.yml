@@ -1,0 +1,41 @@
+---
+- name: Bootstrap development environment
+  hosts: localhost
+  tasks:
+    - name: Update all submodules
+      tags:
+        - submodules
+        - nvim
+      ansible.builtin.command:
+        cmd: git submodule update --force --init --recursive --jobs 4
+      changed_when: false
+
+    - name: Rust
+      tags: rust
+      import_role:
+        name: rust
+
+    - name: GNU Stow
+      tags: stow
+      import_role:
+        name: stow
+
+    - name: Command-line tools
+      tags: cli
+      import_role:
+        name: cli
+
+    - name: Neovim
+      tags: nvim
+      import_role:
+        name: nvim
+
+    - name: Nerd fonts
+      tags: nerd-fonts
+      import_role:
+        name: nerd-fonts
+     
+    - name: i3
+      tags: i3
+      import_role:
+        name: i3

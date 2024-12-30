@@ -1,0 +1,6 @@
+---
+- name: Install lsd in Ubuntu
+  community.general.cargo:
+    name: lsd
+    version: "{{ lsd_version }}"
+  when: ansible_distribution == "Ubuntu"
