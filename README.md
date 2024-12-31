@@ -1,20 +1,22 @@
 # Personal dotfiles
 
 > [!CAUTION]
-> I am currently using these dotfiles on Ubuntu 22.04 only. Use at your own risk.
+> I am currently using these dotfiles on Ubuntu 24.04 only. Use at your own risk.
 
 ## Installing
 
-`git` and GNU `stow` are needed to install these dotfiles.
+To install all dependencies and deploy my dotfiles, you will need to install Git and
+Ansible. You can install them using the following commands:
 
-Clone into your `$HOME` directory:
+```bash
+sudo apt update
+sudo apt install -y git ansible
+```
+
+Then, clone this repository and run the Ansible playbook:
 
 ```bash
 git clone https://github.com/sdiebolt/.dotfiles.git ~/.dotfiles
-```
-
-Run `stow` to symlink any package you want, e.g.
-
-```bash
-stow zsh
+cd ~/.dotfiles
+ansible-playbook -K bootstrap.yml
 ```
