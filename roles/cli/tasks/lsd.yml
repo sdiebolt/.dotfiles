@@ -3,5 +3,5 @@
   community.general.cargo:
     name: lsd
     version: "{{ lsd_version }}"
-    executable: "{{ ansible_env.HOME }}/.cargo/bin/cargo"
+    executable: "{{ cargo_path }}"
   when: ansible_distribution == "Ubuntu"
