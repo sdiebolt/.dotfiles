@@ -3,4 +3,5 @@
   community.general.cargo:
     name: ripgrep
     version: "{{ ripgrep_version }}"
+    executable: "{{ ansible_env.HOME }}/.cargo/bin/cargo"
   when: ansible_distribution == "Ubuntu"
