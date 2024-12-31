@@ -72,3 +72,13 @@
     target: install
   register: nvim_install
   changed_when: nvim_install.changed
+
+- name: Install dependencies for nvim plugins
+  become: true
+  ansible.builtin.apt:
+    name:
+      - imagemagick
+      - libmagickwand-dev
+      - luarocks
+      - python3-venv
+    state: present
