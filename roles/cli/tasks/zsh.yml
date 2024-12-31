@@ -14,3 +14,8 @@
     shell: /bin/zsh
   when: ansible_distribution == "Ubuntu"
 
+- name: Install the Zap plugin manager
+  shell: 
+    cmd: "zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep"
+    creates: "{{ ansible_env.HOME }}/.local/share/zap/zap.zsh"
+  when: ansible_distribution == "Ubuntu"
