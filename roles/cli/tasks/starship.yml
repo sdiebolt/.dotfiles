@@ -1,10 +1,11 @@
 ---
-- name: check if Starship is installed
+- name: Check if Starship is installed
   shell: command -v starship
   register: starship_exists
   ignore_errors: yes
   changed_when: false
+  failed_when: false
 
-- name: install Starship
+- name: Install Starship
   shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
   when: starship_exists is failed

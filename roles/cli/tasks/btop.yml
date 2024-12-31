@@ -1,9 +1,10 @@
 ---
-- name: check if btop is installed
+- name: Check if btop is installed
   shell: command -v btop
   register: btop_exists
   ignore_errors: yes
   changed_when: false
+  failed_when: false
 
 - name: Download and extract binary
   ansible.builtin.unarchive:

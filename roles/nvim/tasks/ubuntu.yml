@@ -81,4 +81,5 @@
       - libmagickwand-dev
       - luarocks
       - python3-venv
+    update_cache: yes
     state: present

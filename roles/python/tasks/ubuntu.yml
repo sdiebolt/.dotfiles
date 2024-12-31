@@ -3,6 +3,8 @@
   shell: command -v uv
   register: uv_exists
   ignore_errors: yes
+  changed_when: false
+  failed_when: false
 
 - name: Install uv
   shell: curl -LsSf https://astral.sh/uv/install.sh | sh
