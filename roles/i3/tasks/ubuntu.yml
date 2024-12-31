@@ -6,6 +6,7 @@
     checksum: sha256:f9bb4340b5ce0ded29b7e014ee9ce788006e9bbfe31e96c09b2118ab91fca734
 
 - name: Install keyring
+  become: true
   ansible.builtin.apt:
     deb: /tmp/sur5r-keyring.deb
 
@@ -15,6 +16,7 @@
   changed_when: false
 
 - name: Add i3 repository
+  become: true
   ansible.builtin.apt_repository:
     repo: "deb http://debian.sur5r.net/i3/ {{ ubuntu_codename.stdout }} universe"
     filename: sur5r-i3
