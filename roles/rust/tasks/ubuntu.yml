@@ -1,17 +1,18 @@
 ---
 - name: Check if cargo is installed
-  shell: command -v cargo
+  ansible.builtin.shell: command -v cargo
   register: cargo_exists
-  ignore_errors: yes
+  ignore_errors: true
   changed_when: false
   failed_when: false
 
-- name: Ensure curl is installed
-  apt:
-    name: curl
-    state: present
-  when: cargo_exists is failed
-
 - name: Install Rust/cargo
-  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  when: cargo_exists is failed
+  when: cargo_exists.rc != 0
+  block:
+    - name: Ensure curl is installed
+      ansible.builtin.apt:
+        name: curl
+        state: present
+
+    - name: Install Rust/cargo
+      ansible.builtin.shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y

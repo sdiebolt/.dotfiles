@@ -1,13 +1,13 @@
 ---
 - name: Create directory ~/.local/bin/
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.local/bin"
     state: directory
     mode: 0755
 
 - name: Install CLI tools in Ubuntu
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - build-essential
       - curl
@@ -18,32 +18,32 @@
   when: ansible_distribution == "Ubuntu"
 
 - name: Install bat
-  import_tasks: bat.yml
+  ansible.builtin.import_tasks: bat.yml
 
 - name: Install btop
-  import_tasks: btop.yml
+  ansible.builtin.import_tasks: btop.yml
 
 - name: Install delta
-  import_tasks: delta.yml
+  ansible.builtin.import_tasks: delta.yml
 
 - name: Install fd
-  import_tasks: fd.yml
+  ansible.builtin.import_tasks: fd.yml
 
 - name: Install fzf
-  import_tasks: fzf.yml
+  ansible.builtin.import_tasks: fzf.yml
 
 - name: Install lsd
-  import_tasks: lsd.yml
+  ansible.builtin.import_tasks: lsd.yml
 
 - name: Install ripgrep
-  import_tasks: ripgrep.yml
+  ansible.builtin.import_tasks: ripgrep.yml
 
 - name: Install Starship
-  import_tasks: starship.yml
+  ansible.builtin.import_tasks: starship.yml
 
 - name: Install zoxide
-  import_tasks: zoxide.yml
+  ansible.builtin.import_tasks: zoxide.yml
 
 - name: Install and set zsh as default shell
-  import_tasks: zsh.yml
+  ansible.builtin.import_tasks: zsh.yml
 

@@ -1,4 +1,4 @@
 ---
 - name: Install i3 in Ubuntu
-  import_tasks: ubuntu.yml
+  ansible.builtin.import_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"

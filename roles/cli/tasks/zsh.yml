@@ -1,21 +1,21 @@
 ---
 - name: Install zsh in Ubuntu
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - zsh
     state: present
   when: ansible_distribution == "Ubuntu"
 
 - name: Change user shell to zsh
-  become: yes
-  user:
+  become: true
+  ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /bin/zsh
   when: ansible_distribution == "Ubuntu"
 
 - name: Install the Zap plugin manager
-  shell: 
+  ansible.builtin.shell: 
     cmd: "zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep"
     executable: /bin/zsh
     creates: "{{ ansible_env.HOME }}/.local/share/zap/zap.zsh"

@@ -10,43 +10,27 @@
         cmd: git submodule update --force --init --recursive --jobs 4
       changed_when: false
 
-    - name: GNU Stow
-      tags: stow
-      import_role:
+    - ansible.builtin.import_role:
         name: stow
 
     # Installing Rust before CLI tools because some CLI tools are installed using Cargo.
-    - name: Rust
-      tags: rust
-      import_role:
+    - ansible.builtin.import_role:
         name: rust
 
-    - name: Command-line tools
-      tags: cli
-      import_role:
+    - ansible.builtin.import_role:
         name: cli
 
-    - name: Python
-      tags: python
-      import_role:
+    - ansible.builtin.import_role:
         name: python
 
-    - name: Neovim
-      tags: nvim
-      import_role:
+    - ansible.builtin.import_role:
         name: nvim
 
-    - name: Nerd fonts
-      tags: nerd-fonts
-      import_role:
+    - ansible.builtin.import_role:
         name: nerd-fonts
 
-    - name: i3
-      tags: i3
-      import_role:
+    - ansible.builtin.import_role:
         name: i3
 
-    - name: WezTerm
-      tags: wezterm
-      import_role:
+    - ansible.builtin.import_role:
         name: wezterm

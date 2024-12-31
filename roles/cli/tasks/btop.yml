@@ -1,21 +1,22 @@
 ---
 - name: Check if btop is installed
-  shell: command -v btop
+  ansible.builtin.shell: command -v btop
   register: btop_exists
-  ignore_errors: yes
+  ignore_errors: true
   changed_when: false
   failed_when: false
 
-- name: Download and extract binary
-  ansible.builtin.unarchive:
-    src: https://github.com/aristocratos/btop/releases/download/v{{ btop_version }}/btop-x86_64-linux-musl.tbz
-    dest: /tmp
-    remote_src: yes
-  when: btop_exists is failed
+- name: Install btop
+  when: btop_exists.rc != 0
+  block:
+    - name: Download and extract binary
+      ansible.builtin.unarchive:
+        src: https://github.com/aristocratos/btop/releases/download/v{{ btop_version }}/btop-x86_64-linux-musl.tbz
+        dest: /tmp
+        remote_src: true
 
-- name: Run 'install' target as root
-  community.general.make:
-    chdir: /tmp/btop
-    target: install
-  become: true
-  when: btop_exists is failed
+    - name: Run 'install' target as root
+      community.general.make:
+        chdir: /tmp/btop
+        target: install
+      become: true

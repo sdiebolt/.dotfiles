@@ -1,9 +1,9 @@
 ---
 - name: Install nvim in Ubuntu
-  import_tasks: ubuntu.yml
+  ansible.builtin.import_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
 - name: Generate :help pages
-  shell: nvim --headless -c 'helptags ALL' -c quit
+  ansible.builtin.shell: nvim --headless -c 'helptags ALL' -c quit
   changed_when: false
 

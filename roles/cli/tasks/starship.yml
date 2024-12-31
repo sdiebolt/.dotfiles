@@ -1,11 +1,13 @@
 ---
 - name: Check if Starship is installed
-  shell: command -v starship
+  ansible.builtin.shell: command -v starship
   register: starship_exists
-  ignore_errors: yes
+  ignore_errors: true
   changed_when: false
   failed_when: false
 
 - name: Install Starship
-  shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
-  when: starship_exists is failed
+  when: ansible_distribution == "Ubuntu" and starship_exists.rc != 0
+  block:
+    - name: Install Starship
+      ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- -y

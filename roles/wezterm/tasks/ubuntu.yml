@@ -1,54 +1,51 @@
 ---
 - name: Check if WezTerm is installed
-  shell: command -v wezterm
-  register: wezterm_check
+  ansible.builtin.shell: command -v wezterm
+  register: wezterm_exists
   failed_when: false
   changed_when: false
-
-- name: Create keyrings directory
-  ansible.builtin.file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
-  become: true
-  when: wezterm_check is failed
-
-- name: Download and install WezTerm GPG key
-  ansible.builtin.get_url:
-    url: https://apt.fury.io/wez/gpg.key
-    dest: /tmp/wezterm.gpg
-    mode: '0644'
-  become: true
-  register: gpg_download
-  when: wezterm_check is failed
-
-- name: Dearmor GPG key
-  ansible.builtin.shell: cat /tmp/wezterm.gpg | gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
-  become: true
-  changed_when: gpg_download.changed
-  when: wezterm_check is failed
-
-- name: Add WezTerm repository
-  ansible.builtin.apt_repository:
-    repo: deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *
-    state: present
-    filename: wezterm
-  become: true
-  register: repo_added
-  when: wezterm_check is failed
+  ignore_errors: true
 
 - name: Install WezTerm
-  ansible.builtin.apt:
-    name: wezterm
-    state: present
-    update_cache: yes
-  become: true
-  register: wezterm_installed
-  when: wezterm_check is failed
+  when: wezterm_exists.rc != 0
+  block:
+    - name: Create keyrings directory
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+      become: true
 
-- name: Clean up temporary GPG key
-  ansible.builtin.file:
-    path: /tmp/wezterm.gpg
-    state: absent
-  become: true
-  when: gpg_download.changed
+    - name: Download and install WezTerm GPG key
+      ansible.builtin.get_url:
+        url: https://apt.fury.io/wez/gpg.key
+        dest: /tmp/wezterm.gpg
+        mode: '0644'
+      become: true
+      register: gpg_download
+
+    - name: Dearmor GPG key
+      become: true
+      ansible.builtin.shell: cat /tmp/wezterm.gpg | gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
+      changed_when: gpg_download.changed
+
+    - name: Add WezTerm repository
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *
+        state: present
+        filename: wezterm
+      become: true
+
+    - name: Install WezTerm
+      ansible.builtin.apt:
+        name: wezterm
+        state: present
+        update_cache: true
+      become: true
+
+    - name: Clean up temporary GPG key
+      ansible.builtin.file:
+        path: /tmp/wezterm.gpg
+        state: absent
+      become: true
+      when: gpg_download.changed

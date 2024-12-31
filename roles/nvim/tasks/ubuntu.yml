@@ -1,17 +1,17 @@
 ---
 - name: Check NeoVim version
-  shell: nvim --version | head -n 1 | cut -d ' ' -f 2
+  ansible.builtin.shell: nvim --version | head -n 1 | cut -d ' ' -f 2
   register: nvim_exists
+  ignore_errors: true
   changed_when: false
   failed_when: false
-  ignore_errors: true
 
-- name: Install NeoVim if not installed
-  when: nvim_exists is failed or nvim_exists.stdout != neovim_version
+- name: Install NeoVim
+  when: nvim_exists.rc != 0 or nvim_exists.stdout != neovim_version
   block:
-    - name: Install nvim build dependencies in Ubuntu
+    - name: Install nvim build dependencies
       become: true
-      apt:
+      ansible.builtin.apt:
         name:
           - ninja-build
           - gettext
@@ -34,16 +34,18 @@
       changed_when: false
 
     - name: Get VIMRUNTIME path
-      shell: nvim --headless -c 'echo $VIMRUNTIME' -c quit
+      ansible.builtin.shell: nvim --headless -c 'echo $VIMRUNTIME' -c quit
       register: nvim_vimruntime
       changed_when: false
+      failed_when: false
+      ignore_errors: true
 
     - name: Check if previous build exist
-      stat: 
+      ansible.builtin.stat: 
         path: dependencies/neovim/build
       register: nvim_build
 
-    - name: Build nvim release version in Linux
+    - name: Build nvim release version
       community.general.make:
         chdir: dependencies/neovim
         params:
@@ -60,12 +62,12 @@
 
     - name: Delete previous installation VIMRUNTIME path
       become: true
-      file:
+      ansible.builtin.file:
         path: "{{ nvim_vimruntime.stderr }}"
         state: absent
       when: nvim_runtime is defined
 
-    - name: Install nvim release version in Linux
+    - name: Install nvim release version
       become: true
       community.general.make:
         chdir: dependencies/neovim
@@ -73,13 +75,13 @@
       register: nvim_install
       changed_when: nvim_install.changed
 
-    - name: Install dependencies for nvim plugins
-      become: true
-      ansible.builtin.apt:
-        name:
-          - imagemagick
-          - libmagickwand-dev
-          - luarocks
-          - python3-venv
-        update_cache: yes
-        state: present
+- name: Install dependencies for nvim plugins
+  become: true
+  ansible.builtin.apt:
+    name:
+      - imagemagick
+      - libmagickwand-dev
+      - luarocks
+      - python3-venv
+    update_cache: true
+    state: present
