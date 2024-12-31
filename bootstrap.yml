@@ -40,8 +40,13 @@
       tags: nerd-fonts
       import_role:
         name: nerd-fonts
-     
+
     - name: i3
       tags: i3
       import_role:
         name: i3
+
+    - name: WezTerm
+      tags: wezterm
+      import_role:
+        name: wezterm
