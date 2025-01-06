@@ -32,6 +32,9 @@
 - name: Install fzf
   ansible.builtin.import_tasks: fzf.yml
 
+- name: Install lazygit
+  ansible.builtin.import_tasks: lazygit.yml
+
 - name: Install lsd
   ansible.builtin.import_tasks: lsd.yml
 

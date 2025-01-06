@@ -6,8 +6,8 @@
   changed_when: false
   failed_when: false
 
-- name: Install btop
-  when: btop_exists.rc != 0
+- name: Install btop in Ubuntu
+  when: btop_exists.rc != 0 and ansible_distribution == "Ubuntu"
   block:
     - name: Download and extract binary
       ansible.builtin.unarchive:

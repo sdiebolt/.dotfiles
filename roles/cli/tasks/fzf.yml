@@ -1,6 +1,7 @@
 ---
-- name: Install fzf
+- name: Install fzf in Ubuntu
   ansible.builtin.command:
     chdir: "{{ ansible_env.HOME }}/.fzf"
     cmd: ./install --bin
     creates: "{{ ansible_env.HOME }}/.fzf/bin/fzf"
+  when: ansible_distribution == "Ubuntu"

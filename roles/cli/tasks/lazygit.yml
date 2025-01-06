@@ -1,0 +1,10 @@
+---
+- name: Install lazygit in Ubuntu
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz
+    include: lazygit
+    dest: /usr/local/bin
+    creates: /usr/local/bin/lazygit
+    remote_src: true
+  when: ansible_distribution == "Ubuntu"

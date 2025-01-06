@@ -5,5 +5,6 @@ zoxide_version: 0.9.6
 fd_version: 10.2.0
 ripgrep_version: 14.1.1
 btop_version: 1.4.0
+lazygit_version: 0.44.1
 lsd_version: 1.1.5
 cargo_path: "{{ ansible_env.HOME }}/.cargo/bin/cargo"

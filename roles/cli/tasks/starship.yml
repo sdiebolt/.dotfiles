@@ -6,7 +6,7 @@
   changed_when: false
   failed_when: false
 
-- name: Install Starship
+- name: Install Starship in Ubuntu
   when: ansible_distribution == "Ubuntu" and starship_exists.rc != 0
   block:
     - name: Install Starship
