@@ -62,7 +62,7 @@ return {
             },
 
             {
-                "<leader>a",
+                "<leader>ha",
                 function()
                     harpoon:list():add()
                 end,
