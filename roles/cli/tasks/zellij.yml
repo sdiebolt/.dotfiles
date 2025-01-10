@@ -1,0 +1,7 @@
+---
+- name: Install Zellij in Ubuntu
+  community.general.cargo:
+    name: zellij
+    version: "{{ zellij_version }}"
+    executable: "{{ cargo_path }}"
+  when: ansible_distribution == "Ubuntu"

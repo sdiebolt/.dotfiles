@@ -44,6 +44,9 @@
 - name: Install Starship
   ansible.builtin.import_tasks: starship.yml
 
+- name: Instal Zellij
+  ansible.builtin.import_tasks: zellij.yml
+
 - name: Install zoxide
   ansible.builtin.import_tasks: zoxide.yml
 
