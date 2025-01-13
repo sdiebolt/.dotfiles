@@ -22,10 +22,11 @@
     filename: sur5r-i3
     state: present
 
-- name: Install i3 and i3status
+- name: Install i3, i3status, and rofi
   become: true
   ansible.builtin.apt:
     name: 
       - i3
       - i3status
+      - rofi
     update_cache: true
