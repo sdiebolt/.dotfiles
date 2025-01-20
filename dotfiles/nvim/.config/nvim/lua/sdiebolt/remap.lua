@@ -44,8 +44,5 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>rs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     { desc = "Replace interactively" })
 
--- Diagnostic hover window.
-vim.keymap.set("n", "<leader>dh", "<Cmd>lua vim.diagnostic.open_float()<CR>")
-
 -- Save file.
 vim.keymap.set("n", "<leader>w", ":w<CR>")

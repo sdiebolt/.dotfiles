@@ -9,7 +9,12 @@ return {
         {
             "<leader>tt",
             "<cmd>Trouble diagnostics toggle<cr>",
-            desc = "Trouble: Diagnostics",
+            desc = "Trouble: Diagnostics Window",
+        },
+        {
+            "<leader>th",
+            "<Cmd>lua vim.diagnostic.open_float()<CR>",
+            desc = "Trouble: Diagnostics Hover",
         },
         {
             "<leader>tT",
