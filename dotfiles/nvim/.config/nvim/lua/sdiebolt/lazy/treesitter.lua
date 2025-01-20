@@ -20,6 +20,7 @@ return {
             "markdown",
             "typst",
             "latex",
+            "just",
         },
         sync_install = false,
         auto_install = true,
