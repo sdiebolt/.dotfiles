@@ -18,6 +18,10 @@ return {
     },
 
     config = function()
+        -- Disable LSP logging, as the LSP log file will otherwise grow indefinitely.
+        -- To enable logging, set the log level to "debug" when debugging LSP issues.
+        vim.lsp.set_log_level("off")
+
         local lsp_zero = require("lsp-zero")
 
         local lsp_attach = function(client, bufnr)
