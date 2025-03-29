@@ -9,6 +9,15 @@
 - name: Install NeoVim
   when: nvim_exists.rc != 0 or nvim_exists.stdout != neovim_version
   block:
+    - name: Uninstall previous installation of nvim
+      become: true
+      ansible.builtin.file:
+        path: '{{ item }}'
+        state: absent
+      with_items:
+        - /usr/local/bin/nvim
+        - /usr/local/share/nvim
+
     - name: Install nvim build dependencies
       become: true
       ansible.builtin.apt:
@@ -33,17 +42,17 @@
         cmd: git clean -fdx
       changed_when: false
 
-    - name: Get VIMRUNTIME path
-      ansible.builtin.shell: nvim --headless -c 'echo $VIMRUNTIME' -c quit
-      register: nvim_vimruntime
+    - name: Pull latest changes
+      ansible.builtin.command:
+        chdir: dependencies/neovim
+        cmd: git fetch
       changed_when: false
-      failed_when: false
-      ignore_errors: true
 
-    - name: Check if previous build exist
-      ansible.builtin.stat: 
-        path: dependencies/neovim/build
-      register: nvim_build
+    - name: Checkout specific version
+      ansible.builtin.command:
+        chdir: dependencies/neovim
+        cmd: git checkout {{ neovim_version }}
+      changed_when: false
 
     - name: Build nvim release version
       community.general.make:
@@ -52,20 +61,6 @@
           CMAKE_BUILD_TYPE: Release
       register: nvim_build_result
       changed_when: nvim_build_result.changed
-
-    - name: Uninstall previous installation of nvim
-      become: true
-      ansible.builtin.command:
-        chdir: dependencies/neovim
-        cmd: cmake --build build/ --target uninstall
-      when: nvim_build.stat.exists
-
-    - name: Delete previous installation VIMRUNTIME path
-      become: true
-      ansible.builtin.file:
-        path: "{{ nvim_vimruntime.stderr }}"
-        state: absent
-      when: nvim_runtime is defined
 
     - name: Install nvim release version
       become: true
