@@ -5,5 +5,7 @@ return {
 
     version = "1.*",
 
-    opts = {}
+    opts = {
+        invert_colors = "auto",
+    }
 }

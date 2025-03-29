@@ -5,7 +5,7 @@ return {
 
     version = "*",
 
-    config = {
+    opts = {
         mappings = {
             add = "<leader>sa",       -- Add surroundng in Normal and Visual modes
             delete = "<leader>sd",    -- Delete surrounding
