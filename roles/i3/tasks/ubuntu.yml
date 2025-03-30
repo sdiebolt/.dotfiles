@@ -18,7 +18,7 @@
 - name: Add i3 repository
   become: true
   ansible.builtin.apt_repository:
-    repo: "deb http://debian.sur5r.net/i3/ {{ ubuntu_codename.stdout }} universe"
+    repo: "deb [signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ {{ ubuntu_codename.stdout }} universe"
     filename: sur5r-i3
     state: present
 
