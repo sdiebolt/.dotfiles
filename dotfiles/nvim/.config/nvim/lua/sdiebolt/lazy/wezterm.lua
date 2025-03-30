@@ -1,5 +1,5 @@
 return {
-    'willothy/wezterm.nvim',
+    "willothy/wezterm.nvim",
 
     config = true
 }

@@ -20,14 +20,10 @@ return {
             require("dap-python").setup(os.getenv("VIRTUALENVS") .. "/debugpy/bin/python")
 
             -- Signs
-            for _, group in pairs({
-                "DapBreakpoint",
-                "DapBreakpointCondition",
-                "DapBreakpointRejected",
-                "DapLogPoint",
-            }) do
-                vim.fn.sign_define(group, { text = "●", texthl = group })
-            end
+            local sign = vim.fn.sign_define
+            sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+            sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
+            sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
 
             -- nvim-dap-ui
             require("dapui").setup()
