@@ -1,13 +1,13 @@
 ---
-- name: Check if btop is installed
-  ansible.builtin.shell: command -v btop
+- name: Check btop version
+  ansible.builtin.shell: btop --version | head -n 1 | cut -d ' ' -f 3
   register: btop_exists
   ignore_errors: true
   changed_when: false
   failed_when: false
 
 - name: Install btop in Ubuntu
-  when: btop_exists.rc != 0 and ansible_distribution == "Ubuntu"
+  when: (btop_exists.rc != 0 or btop_exists.stdout != btop_version) and ansible_distribution == "Ubuntu"
   block:
     - name: Download and extract binary
       ansible.builtin.unarchive:

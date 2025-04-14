@@ -1,2 +1,5 @@
 # Secret environment variables.
 secrets.zsh
+
+# btop logs
+btop.log
