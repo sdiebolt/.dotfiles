@@ -12,7 +12,7 @@ vim.lsp.enable({
 
 -- Disable LSP logging, as the LSP log file will otherwise grow indefinitely.
 -- To enable logging, set the log level to "debug" when debugging LSP issues.
-vim.lsp.set_log_level("off")
+-- vim.lsp.set_log_level("off")
 
 -- Add border to the diagnostic popup window
 local border = "single"
@@ -29,6 +29,12 @@ vim.diagnostic.config({
 -- Set up format on save and inlay hints for LSP clients that support it.
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
+        local opts = { buffer = args.buf }
+        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client == nil then
             return
