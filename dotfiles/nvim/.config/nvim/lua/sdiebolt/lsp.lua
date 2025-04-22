@@ -8,6 +8,8 @@ vim.lsp.enable({
     "rust_analyzer",
     -- typst
     "tinymist",
+    -- harper
+    "harper_ls",
 })
 
 -- Disable LSP logging, as the LSP log file will otherwise grow indefinitely.
@@ -29,11 +31,29 @@ vim.diagnostic.config({
 -- Set up format on save and inlay hints for LSP clients that support it.
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
-        local opts = { buffer = args.buf }
-        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+        local lsp = vim.lsp.buf
+        local bufnr = args.buf
+
+        local map = function(mode, lhs, rhs, opts)
+            if opts.buffer == nil then
+                opts.buffer = bufnr
+            end
+            vim.keymap.set(mode, lhs, rhs, opts)
+        end
+
+        map("n", "gd", function() lsp.definition() end, { desc = "LSP: [g]o to [d]efinition" })
+        map("n", "gD", function() lsp.declaration() end, { desc = "LSP: [g]o to [D]eclaration" })
+        map("n", "gi", function() lsp.implementation() end, { desc = "LSP: [g]o to [i]mplementation" })
+        map("n", "gr", function() lsp.references() end, { desc = "LSP: [g]o to [r]eferences" })
+        map("n", "gs", function() lsp.signature_help() end, { desc = "LSP: [g]et [s]ignature help" })
+        map("n", "gt", function() lsp.type_definition() end, { desc = "LSP: [g]o to [t]ype definition" })
+        map("n", "K", function() lsp.hover() end, { desc = "LSP: [K]eyword hover" })
+
+        map("n", "<leader>la", function() lsp.code_action() end, { desc = "LSP: [l]sp [a]ction" })
+        map("n", "<leader>lf", function() lsp.format({ async = true }) end, { desc = "LSP: [l]sp [f]ormat" })
+        map("n", "<leader>li",
+            function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr }) end,
+            { desc = "LSP: [l]sp [i]nlay hint" })
 
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client == nil then
@@ -88,6 +108,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     end
                 )
             end, {})
+
+            map("n", "<leader>lp", "<cmd>TypstPin<CR>", { desc = "LSP: [l]sp [p]in main Typst file" })
+            map("n", "<leader>ltp", "<cmd>TypstPreview<CR>", { desc = "LSP: [l]sp [t]ypst [p]review" })
         end
     end,
 })

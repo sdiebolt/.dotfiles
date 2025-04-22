@@ -31,9 +31,6 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 -- Avoid repetitions.
 vim.keymap.set("n", "Q", "<nop>")
 
--- Format.
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-
 -- Move faster in quickfix.
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
