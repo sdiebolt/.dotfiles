@@ -10,6 +10,7 @@
   when: cargo_exists.rc != 0
   block:
     - name: Ensure curl is installed
+      become: true
       ansible.builtin.apt:
         name: curl
         state: present
