@@ -1,27 +1,49 @@
 ---
-- name: Download i3 keyring
-  ansible.builtin.get_url:
-    url: https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb
-    dest: /tmp/sur5r-keyring.deb
-    checksum: sha256:2c2601e6053d5c68c2c60bcd088fa9797acec5f285151d46de9c830aaba6173c
-
-- name: Install keyring
-  become: true
-  ansible.builtin.apt:
-    deb: /tmp/sur5r-keyring.deb
-
-- name: Get Ubuntu codename
-  ansible.builtin.shell: grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=
-  register: ubuntu_codename
+- name: Check Ubuntu version
+  ansible.builtin.shell: lsb_release -rs
+  register: ubuntu_version
   changed_when: false
 
-- name: Add i3 repository
+
+- name: Set installation method
+  ansible.builtin.set_fact:
+    use_ppa: "{{ ubuntu_version.stdout is version('25.04', '<') }}"
+
+# PPA installation steps (for Ubuntu versions before 25.04)
+- block:
+    - name: Download i3 keyring
+      ansible.builtin.get_url:
+        url: https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb
+        dest: /tmp/sur5r-keyring.deb
+        checksum: sha256:2c2601e6053d5c68c2c60bcd088fa9797acec5f285151d46de9c830aaba6173c
+
+    - name: Install keyring
+      become: true
+      ansible.builtin.apt:
+        deb: /tmp/sur5r-keyring.deb
+
+    - name: Get Ubuntu codename
+      ansible.builtin.shell: grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=
+      register: ubuntu_codename
+      changed_when: false
+
+    - name: Add i3 repository
+      become: true
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ {{ ubuntu_codename.stdout }} universe"
+        filename: sur5r-i3
+        state: present
+  when: use_ppa | bool
+
+# Standard apt installation (for Ubuntu 25.04 and later)
+- name: Ensure universe repository is enabled
   become: true
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ {{ ubuntu_codename.stdout }} universe"
-    filename: sur5r-i3
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
     state: present
+  when: not use_ppa | bool
 
+# Install i3 packages using apt (works for both methods)
 - name: Install i3, i3status, and rofi
   become: true
   ansible.builtin.apt:

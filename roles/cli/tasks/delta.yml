@@ -1,6 +1,13 @@
 ---
+- name: Check if delta is installed
+  ansible.builtin.shell: command -v delta
+  register: delta_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
 - name: Install delta in Ubuntu
   become: true
   ansible.builtin.apt:
     deb: "https://github.com/dandavison/delta/releases/download/{{ git_delta_version }}/git-delta_{{ git_delta_version }}_amd64.deb"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and delta_exists.rc != 0
