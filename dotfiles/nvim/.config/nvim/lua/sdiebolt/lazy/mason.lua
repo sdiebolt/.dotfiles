@@ -1,19 +1,9 @@
 return {
-    "WhoIsSethDaniel/mason-lspconfig.nvim",
+    "williamboman/mason.nvim",
 
-    dependencies = { "williamboman/mason.nvim" },
+    tag = "stable",
 
-    config = function()
-        require("mason").setup({})
-        require("mason-lspconfig").setup({
-            ensure_installed = {
-                "rust_analyzer",
-                "basedpyright",
-                "lua_ls",
-                "ruff",
-                "tinymist",
-                "harper_ls",
-            },
-        })
-    end,
+    lazy = false,
+
+    config = true,
 }

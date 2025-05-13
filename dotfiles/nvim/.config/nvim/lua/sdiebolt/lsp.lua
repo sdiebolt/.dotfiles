@@ -1,15 +1,21 @@
 vim.lsp.enable({
     -- lua
-    "luals",
+    "lua",
     -- python
     "pyright",
     "ruff",
     -- rust
-    "rust_analyzer",
+    "rust",
     -- typst
-    "tinymist",
+    "typst",
     -- harper
-    "harper_ls",
+    "harper",
+    -- bash
+    "bash",
+    -- ansible
+    "ansible",
+    -- yaml
+    "yaml",
 })
 
 -- Disable LSP logging, as the LSP log file will otherwise grow indefinitely.
