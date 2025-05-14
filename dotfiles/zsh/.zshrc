@@ -34,4 +34,8 @@ zle -N down-line-or-beginning-search
 bindkey "$terminfo[kcuu1]" up-line-or-beginning-search # Up
 bindkey "$terminfo[kcud1]" down-line-or-beginning-search # Down
 
+# Setup rustup shell
 . "$HOME/.cargo/env"
+
+# Zellij completions
+. <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
