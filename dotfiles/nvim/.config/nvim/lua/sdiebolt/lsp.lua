@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end
 
-        if client.name == "rust_analyzer" then
+        if client.name == "rust" then
             vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
         end
 
@@ -95,7 +95,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end
 
-        if client.name == "tinymist" then
+        if client.name == "typst" then
             -- Command to pin main file in multi-file Typst projects.
             vim.api.nvim_create_user_command("TypstPin", function()
                 client:exec_cmd(
@@ -115,8 +115,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 )
             end, {})
 
-            map("n", "<leader>lp", "<cmd>TypstPin<CR>", { desc = "LSP: [l]sp [p]in main Typst file" })
-            map("n", "<leader>ltp", "<cmd>TypstPreview<CR>", { desc = "LSP: [l]sp [t]ypst [p]review" })
+            map("n", "<leader>Tp", "<cmd>TypstPreview<CR>", { desc = "[T]ypst: [p]review" })
+            map("n", "<leader>TP", "<cmd>TypstPin<CR>", { desc = "[T]ypst: [P]in main file" })
         end
     end,
 })
