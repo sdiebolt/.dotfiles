@@ -1,0 +1,8 @@
+---
+- name: Install prettyping in Ubuntu
+  become: true
+  ansible.builtin.apt:
+    name:
+      - prettyping
+    state: present
+  when: ansible_distribution == "Ubuntu"
