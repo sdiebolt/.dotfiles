@@ -38,9 +38,7 @@
 # Standard apt installation (for Ubuntu 25.04 and later)
 - name: Ensure universe repository is enabled
   become: true
-  ansible.builtin.apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
-    state: present
+  raw: apt-add-repository -y universe 
   when: not use_ppa | bool
 
 # Install i3 packages using apt (works for both methods)
