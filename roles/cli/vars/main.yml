@@ -9,4 +9,5 @@ lazygit_version: 0.44.1
 lsd_version: 1.1.5
 zellij_version: 0.41.2
 tlrc_version: 1.11.1
+just_version: 1.40.0
 cargo_path: "{{ ansible_env.HOME }}/.cargo/bin/cargo"

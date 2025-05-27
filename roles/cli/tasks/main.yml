@@ -32,11 +32,17 @@
 - name: Install fzf
   ansible.builtin.import_tasks: fzf.yml
 
+- name: Install just
+  ansible.builtin.import_tasks: just.yml
+
 - name: Install lazygit
   ansible.builtin.import_tasks: lazygit.yml
 
 - name: Install lsd
   ansible.builtin.import_tasks: lsd.yml
+
+- name: Install prettyping
+  ansible.builtin.import_tasks: prettyping.yml
 
 - name: Install ripgrep
   ansible.builtin.import_tasks: ripgrep.yml
@@ -45,6 +51,12 @@
   ansible.builtin.import_tasks: starship.yml
 
 - name: Instal Zellij
+  ansible.builtin.import_tasks: zellij.yml
+
+- name: Install tldr
+  ansible.builtin.import_tasks: tldr.yml
+
+- name: Install zellij
   ansible.builtin.import_tasks: zellij.yml
 
 - name: Install zoxide
