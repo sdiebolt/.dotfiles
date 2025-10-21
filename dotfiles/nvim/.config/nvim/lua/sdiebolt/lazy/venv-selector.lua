@@ -13,7 +13,7 @@ return {
 
     lazy = false,
 
-    branch = "regexp",
+    branch = "main",
 
     keys = {
         { "<leader>vv", "<cmd>VenvSelect<cr>" },
