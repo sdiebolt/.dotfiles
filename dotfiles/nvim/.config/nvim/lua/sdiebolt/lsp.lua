@@ -2,7 +2,7 @@ vim.lsp.enable({
     -- lua
     "lua",
     -- python
-    "pyright",
+    "ty",
     "ruff",
     -- rust
     "rust",
@@ -77,22 +77,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         if client.name == "rust" then
             vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
-        end
-
-        if client.name == "ruff" then
-            -- Disable hover in favor of Pyright
-            client.server_capabilities.hoverProvider = false
-
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = args.buf,
-                callback = function()
-                    vim.lsp.buf.code_action({
-                        context = { only = { "source.organizeImports.ruff" } },
-                        apply = true,
-                    })
-                    vim.wait(100)
-                end,
-            })
         end
 
         if client.name == "typst" then
