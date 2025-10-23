@@ -1,1 +1,3 @@
-theme = Catppuccin Macchiato
+theme = catppuccin-mocha.conf
+
+window-decoration = none
