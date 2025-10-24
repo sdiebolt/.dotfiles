@@ -33,4 +33,4 @@
         name: i3
 
     - ansible.builtin.import_role:
-        name: wezterm
+        name: ghostty
