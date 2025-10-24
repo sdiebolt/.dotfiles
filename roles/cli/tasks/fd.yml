@@ -1,7 +1,6 @@
 ---
-- name: Install fd in Ubuntu
+- name: Install fd
   community.general.cargo:
     name: fd-find
     version: "{{ fd_version }}"
     executable: "{{ cargo_path }}"
-  when: ansible_distribution == "Ubuntu"

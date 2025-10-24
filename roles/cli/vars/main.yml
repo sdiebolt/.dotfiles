@@ -1,13 +1,14 @@
 ---
 git_delta_version: 0.18.2
-bat_version: 0.24.0
-zoxide_version: 0.9.6
-fd_version: 10.2.0
-ripgrep_version: 14.1.1
-btop_version: 1.4.0
-lazygit_version: 0.44.1
+bat_version: 0.26.0
+zoxide_version: 0.9.8
+fd_version: 10.3.0
+ripgrep_version: 15.1.0
+btop_version: 1.4.5
+lazygit_version: 0.55.1
 lsd_version: 1.1.5
-zellij_version: 0.41.2
-tlrc_version: 1.11.1
-just_version: 1.40.0
+zellij_version: 0.43.1
+tlrc_version: 1.12.0
+just_version: 1.43.0
+sheldon_version: 0.8.5
 cargo_path: "{{ ansible_env.HOME }}/.cargo/bin/cargo"

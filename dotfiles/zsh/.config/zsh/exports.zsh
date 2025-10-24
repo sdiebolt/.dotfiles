@@ -1,3 +1,4 @@
+export ZSHRC="$HOME/.zshrc"
 export EDITOR="nvim"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -9,7 +10,7 @@ export TERMINAL="wezterm"
 export TERM=xterm-256color
 
 # Fix pip SSL cert validation.
-export NODE_TLS_REJECT_UNAUTHORIZED='0'
+export NODE_TLS_REJECT_UNAUTHORIZED=1
 
 # Starship prompt
 eval "$(starship init zsh)"
@@ -32,5 +33,17 @@ export VIRTUALENVS="$HOME/.virtualenvs"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# opencode
+export PATH=/home/sdiebolt/.opencode/bin:$PATH
+
+# Setup rustup shell
+. "$HOME/.cargo/env"
+
+# Zellij completions
+. <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
+
+# Sheldon completions
+. <( sheldon completions --shell zsh )

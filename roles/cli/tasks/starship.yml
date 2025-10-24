@@ -6,8 +6,8 @@
   changed_when: false
   failed_when: false
 
-- name: Install Starship in Ubuntu
-  when: ansible_distribution == "Ubuntu" and starship_exists.rc != 0
+- name: Install Starship
+  when: starship_exists.rc != 0
   block:
     - name: Install Starship
       ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
