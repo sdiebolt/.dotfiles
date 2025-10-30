@@ -13,7 +13,7 @@ return {
                         command = { "zsh" },
                     },
                     python = {
-                        command = { "ipython", "--no-autoindent" },
+                        command = { "uv", "run", "ipython", "--no-autoindent" },
                         format = require("iron.fts.common").bracketed_paste_python,
                     },
                 },
@@ -42,6 +42,7 @@ return {
             ignore_blank_lines = true,
         }
     end,
+
     keys = {
         { "<leader>ir", "<cmd>IronRepl<cr>",    desc = "Iron: open REPL" },
         { "<leader>iR", "<cmd>IronRestart<cr>", desc = "Iron: restart REPL" },
