@@ -7,7 +7,10 @@ return {
 
     settings = {
         ty = {
-            diagnosticMode = "workspace"
+            diagnosticMode = "workspace",
+            experimental = {
+                rename = true,
+            },
         }
     }
 }
