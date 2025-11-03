@@ -1,5 +1,8 @@
 vim.g.mapleader = " "
 
+-- Exit terminal mode
+vim.keymap.set("t", "<leader><ESC>", "<C-\\><C-n>")
+
 -- Move lines up and down in visual mode.
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
