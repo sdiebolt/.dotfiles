@@ -10,7 +10,7 @@
   when: ghostty_exists.rc != 0
   block:
     - name: Install Ghostty
-      ansible.builtin.shell: /bin/bash - c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+      ansible.builtin.shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 
 - name: Set Ghostty as default terminal
   become: true
