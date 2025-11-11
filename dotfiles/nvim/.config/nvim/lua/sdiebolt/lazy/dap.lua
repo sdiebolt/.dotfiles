@@ -5,7 +5,8 @@ return {
         dependencies = {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
-            "mfussenegger/nvim-dap-python"
+            "mfussenegger/nvim-dap-python",
+            "theHamsta/nvim-dap-virtual-text",
         },
 
         keys = {
@@ -17,7 +18,19 @@ return {
         },
 
         config = function()
-            require("dap-python").setup(os.getenv("VIRTUALENVS") .. "/debugpy/bin/python")
+            require("nvim-dap-virtual-text").setup()
+            require("dap-python").setup("uv")
+
+            -- Adding justMyCode=false to the first configuration doesn't seem to work,
+            -- so we add a new configuration instead.
+            table.insert(require("dap").configurations.python, {
+                type = "python",
+                request = "launch",
+                name = "file with justMyCode=false",
+                program = "${file}",
+                console = "integratedTerminal",
+                justMyCode = false
+            })
 
             -- Signs
             local sign = vim.fn.sign_define
