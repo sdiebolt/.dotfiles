@@ -21,9 +21,6 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- Paste without replacing the register.
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- Delete without replacing the register.
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-
 -- Yank to clipboard.
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
@@ -41,5 +38,8 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>rs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     { desc = "Replace interactively" })
 
--- Save file.
+-- Save buffer.
 vim.keymap.set("n", "<leader>w", ":w<CR>")
+
+-- Quit window.
+vim.keymap.set("n", "<leader>q", ":q<CR>")
