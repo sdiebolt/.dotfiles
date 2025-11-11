@@ -2,4 +2,5 @@ theme = catppuccin-mocha.conf
 
 window-decoration = none
 
+font-family = "Monaspace Neon Var"
 font-size = 11
