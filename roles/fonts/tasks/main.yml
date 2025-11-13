@@ -1,0 +1,36 @@
+---
+- name: Check if Monaspace fonts are installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
+  register: monaspace_exists
+
+- name: Install Monaspace fonts
+  when: not monaspace_exists.stat.exists
+  block:
+    - name: Clone Monaspace repository
+      ansible.builtin.git:
+        repo: https://github.com/githubnext/monaspace.git
+        dest: /tmp/monaspace
+        version: main
+        depth: 1
+
+    - name: Create fonts directory
+      ansible.builtin.file:
+        path: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
+        state: directory
+        mode: 0755
+
+    - name: Copy fonts to local fonts directory
+      ansible.builtin.copy:
+        src: /tmp/monaspace/fonts/
+        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace/"
+        mode: 0644
+
+    - name: Rebuild font cache
+      ansible.builtin.command: fc-cache -f -v
+      changed_when: true
+
+    - name: Clean up temporary files
+      ansible.builtin.file:
+        path: /tmp/monaspace
+        state: absent

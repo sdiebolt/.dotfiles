@@ -1,0 +1,13 @@
+---
+- name: Check if OpenCode is installed
+  ansible.builtin.shell: command -v opencode
+  register: opencode_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install OpenCode
+  when: opencode_exists.rc != 0
+  block:
+    - name: Download and install OpenCode
+      ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
