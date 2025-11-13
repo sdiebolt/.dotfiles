@@ -5,7 +5,6 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.local/share/zap":$PATH
-export PATH="$HOME/.cargo/bin":$PATH
 export TERM=xterm-256color
 
 # Fix pip SSL cert validation.
