@@ -1,5 +1,5 @@
 ---
-- name: Bootstrap development environment
+- name: Install personal development machine
   hosts: localhost
   tasks:
     - name: Update all submodules
@@ -44,3 +44,6 @@
 
     - ansible.builtin.import_role:
         name: ghostty
+
+    - ansible.builtin.import_role:
+        name: ufw

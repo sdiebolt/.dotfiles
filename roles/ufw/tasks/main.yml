@@ -1,0 +1,85 @@
+---
+- name: Include distribution-specific tasks
+  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] | lower }}.yml"
+
+- name: Copy missing after.rules if needed
+  become: true
+  ansible.builtin.copy:
+    src: /usr/share/ufw/iptables/after.rules
+    dest: /etc/ufw/after.rules
+    remote_src: true
+    mode: '0644'
+    force: false
+
+- name: Initialize UFW if not configured
+  become: true
+  ansible.builtin.command: ufw --force enable
+  args:
+    creates: /etc/ufw/ufw.conf
+  failed_when: false
+
+- name: Set UFW default policy (deny incoming)
+  become: true
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+
+- name: Set UFW default policy (allow outgoing)
+  become: true
+  community.general.ufw:
+    direction: outgoing
+    policy: allow
+
+- name: Allow LocalSend UDP port
+  become: true
+  community.general.ufw:
+    rule: allow
+    port: '53317'
+    proto: udp
+
+- name: Allow LocalSend TCP port
+  become: true
+  community.general.ufw:
+    rule: allow
+    port: '53317'
+    proto: tcp
+
+- name: Allow Docker containers to use DNS on host
+  become: true
+  community.general.ufw:
+    rule: allow
+    direction: in
+    proto: udp
+    from_ip: 172.16.0.0/12
+    to_ip: 172.17.0.1
+    to_port: '53'
+    comment: allow-docker-dns
+
+- name: Enable UFW
+  become: true
+  community.general.ufw:
+    state: enabled
+
+- name: Enable UFW systemd service
+  become: true
+  ansible.builtin.systemd:
+    name: ufw
+    enabled: true
+    state: started
+
+- name: Check if Docker is installed
+  ansible.builtin.command: which docker
+  register: docker_check
+  failed_when: false
+  changed_when: false
+
+- name: Install ufw-docker protections
+  become: true
+  ansible.builtin.command: ufw-docker install
+  when: docker_check.rc == 0
+  changed_when: true
+
+- name: Reload UFW
+  become: true
+  community.general.ufw:
+    state: reloaded
