@@ -1,7 +1,15 @@
 ---
-- name: Install tlrc
+- name: Install tlrc in Ubuntu
   community.general.cargo:
     name: tlrc
     locked: true
     version: "{{ tlrc_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install tlrc in Arch Linux
+  become: true
+  community.general.pacman:
+    name: tlrc
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

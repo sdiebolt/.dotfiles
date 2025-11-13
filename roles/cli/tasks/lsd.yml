@@ -1,6 +1,14 @@
 ---
-- name: Install lsd
+- name: Install lsd in Ubuntu
   community.general.cargo:
     name: lsd
     version: "{{ lsd_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install lsd in Arch Linux
+  become: true
+  community.general.pacman:
+    name: lsd
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

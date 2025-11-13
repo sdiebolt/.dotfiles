@@ -1,6 +1,14 @@
 ---
-- name: Install ripgrep
+- name: Install ripgrep in Ubuntu
   community.general.cargo:
     name: ripgrep
     version: "{{ ripgrep_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install ripgrep in Arch Linux
+  become: true
+  community.general.pacman:
+    name: ripgrep
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

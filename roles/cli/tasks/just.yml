@@ -1,6 +1,14 @@
 ---
-- name: Install just
+- name: Install just in Ubuntu
   community.general.cargo:
     name: just
     version: "{{ just_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install just in Arch Linux
+  become: true
+  community.general.pacman:
+    name: just
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

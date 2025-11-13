@@ -1,6 +1,14 @@
 ---
-- name: Install Zellij
+- name: Install Zellij in Ubuntu
   community.general.cargo:
     name: zellij
     version: "{{ zellij_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install Zellij in Arch Linux
+  become: true
+  community.general.pacman:
+    name: zellij
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

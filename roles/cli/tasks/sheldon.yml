@@ -1,6 +1,14 @@
 ---
-- name: Install sheldon
+- name: Install sheldon in Ubuntu
   community.general.cargo:
     name: sheldon
     version: "{{ sheldon_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install sheldon in Arch Linux
+  become: true
+  community.general.pacman:
+    name: sheldon
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

@@ -1,6 +1,14 @@
 ---
-- name: Install fd
+- name: Install fd in Ubuntu
   community.general.cargo:
     name: fd-find
     version: "{{ fd_version }}"
     executable: "{{ cargo_path }}"
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install fd in Arch Linux
+  become: true
+  community.general.pacman:
+    name: fd
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"

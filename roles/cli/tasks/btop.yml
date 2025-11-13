@@ -7,7 +7,7 @@
   failed_when: false
 
 - name: Install btop in Ubuntu
-  when: (btop_exists.rc != 0 or btop_exists.stdout != btop_version) and ansible_distribution == "Ubuntu"
+  when: (btop_exists.rc != 0 or btop_exists.stdout != btop_version) and ansible_facts["distribution"] == "Ubuntu"
   block:
     - name: Download and extract binary
       ansible.builtin.unarchive:
@@ -20,3 +20,10 @@
         chdir: /tmp/btop
         target: install
       become: true
+
+- name: Install btop in Arch Linux
+  become: true
+  community.general.pacman:
+    name: btop
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux" and (btop_exists.rc != 0 or btop_exists.stdout != btop_version)

@@ -1,5 +1,5 @@
 ---
-- name: Install lazygit
+- name: Install lazygit in Ubuntu
   become: true
   ansible.builtin.unarchive:
     src: https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz
@@ -7,3 +7,11 @@
     dest: /usr/local/bin
     creates: /usr/local/bin/lazygit
     remote_src: true
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install lazygit in Arch Linux
+  become: true
+  community.general.pacman:
+    name: lazygit
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"
