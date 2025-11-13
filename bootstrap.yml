@@ -13,9 +13,9 @@
     - ansible.builtin.import_role:
         name: stow
 
-    # Installing paru before other tools for Arch Linux AUR support.
+    # Installing Arch Linux base system packages (polkit, paru) before other tools.
     - ansible.builtin.import_role:
-        name: paru
+        name: arch-base
 
     # Installing Rust before CLI tools because some CLI tools are installed using Cargo.
     - ansible.builtin.import_role:
@@ -35,6 +35,9 @@
 
     - ansible.builtin.import_role:
         name: fonts
+
+    - ansible.builtin.import_role:
+        name: x11-user
 
     - ansible.builtin.import_role:
         name: i3

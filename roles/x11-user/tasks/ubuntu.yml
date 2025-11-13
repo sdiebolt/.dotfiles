@@ -1,0 +1,8 @@
+---
+- name: Install xinit and x11-xserver-utils
+  become: true
+  ansible.builtin.apt:
+    name: 
+      - xinit
+      - x11-xserver-utils
+    update_cache: true
