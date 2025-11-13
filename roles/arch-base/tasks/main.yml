@@ -11,6 +11,8 @@
           - brightnessctl
           - power-profiles-daemon
           - fastfetch
+          - docker
+          - docker-compose
         state: present
 
     - name: Check if paru is installed

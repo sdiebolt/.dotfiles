@@ -67,16 +67,9 @@
     enabled: true
     state: started
 
-- name: Check if Docker is installed
-  ansible.builtin.command: which docker
-  register: docker_check
-  failed_when: false
-  changed_when: false
-
 - name: Install ufw-docker protections
   become: true
   ansible.builtin.command: ufw-docker install
-  when: docker_check.rc == 0
   changed_when: true
 
 - name: Reload UFW
