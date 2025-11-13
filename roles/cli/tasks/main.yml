@@ -1,7 +1,7 @@
 ---
 - name: Create directory ~/.local/bin/
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
+    path: "{{ ansible_facts.env.HOME }}/.local/bin"
     state: directory
     mode: 0755
 
@@ -12,10 +12,11 @@
       - build-essential
       - curl
       - jq
+      - openssh-client
       - unzip
       - xclip
     state: present
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install CLI tools in Arch Linux
   become: true
@@ -24,10 +25,11 @@
       - base-devel
       - curl
       - jq
+      - openssh
       - unzip
       - xclip
     state: present
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Install bat
   ansible.builtin.import_tasks: bat.yml
@@ -37,6 +39,9 @@
 
 - name: Install delta
   ansible.builtin.import_tasks: delta.yml
+
+- name: Install dust
+  ansible.builtin.import_tasks: dust.yml
 
 - name: Install fd
   ansible.builtin.import_tasks: fd.yml

@@ -1,11 +1,11 @@
 ---
 - name: Install GNU Stow in Ubuntu
   ansible.builtin.import_tasks: ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install GNU Stow in Arch Linux
   ansible.builtin.import_tasks: arch.yml
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Build directories list
   ansible.builtin.find:
@@ -20,7 +20,7 @@
   ansible.builtin.shell: |
     STOW_PATH={{ item.path | replace("dotfiles/", "") }}
     OVERRIDE_TARGET=$(cat ${STOW_PATH}/.override 2>/dev/null)
-    TARGET=${OVERRIDE_TARGET:-{{ ansible_env.HOME }}}
+    TARGET=${OVERRIDE_TARGET:-{{ ansible_facts.env.HOME }}}
     stow -v -t ${TARGET} ${STOW_PATH}
   args:
     chdir: ./dotfiles

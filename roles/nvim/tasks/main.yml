@@ -1,11 +1,11 @@
 ---
 - name: Install nvim in Ubuntu
   ansible.builtin.import_tasks: ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install nvim in Arch Linux
   ansible.builtin.import_tasks: arch.yml
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Generate :help pages
   ansible.builtin.shell: nvim --headless -c 'helptags ALL' -c quit
