@@ -3,9 +3,31 @@
 > [!NOTE]
 > These dotfiles are tested and working on Ubuntu 25.10 and Arch Linux.
 
-## Installing
+## Quick Start
 
-To install all dependencies and deploy my dotfiles, you will need to install Git and Ansible.
+The easiest way to install is using the bootstrap script, which will automatically:
+- Detect your OS (Arch Linux or Ubuntu)
+- Install Git and Ansible if needed
+- Clone this repository
+- Run the Ansible playbook
+
+### One-line install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sdiebolt/.dotfiles/main/bootstrap.sh | bash
+```
+
+### Or clone and run locally
+
+```bash
+git clone https://github.com/sdiebolt/.dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./bootstrap.sh
+```
+
+## Manual Installation
+
+If you prefer to install manually, you can install Git and Ansible yourself and run the playbook directly.
 
 ### On Ubuntu 25.10
 
@@ -22,10 +44,28 @@ sudo pacman -S git ansible
 
 ### Deploy dotfiles
 
-Clone this repository and run the Ansible playbook:
-
 ```bash
 git clone https://github.com/sdiebolt/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-ansible-playbook -K bootstrap.yml
+ansible-playbook -K install.yml
+```
+
+## Advanced Usage
+
+### Run specific roles only
+
+```bash
+./bootstrap.sh --tags nvim
+```
+
+### Skip specific roles
+
+```bash
+./bootstrap.sh --skip-tags submodules
+```
+
+### Get help
+
+```bash
+./bootstrap.sh --help
 ```
