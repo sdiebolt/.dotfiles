@@ -1,0 +1,14 @@
+---
+- name: Install Ghostty in Arch Linux
+  become: true
+  community.general.pacman:
+    name: ghostty
+    state: present
+
+- name: Set Ghostty as default terminal
+  become: true
+  community.general.alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/ghostty
+    link: /usr/bin/x-terminal-emulator
+  failed_when: false

@@ -11,3 +11,10 @@
   ansible.builtin.apt:
     deb: "https://github.com/dandavison/delta/releases/download/{{ git_delta_version }}/git-delta_{{ git_delta_version }}_amd64.deb"
   when: ansible_distribution == "Ubuntu" and delta_exists.rc != 0
+
+- name: Install delta in Arch Linux
+  become: true
+  community.general.pacman:
+    name: git-delta
+    state: present
+  when: ansible_distribution == "Archlinux" and delta_exists.rc != 0

@@ -3,6 +3,10 @@
   ansible.builtin.import_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
+- name: Install GNU Stow in Arch Linux
+  ansible.builtin.import_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
+
 - name: Build directories list
   ansible.builtin.find:
     paths: [dotfiles/]

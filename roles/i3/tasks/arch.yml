@@ -1,0 +1,9 @@
+---
+- name: Install i3, i3status, and rofi
+  become: true
+  community.general.pacman:
+    name: 
+      - i3-wm
+      - i3status
+      - rofi
+    state: present

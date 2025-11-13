@@ -18,3 +18,10 @@
         extra_opts:
           - "zoxide"
 
+- name: Install zoxide in Arch Linux
+  become: true
+  community.general.pacman:
+    name: zoxide
+    state: present
+  when: ansible_distribution == "Archlinux" and zoxide_exists.rc != 0
+

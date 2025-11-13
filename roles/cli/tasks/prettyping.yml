@@ -6,3 +6,10 @@
       - prettyping
     state: present
   when: ansible_distribution == "Ubuntu"
+
+- name: Install prettyping in Arch Linux
+  become: true
+  community.general.pacman:
+    name: prettyping
+    state: present
+  when: ansible_distribution == "Archlinux"

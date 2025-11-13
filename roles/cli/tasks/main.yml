@@ -17,6 +17,18 @@
     state: present
   when: ansible_distribution == "Ubuntu"
 
+- name: Install CLI tools in Arch Linux
+  become: true
+  community.general.pacman:
+    name:
+      - base-devel
+      - curl
+      - jq
+      - unzip
+      - xclip
+    state: present
+  when: ansible_distribution == "Archlinux"
+
 - name: Install bat
   ansible.builtin.import_tasks: bat.yml
 

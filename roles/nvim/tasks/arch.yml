@@ -1,0 +1,15 @@
+---
+- name: Install NeoVim in Arch Linux
+  become: true
+  community.general.pacman:
+    name: neovim
+    state: present
+
+- name: Install dependencies for nvim plugins
+  become: true
+  community.general.pacman:
+    name:
+      - imagemagick
+      - luarocks
+      - python
+    state: present

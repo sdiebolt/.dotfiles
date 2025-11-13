@@ -7,16 +7,24 @@
     state: present
   when: ansible_distribution == "Ubuntu"
 
+- name: Install zsh in Arch Linux
+  become: true
+  community.general.pacman:
+    name:
+      - zsh
+    state: present
+  when: ansible_distribution == "Archlinux"
+
 - name: Change user shell to zsh
   become: true
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /bin/zsh
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux"
 
 - name: Install the Zap plugin manager
   ansible.builtin.shell: 
     cmd: "zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep"
     executable: /bin/zsh
     creates: "{{ ansible_env.HOME }}/.local/share/zap/zap.zsh"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux"

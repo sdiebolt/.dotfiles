@@ -2,3 +2,7 @@
 - name: Install i3 in Ubuntu
   ansible.builtin.import_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
+
+- name: Install i3 in Arch Linux
+  ansible.builtin.import_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
