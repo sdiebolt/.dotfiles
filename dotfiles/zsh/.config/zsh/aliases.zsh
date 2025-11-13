@@ -1,8 +1,8 @@
 # bat
 alias cat="bat --theme "Dracula" --color always"
 
-# ncdu
-alias du="ncdu --color dark -rr -x"
+# dust
+alias du="dust"
 
 # fzf 
 alias pfzf="fzf --preview 'bat -n --color=always {}'"
