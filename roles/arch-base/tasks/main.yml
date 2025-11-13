@@ -7,6 +7,10 @@
       community.general.pacman:
         name:
           - polkit
+          - iwd
+          - brightnessctl
+          - power-profiles-daemon
+          - fastfetch
         state: present
 
     - name: Check if paru is installed
