@@ -67,8 +67,8 @@
 - name: Install Starship
   ansible.builtin.import_tasks: starship.yml
 
-- name: Instal Zellij
-  ansible.builtin.import_tasks: zellij.yml
+- name: Install sheldon
+  ansible.builtin.import_tasks: sheldon.yml
 
 - name: Install tldr
   ansible.builtin.import_tasks: tldr.yml

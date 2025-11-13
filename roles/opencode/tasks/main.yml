@@ -11,3 +11,4 @@
   block:
     - name: Download and install OpenCode
       ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
+      changed_when: true
