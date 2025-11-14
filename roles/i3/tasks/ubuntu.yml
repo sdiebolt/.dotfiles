@@ -3,7 +3,7 @@
   ansible.builtin.shell: lsb_release -rs
   register: ubuntu_version
   changed_when: false
-
+  check_mode: false
 
 - name: Set installation method
   ansible.builtin.set_fact:
@@ -26,6 +26,7 @@
       ansible.builtin.shell: grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=
       register: ubuntu_codename
       changed_when: false
+      check_mode: false
 
     - name: Add i3 repository
       become: true
@@ -33,13 +34,13 @@
         repo: "deb [signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ {{ ubuntu_codename.stdout }} universe"
         filename: sur5r-i3
         state: present
-  when: use_ppa | bool
+  when: use_ppa | bool and not ansible_check_mode
 
 # Standard apt installation (for Ubuntu 25.04 and later)
 - name: Ensure universe repository is enabled
   become: true
   raw: apt-add-repository -y universe 
-  when: not use_ppa | bool
+  when: not use_ppa | bool and not ansible_check_mode
 
 # Install i3 packages using apt (works for both methods)
 - name: Install i3, i3status, and rofi
