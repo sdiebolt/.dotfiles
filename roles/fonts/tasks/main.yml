@@ -7,24 +7,50 @@
 - name: Install Monaspace fonts
   when: not monaspace_exists.stat.exists
   block:
-    - name: Clone Monaspace repository
-      ansible.builtin.git:
-        repo: https://github.com/githubnext/monaspace.git
-        dest: /tmp/monaspace
-        version: main
-        depth: 1
+    - name: Get latest Monaspace release
+      community.general.github_release:
+        user: githubnext
+        repo: monaspace
+        action: latest_release
+      register: monaspace_release
 
-    - name: Create fonts directory
+    - name: Download Monaspace variable fonts
+      ansible.builtin.get_url:
+        url: "https://github.com/githubnext/monaspace/releases/download/{{ monaspace_release.tag }}/monaspace-variable-{{ monaspace_release.tag }}.zip"
+        dest: /tmp/monaspace-variable.zip
+        mode: 0644
+
+    - name: Download Monaspace Nerd Fonts
+      ansible.builtin.get_url:
+        url: "https://github.com/githubnext/monaspace/releases/download/{{ monaspace_release.tag }}/monaspace-nerdfonts-{{ monaspace_release.tag }}.zip"
+        dest: /tmp/monaspace-nerdfonts.zip
+        mode: 0644
+
+    - name: Create fonts base directory
+      ansible.builtin.file:
+        path: "{{ ansible_facts.env.HOME }}/.local/share/fonts"
+        state: directory
+        mode: 0755
+
+    - name: Create Monaspace fonts directory
       ansible.builtin.file:
         path: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
         state: directory
         mode: 0755
 
-    - name: Copy fonts to local fonts directory
-      ansible.builtin.copy:
-        src: /tmp/monaspace/fonts/
-        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace/"
-        mode: 0644
+    - name: Extract variable fonts
+      ansible.builtin.unarchive:
+        src: /tmp/monaspace-variable.zip
+        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
+        remote_src: true
+      when: not ansible_check_mode
+
+    - name: Extract Nerd Fonts
+      ansible.builtin.unarchive:
+        src: /tmp/monaspace-nerdfonts.zip
+        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
+        remote_src: true
+      when: not ansible_check_mode
 
     - name: Rebuild font cache
       ansible.builtin.command: fc-cache -f -v
@@ -32,5 +58,8 @@
 
     - name: Clean up temporary files
       ansible.builtin.file:
-        path: /tmp/monaspace
+        path: "{{ item }}"
         state: absent
+      loop:
+        - /tmp/monaspace-variable.zip
+        - /tmp/monaspace-nerdfonts.zip
