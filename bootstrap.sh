@@ -123,6 +123,32 @@ setup_dotfiles() {
     fi
 }
 
+# List available tags
+list_tags() {
+    local dotfiles_dir="$HOME/.dotfiles"
+    cd "$dotfiles_dir"
+    
+    print_info "Available tags:"
+    echo ""
+    echo "  dotfiles      - Deploy dotfiles using GNU Stow"
+    echo "  arch-system   - Install Arch Linux system packages (polkit, paru, docker)"
+    echo "  rust          - Install Rust toolchain"
+    echo "  cli           - Install CLI tools (fzf, ripgrep, bat, etc.)"
+    echo "  opencode      - Install OpenCode editor"
+    echo "  python        - Install Python and uv"
+    echo "  nvim          - Install Neovim"
+    echo "  fonts         - Install fonts"
+    echo "  x11           - Install X11 utilities"
+    echo "  i3            - Install i3 window manager"
+    echo "  ghostty       - Install Ghostty terminal"
+    echo "  ufw           - Install and configure UFW firewall"
+    echo ""
+    print_info "Example usage:"
+    echo "  $0 --tags nvim              # Install only nvim"
+    echo "  $0 --tags rust,cli          # Install rust and cli tools"
+    echo "  $0 --skip-tags ufw          # Install everything except ufw"
+}
+
 # Run Ansible playbook
 run_playbook() {
     local dotfiles_dir="$HOME/.dotfiles"
@@ -130,14 +156,22 @@ run_playbook() {
     print_info "Running Ansible playbook..."
     cd "$dotfiles_dir"
     
+    # Check if we should list tags
+    if [ "${1:-}" = "--list-tags" ]; then
+        list_tags
+        exit 0
+    fi
+    
     # Check if we should show help
     if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
         print_info "Available options:"
+        echo "  --list-tags       List all available tags"
         echo "  --tags TAGS       Run only tasks with specific tags"
         echo "  --skip-tags TAGS  Skip tasks with specific tags"
         echo "  --check           Run in check mode (dry-run)"
         echo ""
         print_info "Example usage:"
+        echo "  $0 --list-tags        # List all available tags"
         echo "  $0 --tags nvim        # Install only nvim"
         echo "  $0 --check            # See what would change"
         exit 0
