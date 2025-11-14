@@ -1,3 +1,0 @@
-[submodule "dependencies/neovim"]
-	path = dependencies/neovim
-	url = https://github.com/neovim/neovim.git

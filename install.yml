@@ -2,14 +2,6 @@
 - name: Install personal development machine
   hosts: localhost
   tasks:
-    - name: Update all submodules
-      tags:
-        - submodules
-        - nvim
-      ansible.builtin.command:
-        cmd: git submodule update --force --init --recursive --jobs 4
-      changed_when: false
-
     - ansible.builtin.import_role:
         name: stow
 

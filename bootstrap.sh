@@ -130,17 +130,16 @@ run_playbook() {
     print_info "Running Ansible playbook..."
     cd "$dotfiles_dir"
     
-    # Check if we should ask for tags
+    # Check if we should show help
     if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
         print_info "Available options:"
-        echo "  --tags TAGS    Run only tasks with specific tags"
-        echo "  --skip-tags    Skip tasks with specific tags"
+        echo "  --tags TAGS       Run only tasks with specific tags"
+        echo "  --skip-tags TAGS  Skip tasks with specific tags"
+        echo "  --check           Run in check mode (dry-run)"
         echo ""
-        print_info "Available tags in playbook:"
-        echo "  - submodules"
-        echo "  - nvim"
-        echo ""
-        echo "Example: $0 --tags nvim"
+        print_info "Example usage:"
+        echo "  $0 --tags nvim        # Install only nvim"
+        echo "  $0 --check            # See what would change"
         exit 0
     fi
     

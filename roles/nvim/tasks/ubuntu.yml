@@ -1,13 +1,10 @@
 ---
-- name: Get latest stable NeoVim version
-  ansible.builtin.shell: |
-    curl -s https://api.github.com/repos/neovim/neovim/releases | \
-    grep '"tag_name":' | \
-    grep -v 'nightly' | \
-    head -n 1 | \
-    cut -d '"' -f 4
-  register: neovim_latest_version
-  changed_when: false
+- name: Get latest stable NeoVim release
+  community.general.github_release:
+    user: neovim
+    repo: neovim
+    action: latest_release
+  register: neovim_release
 
 - name: Check NeoVim version
   ansible.builtin.shell: nvim --version | head -n 1 | cut -d ' ' -f 2
@@ -15,9 +12,10 @@
   ignore_errors: true
   changed_when: false
   failed_when: false
+  check_mode: false
 
 - name: Install NeoVim
-  when: nvim_exists.rc != 0 or nvim_exists.stdout != neovim_latest_version.stdout
+  when: (nvim_exists.rc != 0 or nvim_exists.stdout != neovim_release.tag) and not ansible_check_mode
   block:
     - name: Uninstall previous installation of nvim
       become: true
@@ -25,60 +23,33 @@
         path: '{{ item }}'
         state: absent
       with_items:
+        - /opt/nvim-linux64
         - /usr/local/bin/nvim
-        - /usr/local/share/nvim
 
-    - name: Install nvim build dependencies
+    - name: Download NeoVim tarball
+      ansible.builtin.get_url:
+        url: "https://github.com/neovim/neovim/releases/download/{{ neovim_release.tag }}/nvim-linux-x86_64.tar.gz"
+        dest: /tmp/nvim-linux-x86_64.tar.gz
+        mode: 0644
+
+    - name: Extract NeoVim tarball
       become: true
-      ansible.builtin.apt:
-        name:
-          - ninja-build
-          - gettext
-          - libtool
-          - libtool-bin
-          - autoconf
-          - automake
-          - cmake
-          - g++
-          - pkg-config
-          - unzip
-          - curl
-          - doxygen
-        state: present
+      ansible.builtin.unarchive:
+        src: /tmp/nvim-linux-x86_64.tar.gz
+        dest: /opt
+        remote_src: true
 
-    - name: Clean git repository
-      ansible.builtin.command:
-        chdir: dependencies/neovim
-        cmd: git clean -fdx
-      changed_when: false
-
-    - name: Pull latest changes
-      ansible.builtin.command:
-        chdir: dependencies/neovim
-        cmd: git fetch
-      changed_when: false
-
-    - name: Checkout latest stable version
-      ansible.builtin.command:
-        chdir: dependencies/neovim
-        cmd: git checkout {{ neovim_latest_version.stdout }}
-      changed_when: false
-
-    - name: Build nvim release version
-      community.general.make:
-        chdir: dependencies/neovim
-        params:
-          CMAKE_BUILD_TYPE: Release
-      register: nvim_build_result
-      changed_when: nvim_build_result.changed
-
-    - name: Install nvim release version
+    - name: Create symlink for nvim
       become: true
-      community.general.make:
-        chdir: dependencies/neovim
-        target: install
-      register: nvim_install
-      changed_when: nvim_install.changed
+      ansible.builtin.file:
+        src: /opt/nvim-linux-x86_64/bin/nvim
+        dest: /usr/local/bin/nvim
+        state: link
+
+    - name: Clean up tarball
+      ansible.builtin.file:
+        path: /tmp/nvim-linux-x86_64.tar.gz
+        state: absent
 
 - name: Install dependencies for nvim plugins
   become: true

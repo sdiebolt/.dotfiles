@@ -55,17 +55,17 @@ ansible-playbook -K install.yml
 ### Run specific roles only
 
 ```bash
-./bootstrap.sh --tags nvim
+ansible-playbook -K install.yml --tags nvim
 ```
 
 ### Skip specific roles
 
 ```bash
-./bootstrap.sh --skip-tags submodules
+ansible-playbook -K install.yml --skip-tags fonts
 ```
 
-### Get help
+### Check what would change (dry-run)
 
 ```bash
-./bootstrap.sh --help
+ansible-playbook -K install.yml --check
 ```
