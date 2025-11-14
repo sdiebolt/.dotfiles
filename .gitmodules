@@ -1,6 +1,3 @@
 [submodule "dependencies/neovim"]
 	path = dependencies/neovim
 	url = https://github.com/neovim/neovim.git
-[submodule "dotfiles/fzf/.fzf"]
-	path = dotfiles/fzf/.fzf
-	url = https://github.com/junegunn/fzf.git
