@@ -3,3 +3,6 @@ secrets.zsh
 
 # btop logs
 btop.log
+
+# uv receipt 
+uv-receipt.json
