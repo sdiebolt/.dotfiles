@@ -1,13 +1,29 @@
 ---
+- name: Check if lazygit is installed
+  ansible.builtin.shell: command -v lazygit
+  register: lazygit_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
 - name: Install lazygit in Ubuntu
-  become: true
-  ansible.builtin.unarchive:
-    src: https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz
-    include: lazygit
-    dest: /usr/local/bin
-    creates: /usr/local/bin/lazygit
-    remote_src: true
-  when: ansible_facts["distribution"] == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu" and lazygit_exists.rc != 0
+  block:
+    - name: Get latest lazygit release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | \
+        grep "browser_download_url.*Linux_x86_64.tar.gz" | \
+        cut -d '"' -f 4
+      register: lazygit_url
+      changed_when: false
+
+    - name: Download and install lazygit
+      become: true
+      ansible.builtin.unarchive:
+        src: "{{ lazygit_url.stdout }}"
+        include: lazygit
+        dest: /usr/local/bin
+        remote_src: true
 
 - name: Install lazygit in Arch Linux
   become: true

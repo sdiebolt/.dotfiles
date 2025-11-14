@@ -3,7 +3,6 @@
   community.general.cargo:
     name: tlrc
     locked: true
-    version: "{{ tlrc_version }}"
     executable: "{{ cargo_path }}"
   when: ansible_facts["distribution"] == "Ubuntu"
 

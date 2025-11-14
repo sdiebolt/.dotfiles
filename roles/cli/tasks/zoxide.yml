@@ -9,10 +9,18 @@
 - name: Install zoxide in Ubuntu
   when: ansible_facts["distribution"] == "Ubuntu" and zoxide_exists.rc != 0
   block:
+    - name: Get latest zoxide release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/ajeetdsouza/zoxide/releases/latest | \
+        grep "browser_download_url.*x86_64-unknown-linux-musl.tar.gz" | \
+        cut -d '"' -f 4
+      register: zoxide_url
+      changed_when: false
+
     - name: Download and install zoxide
       become: true
       ansible.builtin.unarchive:
-        src: https://github.com/ajeetdsouza/zoxide/releases/download/v{{ zoxide_version }}/zoxide-{{ zoxide_version }}-x86_64-unknown-linux-musl.tar.gz
+        src: "{{ zoxide_url.stdout }}"
         dest: "{{ ansible_facts.env.HOME }}/.local/bin"
         remote_src: true
         extra_opts:

@@ -7,10 +7,20 @@
   failed_when: false
 
 - name: Install delta in Ubuntu
-  become: true
-  ansible.builtin.apt:
-    deb: "https://github.com/dandavison/delta/releases/download/{{ git_delta_version }}/git-delta_{{ git_delta_version }}_amd64.deb"
   when: ansible_facts["distribution"] == "Ubuntu" and delta_exists.rc != 0
+  block:
+    - name: Get latest delta release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/dandavison/delta/releases/latest | \
+        grep "browser_download_url.*_amd64.deb" | \
+        cut -d '"' -f 4
+      register: delta_url
+      changed_when: false
+
+    - name: Install delta
+      become: true
+      ansible.builtin.apt:
+        deb: "{{ delta_url.stdout }}"
 
 - name: Install delta in Arch Linux
   become: true

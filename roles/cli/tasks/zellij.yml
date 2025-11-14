@@ -3,7 +3,6 @@
   community.general.cargo:
     name: zellij
     locked: true
-    version: "{{ zellij_version }}"
     executable: "{{ cargo_path }}"
   when: ansible_facts["distribution"] == "Ubuntu"
 
