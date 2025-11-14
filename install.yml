@@ -3,39 +3,51 @@
   hosts: localhost
   tasks:
     - ansible.builtin.import_role:
-        name: stow
+        name: dotfiles
+      tags: dotfiles
 
-    # Installing Arch Linux base system packages (polkit, paru) before other tools.
+    # Installing Arch Linux system packages (polkit, paru) before other tools.
     - ansible.builtin.import_role:
-        name: arch-base
+        name: arch-system
+      tags: arch-system
 
     # Installing Rust before CLI tools because some CLI tools are installed using Cargo.
     - ansible.builtin.import_role:
         name: rust
+      tags: rust
 
     - ansible.builtin.import_role:
         name: cli
+      tags: cli
 
     - ansible.builtin.import_role:
         name: opencode
+      tags: opencode
 
     - ansible.builtin.import_role:
         name: python
+      tags: python
 
     - ansible.builtin.import_role:
         name: nvim
+      tags: nvim
 
     - ansible.builtin.import_role:
         name: fonts
+      tags: fonts
 
     - ansible.builtin.import_role:
-        name: x11-user
+        name: x11
+      tags: x11
 
     - ansible.builtin.import_role:
         name: i3
+      tags: i3
 
     - ansible.builtin.import_role:
         name: ghostty
+      tags: ghostty
 
     - ansible.builtin.import_role:
         name: ufw
+      tags: ufw
