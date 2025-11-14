@@ -1,9 +1,9 @@
 ---
 - name: Install fzf in Ubuntu
   ansible.builtin.command:
-    chdir: "{{ ansible_facts.env.HOME }}/.fzf"
+    chdir: "{{ playbook_dir }}/dotfiles/fzf/.fzf"
     cmd: ./install --bin
-    creates: "{{ ansible_facts.env.HOME }}/.fzf/bin/fzf"
+    creates: "{{ playbook_dir }}/dotfiles/fzf/.fzf/bin/fzf"
   when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install fzf in Arch Linux
