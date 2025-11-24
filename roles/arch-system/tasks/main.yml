@@ -13,6 +13,7 @@
           - fastfetch
           - docker
           - docker-compose
+          - bluetui
         state: present
 
     - name: Check if paru is installed
