@@ -194,7 +194,10 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-default_border pixel 0
+default_border none
+
+gaps inner 10px
+smart_gaps on
 
 # Catppuccin Mocha theme
 set $rosewater #f5e0dc
