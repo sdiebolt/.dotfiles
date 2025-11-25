@@ -6,31 +6,19 @@
         name: dotfiles
       tags: dotfiles
 
-    # Installing Arch Linux system packages (polkit, paru) before other tools.
+    # Install all standard packages (pacman, AUR, apt)
     - ansible.builtin.import_role:
-        name: arch-system
-      tags: arch-system
+        name: packages
+      tags: packages
 
-    # Installing Rust before CLI tools because some CLI tools are installed using Cargo.
+    # Install tools requiring custom installation methods
     - ansible.builtin.import_role:
-        name: rust
-      tags: rust
-
-    - ansible.builtin.import_role:
-        name: cli
-      tags: cli
+        name: custom-installs
+      tags: custom-installs
 
     - ansible.builtin.import_role:
         name: opencode
       tags: opencode
-
-    - ansible.builtin.import_role:
-        name: python
-      tags: python
-
-    - ansible.builtin.import_role:
-        name: nvim
-      tags: nvim
 
     - ansible.builtin.import_role:
         name: fonts
@@ -39,14 +27,6 @@
     - ansible.builtin.import_role:
         name: x11
       tags: x11
-
-    - ansible.builtin.import_role:
-        name: i3
-      tags: i3
-
-    - ansible.builtin.import_role:
-        name: ghostty
-      tags: ghostty
 
     - ansible.builtin.import_role:
         name: ufw

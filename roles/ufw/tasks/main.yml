@@ -1,6 +1,25 @@
 ---
-- name: Include distribution-specific tasks
-  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] | lower }}.yml"
+- name: Install UFW (Arch Linux)
+  become: true
+  community.general.pacman:
+    name: ufw
+    state: present
+  when: ansible_facts["distribution"] == "Archlinux"
+
+- name: Install UFW (Ubuntu)
+  become: true
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: true
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install ufw-docker
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+    dest: /usr/local/bin/ufw-docker
+    mode: '0755'
 
 - name: Copy missing after.rules if needed
   become: true

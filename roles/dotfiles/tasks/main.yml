@@ -1,11 +1,17 @@
 ---
-- name: Install GNU Stow in Ubuntu
-  ansible.builtin.import_tasks: ubuntu.yml
-  when: ansible_facts["distribution"] == "Ubuntu"
-
-- name: Install GNU Stow in Arch Linux
-  ansible.builtin.import_tasks: arch.yml
+- name: Install GNU Stow (Arch Linux)
+  become: true
+  community.general.pacman:
+    name: stow
+    state: present
   when: ansible_facts["distribution"] == "Archlinux"
+
+- name: Install GNU Stow (Ubuntu)
+  become: true
+  ansible.builtin.apt:
+    name: stow
+    state: present
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Build directories list
   ansible.builtin.find:

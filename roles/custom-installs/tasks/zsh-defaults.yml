@@ -1,0 +1,27 @@
+---
+- name: Get zsh path
+  ansible.builtin.shell: command -v zsh
+  register: zsh_path
+  changed_when: false
+
+- name: Get current user shell
+  ansible.builtin.shell: "getent passwd {{ ansible_facts.env.USER }} | cut -d: -f7"
+  register: current_shell
+  changed_when: false
+
+- name: Set zsh as default shell
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_facts.env.USER }}"
+    shell: "{{ zsh_path.stdout }}"
+  when: current_shell.stdout != zsh_path.stdout
+  register: shell_changed
+
+- name: Notify user to log out and back in
+  ansible.builtin.debug:
+    msg: |
+      ╔════════════════════════════════════════════════════════════════╗
+      ║  IMPORTANT: Your default shell has been changed to zsh        ║
+      ║  Please log out and log back in for the change to take effect ║
+      ╔════════════════════════════════════════════════════════════════╝
+  when: shell_changed is changed

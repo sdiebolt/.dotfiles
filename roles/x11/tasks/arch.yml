@@ -1,8 +1,0 @@
----
-- name: Install xorg-xinit and xorg-xrdb
-  become: true
-  community.general.pacman:
-    name: 
-      - xorg-xinit
-      - xorg-xrdb
-    state: present

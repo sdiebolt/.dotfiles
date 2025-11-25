@@ -1,0 +1,14 @@
+---
+- name: Check if prettyping is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.local/bin/prettyping"
+  register: prettyping_exists
+
+- name: Install prettyping
+  when: not prettyping_exists.stat.exists
+  block:
+    - name: Download prettyping
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
+        dest: "{{ ansible_facts.env.HOME }}/.local/bin/prettyping"
+        mode: 0755

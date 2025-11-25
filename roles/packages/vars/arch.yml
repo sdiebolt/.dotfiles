@@ -1,0 +1,44 @@
+---
+# Arch Linux packages installable via pacman
+arch_pacman_packages:
+  # Base system packages
+  - base-devel
+  - curl
+  - jq
+  - openssh
+  - unzip
+  - xclip
+  - polkit
+  - iwd
+  - brightnessctl
+  - power-profiles-daemon
+  - fastfetch
+  - docker
+  - docker-compose
+  - bluetui
+
+  # CLI tools
+  - bat
+  - btop
+  - git-delta
+  - dust
+  - fd
+  - fzf
+  - just
+  - ripgrep
+  - sheldon
+  - zellij
+  - zoxide
+  - zsh
+
+  # Development tools
+  - neovim
+  - imagemagick
+  - luarocks
+  - python
+
+  # GUI applications
+  - ghostty
+  - i3-wm
+  - i3status
+  - rofi

@@ -1,7 +1,0 @@
----
-- name: Install GNU Stow in Arch Linux
-  become: true
-  community.general.pacman:
-    name:
-      - stow
-    state: present

@@ -1,0 +1,5 @@
+---
+# AUR packages installable via paru
+arch_aur_packages:
+  - lsd
+  - lazygit

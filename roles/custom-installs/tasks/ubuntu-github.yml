@@ -1,0 +1,238 @@
+---
+# Install tools from GitHub releases on Ubuntu
+# These are available via pacman on Arch
+
+- name: Check if bat is installed
+  ansible.builtin.shell: command -v bat
+  register: bat_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install bat from GitHub
+  when: bat_exists.rc != 0
+  block:
+    - name: Get latest bat release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | \
+        grep "browser_download_url.*_amd64.deb" | \
+        cut -d '"' -f 4
+      register: bat_url
+      changed_when: false
+
+    - name: Install bat
+      become: true
+      ansible.builtin.apt:
+        deb: "{{ bat_url.stdout }}"
+
+- name: Check if btop is installed
+  ansible.builtin.shell: command -v btop
+  register: btop_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install btop from GitHub
+  when: btop_exists.rc != 0
+  block:
+    - name: Get latest btop release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/aristocratos/btop/releases/latest | \
+        grep "browser_download_url.*x86_64-linux-musl.tbz" | \
+        cut -d '"' -f 4
+      register: btop_url
+      changed_when: false
+
+    - name: Download and extract btop
+      ansible.builtin.unarchive:
+        src: "{{ btop_url.stdout }}"
+        dest: /tmp
+        remote_src: true
+
+    - name: Install btop
+      community.general.make:
+        chdir: /tmp/btop
+        target: install
+      become: true
+
+- name: Check if delta is installed
+  ansible.builtin.shell: command -v delta
+  register: delta_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install delta from GitHub
+  when: delta_exists.rc != 0
+  block:
+    - name: Get latest delta release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/dandavison/delta/releases/latest | \
+        grep "browser_download_url.*_amd64.deb" | \
+        cut -d '"' -f 4
+      register: delta_url
+      changed_when: false
+
+    - name: Install delta
+      become: true
+      ansible.builtin.apt:
+        deb: "{{ delta_url.stdout }}"
+
+- name: Check if lazygit is installed
+  ansible.builtin.shell: command -v lazygit
+  register: lazygit_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install lazygit from GitHub
+  when: lazygit_exists.rc != 0
+  block:
+    - name: Get latest lazygit release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | \
+        grep "browser_download_url.*Linux_x86_64.tar.gz" | \
+        cut -d '"' -f 4
+      register: lazygit_url
+      changed_when: false
+
+    - name: Download and extract lazygit
+      ansible.builtin.unarchive:
+        src: "{{ lazygit_url.stdout }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/bin"
+        remote_src: true
+        include:
+          - lazygit
+
+- name: Check if fzf is installed
+  ansible.builtin.shell: command -v fzf
+  register: fzf_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install fzf from GitHub
+  when: fzf_exists.rc != 0
+  block:
+    - name: Clone fzf repository
+      ansible.builtin.git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: "{{ ansible_facts.env.HOME }}/.fzf"
+        depth: 1
+
+    - name: Install fzf
+      ansible.builtin.shell: "{{ ansible_facts.env.HOME }}/.fzf/install --all"
+      args:
+        creates: "{{ ansible_facts.env.HOME }}/.local/bin/fzf"
+
+- name: Check if just is installed
+  ansible.builtin.shell: command -v just
+  register: just_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install just from GitHub
+  when: just_exists.rc != 0
+  block:
+    - name: Get latest just release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/casey/just/releases/latest | \
+        grep "browser_download_url.*x86_64-unknown-linux-musl.tar.gz" | \
+        cut -d '"' -f 4
+      register: just_url
+      changed_when: false
+
+    - name: Download and extract just
+      ansible.builtin.unarchive:
+        src: "{{ just_url.stdout }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/bin"
+        remote_src: true
+        include:
+          - just
+
+- name: Check if zellij is installed
+  ansible.builtin.shell: command -v zellij
+  register: zellij_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install zellij from GitHub
+  when: zellij_exists.rc != 0
+  block:
+    - name: Get latest zellij release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/zellij-org/zellij/releases/latest | \
+        grep "browser_download_url.*x86_64-unknown-linux-musl.tar.gz" | \
+        cut -d '"' -f 4
+      register: zellij_url
+      changed_when: false
+
+    - name: Download and extract zellij
+      ansible.builtin.unarchive:
+        src: "{{ zellij_url.stdout }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/bin"
+        remote_src: true
+
+- name: Check if Ghostty is installed
+  ansible.builtin.shell: command -v ghostty
+  register: ghostty_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install Ghostty from GitHub
+  when: ghostty_exists.rc != 0
+  block:
+    - name: Get latest Ghostty release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/ghostty-org/ghostty/releases/latest | \
+        grep "browser_download_url.*linux-x86_64.tar.gz" | \
+        cut -d '"' -f 4
+      register: ghostty_url
+      changed_when: false
+
+    - name: Download Ghostty
+      ansible.builtin.get_url:
+        url: "{{ ghostty_url.stdout }}"
+        dest: /tmp/ghostty.tar.gz
+        mode: 0644
+
+    - name: Extract Ghostty
+      become: true
+      ansible.builtin.unarchive:
+        src: /tmp/ghostty.tar.gz
+        dest: /usr/local
+        remote_src: true
+
+    - name: Clean up Ghostty tarball
+      ansible.builtin.file:
+        path: /tmp/ghostty.tar.gz
+        state: absent
+
+- name: Check if sheldon is installed
+  ansible.builtin.shell: command -v sheldon
+  register: sheldon_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install sheldon from GitHub
+  when: sheldon_exists.rc != 0
+  block:
+    - name: Get latest sheldon release URL
+      ansible.builtin.shell: |
+        curl -s https://api.github.com/repos/rossmacarthur/sheldon/releases/latest | \
+        grep "browser_download_url.*x86_64-unknown-linux-musl.tar.gz" | \
+        cut -d '"' -f 4
+      register: sheldon_url
+      changed_when: false
+
+    - name: Download and extract sheldon
+      ansible.builtin.unarchive:
+        src: "{{ sheldon_url.stdout }}"
+        dest: "{{ ansible_facts.env.HOME }}/.local/bin"
+        remote_src: true
+        include:
+          - sheldon

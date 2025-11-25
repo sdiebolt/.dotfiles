@@ -1,7 +1,0 @@
----
-- name: Install GNU Stow in Ubuntu
-  become: true
-  ansible.builtin.apt:
-    name:
-      - stow
-    state: present

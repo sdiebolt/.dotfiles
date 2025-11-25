@@ -180,7 +180,14 @@ run_playbook() {
     # Run playbook with any additional arguments passed to the script
     ansible-playbook -K install.yml "$@"
     
-    print_success "Playbook execution completed!"
+    local playbook_exit_code=$?
+    
+    if [ $playbook_exit_code -eq 0 ]; then
+        print_success "Playbook execution completed!"
+    else
+        print_error "Playbook execution failed with exit code $playbook_exit_code"
+        return $playbook_exit_code
+    fi
 }
 
 # Main function
@@ -196,6 +203,10 @@ main() {
     
     echo ""
     print_success "Bootstrap complete! Your system is ready."
+    echo ""
+    print_info "Post-installation notes:"
+    echo "  • If your shell was changed, log out and log back in to see the change"
+    echo "  • For Neovim plugins to work, open nvim and run :Lazy sync"
     echo ""
 }
 

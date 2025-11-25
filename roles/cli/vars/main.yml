@@ -1,2 +1,0 @@
----
-cargo_path: "{{ ansible_facts.env.HOME }}/.cargo/bin/cargo"
