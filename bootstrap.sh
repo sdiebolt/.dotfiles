@@ -102,6 +102,19 @@ install_dependencies() {
     print_success "Dependencies installed successfully."
 }
 
+# Install Ansible collections
+install_ansible_collections() {
+    print_info "Installing required Ansible collections..."
+    
+    if ! ansible-galaxy collection list | grep -q "kewlfft.aur"; then
+        print_info "Installing kewlfft.aur collection..."
+        ansible-galaxy collection install kewlfft.aur
+        print_success "kewlfft.aur collection installed."
+    else
+        print_success "kewlfft.aur collection already installed."
+    fi
+}
+
 # Clone or update dotfiles
 setup_dotfiles() {
     local dotfiles_dir="$HOME/.dotfiles"
@@ -198,6 +211,7 @@ main() {
     
     detect_os
     install_dependencies
+    install_ansible_collections
     setup_dotfiles
     run_playbook "$@"
     
