@@ -15,4 +15,6 @@
     url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
     dest: "{{ ansible_facts.env.HOME }}/.local/bin/prettyping"
     mode: 0755
-  when: not prettyping_exists.stat.exists
+  when: 
+    - not prettyping_exists.stat.exists
+    - not ansible_check_mode
