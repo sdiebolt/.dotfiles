@@ -1,11 +1,16 @@
 ---
 # NeoVim from GitHub releases (Ubuntu only - Arch uses pacman)
-- name: Get latest stable NeoVim release
-  community.general.github_release:
-    user: neovim
-    repo: neovim
-    action: latest_release
-  register: neovim_release
+- name: Get latest stable NeoVim release tag
+  ansible.builtin.shell: |
+    curl -s https://api.github.com/repos/neovim/neovim/releases/latest | \
+    grep '"tag_name"' | \
+    cut -d '"' -f 4
+  register: neovim_release_output
+  changed_when: false
+
+- name: Set NeoVim release tag
+  ansible.builtin.set_fact:
+    neovim_release_tag: "{{ neovim_release_output.stdout }}"
 
 - name: Check NeoVim version
   ansible.builtin.shell: nvim --version | head -n 1 | cut -d ' ' -f 2
@@ -16,7 +21,7 @@
   check_mode: false
 
 - name: Install NeoVim
-  when: (nvim_exists.rc != 0 or nvim_exists.stdout != neovim_release.tag) and not ansible_check_mode
+  when: (nvim_exists.rc != 0 or nvim_exists.stdout != neovim_release_tag) and not ansible_check_mode
   block:
     - name: Uninstall previous installation of nvim
       become: true
@@ -29,7 +34,7 @@
 
     - name: Download NeoVim tarball
       ansible.builtin.get_url:
-        url: "https://github.com/neovim/neovim/releases/download/{{ neovim_release.tag }}/nvim-linux-x86_64.tar.gz"
+        url: "https://github.com/neovim/neovim/releases/download/{{ neovim_release_tag }}/nvim-linux-x86_64.tar.gz"
         dest: /tmp/nvim-linux-x86_64.tar.gz
         mode: 0644
 
