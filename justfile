@@ -4,23 +4,9 @@
 default:
     @just --list
 
-# Run playbook in check mode (dry-run)
+# Run full playbook in container
 test:
     @./test-playbook.sh
-
-# Run full playbook in container (interactive)
-test-full:
-    @echo "🚀 Starting interactive test..."
-    @docker run -it --rm \
-        -v "{{justfile_directory()}}:/dotfiles" \
-        -w /dotfiles \
-        archlinux:latest \
-        bash -c " \
-            pacman -Syu --noconfirm && \
-            pacman -S --noconfirm python ansible git && \
-            ansible-galaxy collection install kewlfft.aur && \
-            ansible-playbook -i localhost, -c local install.yml \
-        "
 
 # Get a shell in a fresh Arch Linux container
 shell:

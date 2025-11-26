@@ -21,7 +21,7 @@ jobs:
       - name: Install Python and Ansible
         run: |
           pacman -Syu --noconfirm
-          pacman -S --noconfirm python ansible
+          pacman -S --noconfirm python ansible git
 
       - name: Install Ansible collections
         run: |
@@ -31,6 +31,6 @@ jobs:
         run: |
           ansible-playbook --syntax-check install.yml
 
-      - name: Run Ansible playbook in check mode
+      - name: Run Ansible playbook
         run: |
-          ansible-playbook -i localhost, -c local --check install.yml
+          ansible-playbook -i localhost, -c local install.yml

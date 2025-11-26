@@ -38,16 +38,13 @@ docker exec "$CONTAINER_NAME" bash -c "
   ansible-playbook --syntax-check install.yml
 "
 
-echo "🔍 Running playbook in check mode..."
+echo "🚀 Running full playbook installation..."
 docker exec "$CONTAINER_NAME" bash -c "
-  ansible-playbook -i localhost, -c local --check install.yml
+  ansible-playbook -i localhost, -c local install.yml
 "
 
 echo ""
-echo "✨ All tests passed!"
-echo ""
-echo "💡 To run the full playbook (not just check mode), use:"
-echo "   docker exec -it $CONTAINER_NAME ansible-playbook -i localhost, -c local install.yml"
+echo "✨ Installation completed successfully!"
 echo ""
 echo "🐚 To get a shell in the container, use:"
 echo "   docker exec -it $CONTAINER_NAME bash"
