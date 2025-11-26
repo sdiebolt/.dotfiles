@@ -25,6 +25,7 @@ arch_pacman_packages:
   - fd
   - fzf
   - just
+  - less
   - ripgrep
   - sheldon
   - zellij
