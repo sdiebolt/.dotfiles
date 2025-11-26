@@ -13,22 +13,23 @@
     state: present
   when: ansible_facts["distribution"] == "Ubuntu"
 
-- name: Build directories list
+- name: Build system configs directories list
   ansible.builtin.find:
-    paths: [dotfiles/]
+    paths: [system-configs/]
     recurse: no
     file_type: directory
   register: files
 
-- name: Deploy dotfiles
+- name: Deploy system configuration files
+  become: true
   with_items: '{{ files.files }}'
   ansible.builtin.shell: |
-    STOW_PATH={{ item.path | replace("dotfiles/", "") }}
+    STOW_PATH={{ item.path | replace("system-configs/", "") }}
     OVERRIDE_TARGET=$(cat ${STOW_PATH}/.override 2>/dev/null)
-    TARGET=${OVERRIDE_TARGET:-{{ ansible_facts.env.HOME }}}
+    TARGET=${OVERRIDE_TARGET:-/etc}
     stow -v -t ${TARGET} ${STOW_PATH}
   args:
-    chdir: ./dotfiles
+    chdir: ./system-configs
     executable: /bin/bash
   loop_control:
     label: |-

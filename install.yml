@@ -6,6 +6,10 @@
         name: dotfiles
       tags: dotfiles
 
+    - ansible.builtin.import_role:
+        name: system-configs
+      tags: system-configs
+
     # Install all standard packages (pacman, AUR, apt)
     - ansible.builtin.import_role:
         name: packages
