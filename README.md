@@ -1,12 +1,12 @@
 # Personal dotfiles
 
 > [!NOTE]
-> These dotfiles are tested and working on Ubuntu 25.10 and Arch Linux.
+> These dotfiles are tested and working on Arch Linux.
 
 ## Quick Start
 
 The easiest way to install is using the bootstrap script, which will automatically:
-- Detect your OS (Arch Linux or Ubuntu)
+- Detect your OS (Arch Linux)
 - Install Git and Ansible if needed
 - Clone this repository
 - Run the Ansible playbook
@@ -28,13 +28,6 @@ cd ~/.dotfiles
 ## Manual Installation
 
 If you prefer to install manually, you can install Git and Ansible yourself and run the playbook directly.
-
-### On Ubuntu 25.10
-
-```bash
-sudo apt update
-sudo apt install -y git ansible
-```
 
 ### On Arch Linux
 
