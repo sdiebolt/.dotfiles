@@ -21,10 +21,6 @@ clean:
     @docker ps -a | grep dotfiles-test | awk '{print $$1}' | xargs -r docker rm -f || true
     @echo "✨ Cleaned up test containers"
 
-# Run the playbook locally (requires Arch Linux)
-install:
-    ansible-playbook -i inventory install.yml
-
 # Run syntax check only
 syntax-check:
     ansible-playbook --syntax-check install.yml
