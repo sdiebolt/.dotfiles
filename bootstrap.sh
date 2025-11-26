@@ -40,12 +40,9 @@ detect_os() {
         arch|archlinux)
             OS_TYPE="arch"
             ;;
-        ubuntu)
-            OS_TYPE="ubuntu"
-            ;;
         *)
             print_error "Unsupported OS: $OS"
-            print_error "This script only supports Arch Linux and Ubuntu."
+            print_error "This script only supports Arch Linux."
             exit 1
             ;;
     esac
@@ -82,22 +79,9 @@ install_dependencies() {
 
     print_info "Installing dependencies for $OS_TYPE..."
 
-    case $OS_TYPE in
-        arch)
-            if [ "$need_git" = true ] || [ "$need_ansible" = true ]; then
-                sudo pacman -Sy --noconfirm ${need_git:+git} ${need_ansible:+ansible}
-            fi
-            ;;
-        ubuntu)
-            sudo apt update
-            if [ "$need_git" = true ]; then
-                sudo apt install -y git
-            fi
-            if [ "$need_ansible" = true ]; then
-                sudo apt install -y ansible
-            fi
-            ;;
-    esac
+    if [ "$need_git" = true ] || [ "$need_ansible" = true ]; then
+        sudo pacman -Sy --noconfirm ${need_git:+git} ${need_ansible:+ansible}
+    fi
 
     print_success "Dependencies installed successfully."
 }
@@ -145,7 +129,7 @@ list_tags() {
     echo ""
     echo "  dotfiles      - Deploy dotfiles using GNU Stow"
     echo "  system-configs - Deploy system configuration files"
-    echo "  packages      - Install packages (pacman, AUR, apt)"
+    echo "  packages      - Install packages (pacman, AUR)"
     echo "  custom-installs - Install tools requiring custom installation"
     echo "  opencode      - Install OpenCode editor"
     echo "  fonts         - Install fonts"
