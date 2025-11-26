@@ -11,10 +11,17 @@
       ansible.builtin.file:
         path: "{{ ansible_facts.env.HOME }}/.local/bin"
         state: directory
-        mode: "755"
-        recurse: yes
-    - name: Download prettyping
+        mode: 0755
+
+    - name: Download prettyping to /tmp
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
+        dest: /tmp/prettyping
+        mode: 0755
+
+    - name: Copy prettyping to ~/.local/bin
+      ansible.builtin.copy:
+        src: /tmp/prettyping
         dest: "{{ ansible_facts.env.HOME }}/.local/bin/prettyping"
-        mode: "755"
+        mode: 0755
+        remote_src: true
