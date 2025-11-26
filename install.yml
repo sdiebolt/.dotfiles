@@ -10,7 +10,7 @@
         name: system-configs
       tags: system-configs
 
-    # Install all standard packages (pacman, AUR, apt)
+    # Install all standard packages (pacman, AUR)
     - ansible.builtin.import_role:
         name: packages
       tags: packages
