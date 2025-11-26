@@ -42,3 +42,17 @@ arch_pacman_packages:
   - i3-wm
   - i3status
   - rofi
+  - nautilus
+
+  # Hyprland and related tools
+  - hyprland
+  - dunst
+  - swaybg
+  - grim
+  - wl-clipboard
+  - hyprpicker
+  - swaylock
+  - playerctl
+  - pipewire
+  - pipewire-pulse
+  - wireplumber
