@@ -7,8 +7,14 @@
 - name: Install prettyping
   when: not prettyping_exists.stat.exists
   block:
+    - name: Create ~/.local/bin/ directory
+      ansible.builtin.file:
+        path: "{{ ansible_facts.env.HOME }}/.local/bin"
+        state: directory
+        mode: "755"
+        recurse: yes
     - name: Download prettyping
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
         dest: "{{ ansible_facts.env.HOME }}/.local/bin/prettyping"
-        mode: 0755
+        mode: "755"
