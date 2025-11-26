@@ -1,19 +1,8 @@
 ---
-- name: Install X11 utilities (Arch Linux)
+- name: Install X11 utilities
   become: true
   community.general.pacman:
     name:
       - xorg-xinit
       - xorg-xrdb
     state: present
-  when: ansible_facts["distribution"] == "Archlinux"
-
-- name: Install X11 utilities (Ubuntu)
-  become: true
-  ansible.builtin.apt:
-    name:
-      - xinit
-      - x11-xserver-utils
-    state: present
-    update_cache: true
-  when: ansible_facts["distribution"] == "Ubuntu"

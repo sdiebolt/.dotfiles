@@ -1,17 +1,9 @@
 ---
-- name: Install GNU Stow (Arch Linux)
+- name: Install GNU Stow
   become: true
   community.general.pacman:
     name: stow
     state: present
-  when: ansible_facts["distribution"] == "Archlinux"
-
-- name: Install GNU Stow (Ubuntu)
-  become: true
-  ansible.builtin.apt:
-    name: stow
-    state: present
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Build system configs directories list
   ansible.builtin.find:

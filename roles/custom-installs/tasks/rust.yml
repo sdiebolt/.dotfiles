@@ -9,19 +9,11 @@
 - name: Install Rust/cargo
   when: cargo_exists.rc != 0
   block:
-    - name: Ensure curl is installed (Arch)
+    - name: Ensure curl is installed
       become: true
       community.general.pacman:
         name: curl
         state: present
-      when: ansible_facts["distribution"] == "Archlinux"
-
-    - name: Ensure curl is installed (Ubuntu)
-      become: true
-      ansible.builtin.apt:
-        name: curl
-        state: present
-      when: ansible_facts["distribution"] == "Ubuntu"
 
     - name: Install Rust/cargo via rustup
       ansible.builtin.shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y

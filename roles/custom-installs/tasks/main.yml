@@ -8,20 +8,11 @@
 - name: Install Starship prompt
   ansible.builtin.import_tasks: starship.yml
 
-- name: Install NeoVim (Ubuntu - latest from GitHub)
-  ansible.builtin.import_tasks: nvim-ubuntu.yml
-  when: ansible_facts["distribution"] == "Ubuntu"
-
 - name: Install prettyping
   ansible.builtin.import_tasks: prettyping.yml
 
-- name: Install tools from GitHub releases (Ubuntu)
-  ansible.builtin.import_tasks: ubuntu-github.yml
-  when: ansible_facts["distribution"] == "Ubuntu"
-
-- name: Set Ghostty as default terminal (Arch)
+- name: Set Ghostty as default terminal
   ansible.builtin.import_tasks: ghostty-defaults.yml
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Set zsh as default shell
   ansible.builtin.import_tasks: zsh-defaults.yml

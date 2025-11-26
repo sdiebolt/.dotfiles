@@ -2,25 +2,16 @@
 - name: Load Arch package variables
   ansible.builtin.include_vars:
     file: arch.yml
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Load AUR package variables
   ansible.builtin.include_vars:
     file: aur.yml
-  when: ansible_facts["distribution"] == "Archlinux"
 
-- name: Load Ubuntu package variables
-  ansible.builtin.include_vars:
-    file: ubuntu.yml
-  when: ansible_facts["distribution"] == "Ubuntu"
-
-# Arch Linux package installation
-- name: Install pacman packages (Arch Linux)
+- name: Install pacman packages
   become: true
   community.general.pacman:
     name: "{{ arch_pacman_packages }}"
     state: present
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Check if paru is installed
   ansible.builtin.shell: command -v paru
@@ -28,7 +19,6 @@
   ignore_errors: true
   changed_when: false
   failed_when: false
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Create the aur_builder user
   become: true
@@ -36,7 +26,6 @@
     name: aur_builder
     create_home: true
     group: wheel
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Allow the aur_builder user to run sudo pacman without a password
   become: true
@@ -46,12 +35,9 @@
     create: true
     mode: '0644'
     validate: 'visudo -cf %s'
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Install paru (AUR helper)
-  when: 
-    - ansible_facts["distribution"] == "Archlinux"
-    - paru_exists.rc != 0
+  when: paru_exists.rc != 0
   block:
     - name: Install build dependencies for paru
       become: true
@@ -99,14 +85,12 @@
         path: /tmp/paru
         state: absent
 
-- name: Install AUR packages (Arch Linux)
+- name: Install AUR packages
   kewlfft.aur.aur:
     name: "{{ arch_aur_packages }}"
     use: paru
     state: present
-  when: 
-    - ansible_facts["distribution"] == "Archlinux"
-    - arch_aur_packages | length > 0
+  when: arch_aur_packages | length > 0
   become: true
   become_user: aur_builder
 
@@ -116,32 +100,13 @@
     name: aur_builder
     state: absent
     remove: true
-  when: ansible_facts["distribution"] == "Archlinux"
 
 - name: Remove aur_builder sudoers file
   become: true
   ansible.builtin.file:
     path: /etc/sudoers.d/11-install-aur_builder
     state: absent
-  when: ansible_facts["distribution"] == "Archlinux"
 
-# Ubuntu package installation
-- name: Install apt packages (Ubuntu)
-  become: true
-  ansible.builtin.apt:
-    name: "{{ ubuntu_apt_packages }}"
-    state: present
-    update_cache: true
-  when: ansible_facts["distribution"] == "Ubuntu"
-
-- name: Install cargo packages (Ubuntu)
-  community.general.cargo:
-    name: "{{ item }}"
-    executable: "{{ ansible_facts.env.HOME }}/.cargo/bin/cargo"
-  loop: "{{ ubuntu_cargo_packages }}"
-  when: ansible_facts["distribution"] == "Ubuntu"
-
-# Common tasks
 - name: Create ~/.local/bin/ directory
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.local/bin"
