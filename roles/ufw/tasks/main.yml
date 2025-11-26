@@ -1,88 +1,101 @@
 ---
-- name: Install UFW
-  become: true
-  community.general.pacman:
-    name: ufw
-    state: present
+- name: Check if running in container
+  ansible.builtin.stat:
+    path: /.dockerenv
+  register: dockerenv
 
-- name: Install ufw-docker
-  become: true
-  ansible.builtin.get_url:
-    url: https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
-    dest: /usr/local/bin/ufw-docker
-    mode: '0755'
+- name: Skip UFW in containers
+  ansible.builtin.debug:
+    msg: "Skipping UFW configuration - running in container"
+  when: dockerenv.stat.exists
 
-- name: Copy missing after.rules if needed
-  become: true
-  ansible.builtin.copy:
-    src: /usr/share/ufw/iptables/after.rules
-    dest: /etc/ufw/after.rules
-    remote_src: true
-    mode: '0644'
-    force: false
+- name: Configure UFW
+  when: not dockerenv.stat.exists
+  block:
+    - name: Install UFW
+      become: true
+      community.general.pacman:
+        name: ufw
+        state: present
 
-- name: Initialize UFW if not configured
-  become: true
-  ansible.builtin.command: ufw --force enable
-  args:
-    creates: /etc/ufw/ufw.conf
-  failed_when: false
+    - name: Install ufw-docker
+      become: true
+      ansible.builtin.get_url:
+        url: https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+        dest: /usr/local/bin/ufw-docker
+        mode: '0755'
 
-- name: Set UFW default policy (deny incoming)
-  become: true
-  community.general.ufw:
-    direction: incoming
-    policy: deny
+    - name: Copy missing after.rules if needed
+      become: true
+      ansible.builtin.copy:
+        src: /usr/share/ufw/iptables/after.rules
+        dest: /etc/ufw/after.rules
+        remote_src: true
+        mode: '0644'
+        force: false
 
-- name: Set UFW default policy (allow outgoing)
-  become: true
-  community.general.ufw:
-    direction: outgoing
-    policy: allow
+    - name: Initialize UFW if not configured
+      become: true
+      ansible.builtin.command: ufw --force enable
+      args:
+        creates: /etc/ufw/ufw.conf
+      failed_when: false
 
-- name: Allow LocalSend UDP port
-  become: true
-  community.general.ufw:
-    rule: allow
-    port: '53317'
-    proto: udp
+    - name: Set UFW default policy (deny incoming)
+      become: true
+      community.general.ufw:
+        direction: incoming
+        policy: deny
 
-- name: Allow LocalSend TCP port
-  become: true
-  community.general.ufw:
-    rule: allow
-    port: '53317'
-    proto: tcp
+    - name: Set UFW default policy (allow outgoing)
+      become: true
+      community.general.ufw:
+        direction: outgoing
+        policy: allow
 
-- name: Allow Docker containers to use DNS on host
-  become: true
-  community.general.ufw:
-    rule: allow
-    direction: in
-    proto: udp
-    from_ip: 172.16.0.0/12
-    to_ip: 172.17.0.1
-    to_port: '53'
-    comment: allow-docker-dns
+    - name: Allow LocalSend UDP port
+      become: true
+      community.general.ufw:
+        rule: allow
+        port: '53317'
+        proto: udp
 
-- name: Enable UFW
-  become: true
-  community.general.ufw:
-    state: enabled
+    - name: Allow LocalSend TCP port
+      become: true
+      community.general.ufw:
+        rule: allow
+        port: '53317'
+        proto: tcp
 
-- name: Enable UFW systemd service
-  become: true
-  ansible.builtin.systemd:
-    name: ufw
-    enabled: true
-    state: started
+    - name: Allow Docker containers to use DNS on host
+      become: true
+      community.general.ufw:
+        rule: allow
+        direction: in
+        proto: udp
+        from_ip: 172.16.0.0/12
+        to_ip: 172.17.0.1
+        to_port: '53'
+        comment: allow-docker-dns
 
-- name: Install ufw-docker protections
-  become: true
-  ansible.builtin.command: ufw-docker install
-  changed_when: true
+    - name: Enable UFW
+      become: true
+      community.general.ufw:
+        state: enabled
 
-- name: Reload UFW
-  become: true
-  community.general.ufw:
-    state: reloaded
+    - name: Enable UFW systemd service
+      become: true
+      ansible.builtin.systemd:
+        name: ufw
+        enabled: true
+        state: started
+
+    - name: Install ufw-docker protections
+      become: true
+      ansible.builtin.command: ufw-docker install
+      changed_when: true
+
+    - name: Reload UFW
+      become: true
+      community.general.ufw:
+        state: reloaded
