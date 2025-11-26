@@ -49,6 +49,7 @@
         dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
         remote_src: true
       when: not ansible_check_mode
+      register: monaspace_variable_extracted
 
     - name: Extract Nerd Fonts
       ansible.builtin.unarchive:
@@ -56,10 +57,7 @@
         dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/monaspace"
         remote_src: true
       when: not ansible_check_mode
-
-    - name: Rebuild font cache
-      ansible.builtin.command: fc-cache -f -v
-      changed_when: true
+      register: monaspace_nerd_extracted
 
     - name: Clean up temporary files
       ansible.builtin.file:
@@ -106,12 +104,14 @@
         dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/inter"
         remote_src: true
       when: not ansible_check_mode
-
-    - name: Rebuild font cache
-      ansible.builtin.command: fc-cache -f -v
-      changed_when: true
+      register: inter_extracted
 
     - name: Clean up temporary files
       ansible.builtin.file:
         path: /tmp/inter.zip
         state: absent
+
+- name: Rebuild font cache
+  ansible.builtin.command: fc-cache -f -v
+  changed_when: true
+  when: (monaspace_variable_extracted is changed) or (monaspace_nerd_extracted is changed) or (inter_extracted is changed)
