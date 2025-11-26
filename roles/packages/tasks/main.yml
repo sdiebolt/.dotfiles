@@ -91,6 +91,7 @@
       when: paru_package.matched > 0
 
     - name: Clean up paru build files
+      become: true
       ansible.builtin.file:
         path: /tmp/paru
         state: absent
