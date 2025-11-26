@@ -8,23 +8,28 @@
   when: not monaspace_exists.stat.exists
   block:
     - name: Get latest Monaspace release
-      community.general.github_release:
-        user: githubnext
-        repo: monaspace
-        action: latest_release
-      register: monaspace_release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/githubnext/monaspace/releases/latest
+        return_content: true
+      register: monaspace_release_json
+
+    - name: Set Monaspace release tag
+      ansible.builtin.set_fact:
+        monaspace_tag: "{{ monaspace_release_json.json.tag_name }}"
 
     - name: Download Monaspace variable fonts
       ansible.builtin.get_url:
-        url: "https://github.com/githubnext/monaspace/releases/download/{{ monaspace_release.tag }}/monaspace-variable-{{ monaspace_release.tag }}.zip"
+        url: "https://github.com/githubnext/monaspace/releases/download/{{ monaspace_tag }}/monaspace-variable-{{ monaspace_tag }}.zip"
         dest: /tmp/monaspace-variable.zip
         mode: 0644
+        timeout: 300
 
     - name: Download Monaspace Nerd Fonts
       ansible.builtin.get_url:
-        url: "https://github.com/githubnext/monaspace/releases/download/{{ monaspace_release.tag }}/monaspace-nerdfonts-{{ monaspace_release.tag }}.zip"
+        url: "https://github.com/githubnext/monaspace/releases/download/{{ monaspace_tag }}/monaspace-nerdfonts-{{ monaspace_tag }}.zip"
         dest: /tmp/monaspace-nerdfonts.zip
         mode: 0644
+        timeout: 300
 
     - name: Create fonts base directory
       ansible.builtin.file:
@@ -63,3 +68,50 @@
       loop:
         - /tmp/monaspace-variable.zip
         - /tmp/monaspace-nerdfonts.zip
+
+- name: Check if Inter fonts are installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.local/share/fonts/inter"
+  register: inter_exists
+
+- name: Install Inter fonts
+  when: not inter_exists.stat.exists
+  block:
+    - name: Get latest Inter release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/rsms/inter/releases/latest
+        return_content: true
+      register: inter_release_json
+
+    - name: Set Inter release tag
+      ansible.builtin.set_fact:
+        inter_tag: "{{ inter_release_json.json.tag_name }}"
+
+    - name: Download Inter fonts
+      ansible.builtin.get_url:
+        url: "https://github.com/rsms/inter/releases/download/{{ inter_tag }}/Inter-{{ inter_tag | regex_replace('^v', '') }}.zip"
+        dest: /tmp/inter.zip
+        mode: 0644
+        timeout: 300
+
+    - name: Create Inter fonts directory
+      ansible.builtin.file:
+        path: "{{ ansible_facts.env.HOME }}/.local/share/fonts/inter"
+        state: directory
+        mode: 0755
+
+    - name: Extract Inter fonts
+      ansible.builtin.unarchive:
+        src: /tmp/inter.zip
+        dest: "{{ ansible_facts.env.HOME }}/.local/share/fonts/inter"
+        remote_src: true
+      when: not ansible_check_mode
+
+    - name: Rebuild font cache
+      ansible.builtin.command: fc-cache -f -v
+      changed_when: true
+
+    - name: Clean up temporary files
+      ansible.builtin.file:
+        path: /tmp/inter.zip
+        state: absent
