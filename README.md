@@ -14,7 +14,7 @@ The easiest way to install is using the bootstrap script, which will automatical
 ### One-line install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/sdiebolt/.dotfiles/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/sdiebolt/.dotfiles/master/bootstrap.sh | bash
 ```
 
 ### Or clone and run locally

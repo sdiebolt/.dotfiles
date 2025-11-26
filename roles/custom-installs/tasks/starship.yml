@@ -7,5 +7,6 @@
   failed_when: false
 
 - name: Install Starship prompt
+  become: true
   ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
   when: starship_exists.rc != 0
