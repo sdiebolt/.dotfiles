@@ -90,7 +90,9 @@
     name: "{{ arch_aur_packages }}"
     use: paru
     state: present
-  when: arch_aur_packages | length > 0
+  when: 
+    - arch_aur_packages | length > 0
+    - not ansible_check_mode
   become: true
   become_user: aur_builder
 
