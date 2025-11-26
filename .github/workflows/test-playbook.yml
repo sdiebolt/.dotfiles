@@ -18,19 +18,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Python and Ansible
+      - name: Install dependencies
         run: |
           pacman -Syu --noconfirm
-          pacman -S --noconfirm python ansible git
+          pacman -S --noconfirm python ansible git sudo
+
+      - name: Create test user with sudo privileges
+        run: |
+          useradd -m -G wheel -s /bin/bash testuser
+          echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
+          chown -R testuser:testuser /github/workspace
 
       - name: Install Ansible collections
-        run: |
-          ansible-galaxy collection install kewlfft.aur
+        run: su - testuser -c "cd /github/workspace && ansible-galaxy collection install kewlfft.aur"
 
       - name: Run Ansible playbook syntax check
-        run: |
-          ansible-playbook --syntax-check install.yml
+        run: su - testuser -c "cd /github/workspace && ansible-playbook --syntax-check install.yml"
 
       - name: Run Ansible playbook
-        run: |
-          ansible-playbook -i localhost, -c local install.yml
+        run: su - testuser -c "cd /github/workspace && ansible-playbook -i localhost, -c local install.yml"
