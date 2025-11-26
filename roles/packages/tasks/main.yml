@@ -30,17 +30,36 @@
   failed_when: false
   when: ansible_facts["distribution"] == "Archlinux"
 
+- name: Create the aur_builder user
+  become: true
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: true
+    group: wheel
+  when: ansible_facts["distribution"] == "Archlinux"
+
+- name: Allow the aur_builder user to run sudo pacman without a password
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: true
+    mode: '0644'
+    validate: 'visudo -cf %s'
+  when: ansible_facts["distribution"] == "Archlinux"
+
 - name: Install paru (AUR helper)
   when: 
     - ansible_facts["distribution"] == "Archlinux"
     - paru_exists.rc != 0
   block:
-    - name: Install base-devel and git for paru
+    - name: Install build dependencies for paru
       become: true
       community.general.pacman:
         name:
           - base-devel
           - git
+          - rust
         state: present
 
     - name: Clone paru repository
@@ -49,13 +68,31 @@
         dest: /tmp/paru
         version: master
         depth: 1
+        force: true
 
-    - name: Build and install paru
+    - name: Build paru
       ansible.builtin.shell: |
         cd /tmp/paru
-        makepkg -si --noconfirm
-      args:
-        creates: /usr/bin/paru
+        makepkg -sf --noconfirm
+      changed_when: true
+
+    - name: Find built paru package
+      ansible.builtin.find:
+        paths: /tmp/paru
+        patterns: '^paru-(?!.*debug).*\.pkg\.tar\.zst$'
+        use_regex: true
+      register: paru_package
+
+    - name: Debug paru package search
+      ansible.builtin.debug:
+        var: paru_package
+
+    - name: Install paru package
+      become: true
+      community.general.pacman:
+        name: "{{ paru_package.files[0].path }}"
+        state: present
+      when: paru_package.matched > 0
 
     - name: Clean up paru build files
       ansible.builtin.file:
@@ -71,7 +108,22 @@
     - ansible_facts["distribution"] == "Archlinux"
     - arch_aur_packages | length > 0
   become: true
-  become_user: "{{ ansible_facts.env.USER }}"
+  become_user: aur_builder
+
+- name: Remove aur_builder user
+  become: true
+  ansible.builtin.user:
+    name: aur_builder
+    state: absent
+    remove: true
+  when: ansible_facts["distribution"] == "Archlinux"
+
+- name: Remove aur_builder sudoers file
+  become: true
+  ansible.builtin.file:
+    path: /etc/sudoers.d/11-install-aur_builder
+    state: absent
+  when: ansible_facts["distribution"] == "Archlinux"
 
 # Ubuntu package installation
 - name: Install apt packages (Ubuntu)
