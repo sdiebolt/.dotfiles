@@ -27,13 +27,13 @@ jobs:
         run: |
           useradd -m -G wheel -s /bin/bash testuser
           echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
-          chown -R testuser:testuser /github/workspace
+          chown -R testuser:testuser $GITHUB_WORKSPACE
 
       - name: Install Ansible collections
-        run: su - testuser -c "cd /github/workspace && ansible-galaxy collection install kewlfft.aur"
+        run: su - testuser -c "cd $GITHUB_WORKSPACE && ansible-galaxy collection install kewlfft.aur"
 
       - name: Run Ansible playbook syntax check
-        run: su - testuser -c "cd /github/workspace && ansible-playbook --syntax-check install.yml"
+        run: su - testuser -c "cd $GITHUB_WORKSPACE && ansible-playbook --syntax-check install.yml"
 
       - name: Run Ansible playbook
-        run: su - testuser -c "cd /github/workspace && ansible-playbook -i localhost, -c local install.yml"
+        run: su - testuser -c "cd $GITHUB_WORKSPACE && ansible-playbook -i localhost, -c local install.yml"
