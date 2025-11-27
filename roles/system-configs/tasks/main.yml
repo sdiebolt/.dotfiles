@@ -5,6 +5,23 @@
     name: stow
     state: present
 
+# Handle systemd drop-in configurations separately (systemd doesn't follow symlinks)
+- name: Ensure autologin drop-in directory exists
+  become: true
+  ansible.builtin.file:
+    path: /etc/systemd/system/getty@tty1.service.d
+    state: directory
+    mode: '0755'
+
+- name: Deploy autologin configuration (copy, not symlink)
+  become: true
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/system-configs/autologin/systemd/system/getty@tty1.service.d/autologin.conf"
+    dest: /etc/systemd/system/getty@tty1.service.d/autologin.conf
+    mode: '0644'
+  notify:
+    - systemd daemon-reload
+
 - name: Build system configs directories list
   ansible.builtin.find:
     paths: [system-configs/]
