@@ -27,6 +27,15 @@
     create_home: true
     group: wheel
 
+- name: Create ansible tmp directory for aur_builder
+  become: true
+  ansible.builtin.file:
+    path: /home/aur_builder/.ansible/tmp
+    state: directory
+    owner: aur_builder
+    group: wheel
+    mode: '0700'
+
 - name: Allow the aur_builder user to run sudo pacman without a password
   become: true
   ansible.builtin.lineinfile:
