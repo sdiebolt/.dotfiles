@@ -37,6 +37,7 @@ arch_pacman_packages:
   - imagemagick
   - luarocks
   - python
+  - nvm
 
   # GUI applications
   - ghostty
