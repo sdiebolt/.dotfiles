@@ -29,8 +29,8 @@ export FZF_CTRL_T_OPTS="
 # Python virtual environments
 export VIRTUALENVS="$HOME/.virtualenvs"
 
-# nvm
-source /usr/share/nvm/init-nvm.sh
+# mise
+eval "$($HOME/.local/bin/mise activate zsh)"
 
 # opencode
 export PATH=/home/sdiebolt/.opencode/bin:$PATH

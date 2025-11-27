@@ -2,6 +2,9 @@
 - name: Install Rust/Cargo
   ansible.builtin.import_tasks: rust.yml
 
+- name: Install mise
+  ansible.builtin.import_tasks: mise.yml
+
 - name: Install uv (Python package manager)
   ansible.builtin.import_tasks: uv.yml
 

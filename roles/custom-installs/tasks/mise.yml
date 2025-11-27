@@ -1,0 +1,22 @@
+---
+- name: Check if mise is installed
+  ansible.builtin.shell: command -v mise
+  register: mise_exists
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Install mise
+  when: mise_exists.rc != 0
+  block:
+    - name: Download and install mise
+      ansible.builtin.shell: curl https://mise.run | sh
+      args:
+        executable: /bin/bash
+        creates: "{{ ansible_facts.env.HOME }}/.local/bin/mise"
+      changed_when: true
+
+- name: Display mise installation success
+  ansible.builtin.debug:
+    msg: "mise has been installed successfully"
+  when: mise_exists.rc != 0
