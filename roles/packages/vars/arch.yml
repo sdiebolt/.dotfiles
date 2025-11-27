@@ -48,11 +48,13 @@ arch_pacman_packages:
   # Hyprland and related tools
   - hyprland
   - dunst
-  - swaybg
+  - hyprpaper
   - grim
   - wl-clipboard
   - hyprpicker
-  - swaylock
+  - hyprpolkitagent
+  - hyprlock
+  - hypridle
   - waybar
 
   # Audio
