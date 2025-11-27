@@ -1,0 +1,89 @@
+{
+    "reload_style_on_change": true,
+    "layer": "top",
+    "position": "top",
+    "height": 0,
+    "spacing": 0,
+    "mode": "dock",
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["tray", "network", "cpu", "pulseaudio", "battery", "clock"],
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "format": "{icon}",
+        "format-icons": {
+            "default": "",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "0",
+            "active": "󱓻"
+        },
+        "all-outputs": true,
+        "on-click": "activate",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+    "cpu": {
+        "interval": 5,
+        "format": "󰍛",
+        "on-click": "omarchy-launch-or-focus-tui btop"
+    },
+    "tray": {
+        "icon-size": 13,
+        "spacing": 10
+    },
+    "clock": {
+        "format": " {:%H:%M   %e %b}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+    "network": {
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "{ipaddr}/{cidr} 🌐",
+        "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    }
+}
