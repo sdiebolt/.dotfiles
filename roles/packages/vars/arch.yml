@@ -37,6 +37,7 @@ arch_pacman_packages:
   - imagemagick
   - luarocks
   - python
+  - github-cli
 
   # GUI applications
   - ghostty
