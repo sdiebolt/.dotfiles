@@ -38,6 +38,13 @@ arch_pacman_packages:
   - luarocks
   - python
   - github-cli
+  - tree-sitter-cli
+  - bash-language-server
+  - ansible-language-server
+  - lua-language-server
+  - yaml-language-server
+  - harper
+  - tinymist
 
   # GUI applications
   - ghostty
@@ -65,3 +72,9 @@ arch_pacman_packages:
   - wireplumber
   - pamixer
   - playerctl
+
+  # Typesettings
+  - ghostscript
+  - tectonic
+  - mermaid-cli
+  - python-pylatexenc
