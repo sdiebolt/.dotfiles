@@ -17,6 +17,11 @@ arch_pacman_packages:
   - docker-compose
   - bluetui
 
+  # Fonts
+  - noto-fonts-emoji 
+  - noto-fonts-cjk 
+  - ttf-nerd-fonts-symbols-mono
+
   # CLI tools
   - bat
   - btop
