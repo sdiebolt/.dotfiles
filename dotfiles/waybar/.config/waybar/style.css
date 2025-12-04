@@ -37,7 +37,7 @@
  * ----------------------------------------------------- */
 
 * {
-    font-family: "Inter", "Noto Color Emoji", "Symbols Nerd Font";
+    font-family: "Inter", "Font Awesome 7 Free Solid", "Font Awesome 7 Free", "Noto Color Emoji", "Symbols Nerd Font";
     font-size: 13px;
     font-weight: bold;
 }
@@ -103,6 +103,7 @@ window#waybar.hidden {
 #mpd {
     padding: 0 10px;
     color: @text;
+    font-weight: 900;
 }
 
 #window {

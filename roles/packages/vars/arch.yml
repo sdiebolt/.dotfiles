@@ -21,6 +21,7 @@ arch_pacman_packages:
   - noto-fonts-emoji 
   - noto-fonts-cjk 
   - ttf-nerd-fonts-symbols-mono
+  - otf-font-awesome
 
   # CLI tools
   - bat

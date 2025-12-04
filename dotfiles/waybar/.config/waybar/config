@@ -5,14 +5,25 @@
     "height": 0,
     "spacing": 0,
     "mode": "dock",
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["tray", "network", "cpu", "pulseaudio", "battery", "clock"],
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "tray",
+        "network",
+        "cpu",
+        "pulseaudio",
+        "battery",
+        "clock"
+    ],
     "hyprland/workspaces": {
         "disable-scroll": true,
         "format": "{icon}",
         "format-icons": {
-            "default": "",
+            "default": "",
             "1": "1",
             "2": "2",
             "3": "3",
@@ -37,40 +48,44 @@
     },
     "cpu": {
         "interval": 5,
-        "format": "⚙️",
+        "format": " {usage}%"
     },
     "tray": {
         "icon-size": 13,
         "spacing": 10
     },
     "clock": {
-        "format": "🕓 {:%H:%M  🗓️ %e %b}",
+        "format": " {:%H:%M   %e %b}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "tooltip": false,
-        "format-muted": "🔇",
+        "format-muted": "",
         "on-click": "pamixer -t",
         "on-scroll-up": "pamixer -i 5",
         "on-scroll-down": "pamixer -d 5",
         "scroll-step": 5,
         "format-icons": {
-            "headphone": "🎧",
-            "hands-free": "🎧",
-            "headset": "🎧",
-            "phone": "📞",
-            "portable": "📞",
-            "car": "🚗",
-            "default": ["🔈", "🔉", "🔊"]
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
         }
     },
     "network": {
-        "format-wifi": "🛜  {signalStrength}%",
-        "format-ethernet": "{ipaddr}/{cidr} 🌐",
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{essid} - {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "Disconnected ⚠️",
+        "format-disconnected": " Disconnected",
         "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
     },
     "battery": {
@@ -80,9 +95,15 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-charging": "⚡ {capacity}%",
-        "format-plugged": "🔌 {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     }
 }
