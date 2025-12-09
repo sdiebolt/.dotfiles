@@ -1,20 +1,21 @@
 /*
-debug: env GTK_DEBUG=interactive ghostty
-https://docs.gtk.org/gtk4/css-overview.html
-https://docs.gtk.org/gtk4/css-properties.html
-*/
-
+ * Catppuccin Mocha - Ghostty Tab Styling
+ * https://github.com/catppuccin/catppuccin
+ *
+ * Debug: GTK_DEBUG=interactive ghostty
+ * Docs: https://docs.gtk.org/gtk4/css-overview.html
+ */
 
 headerbar {
-  min-height: 0px;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: #1e1e2e;
+    min-height: 0px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: #1e1e2e; /* Base */
 }
 
 tabbar {
-    background-color: #11111b;
+    background-color: #11111b; /* Crust */
 }
 
 tab {
@@ -22,19 +23,18 @@ tab {
     border: none;
     margin: 0;
     padding: 2px 10px;
-    color: #a6adc8;
+    color: #a6adc8; /* Subtext0 */
     transition: all 0.2s ease;
-    font-family: "Monaspace Neon Var";
-    font-size: 13px;
 }
 
 tab:selected {
-    background-color: #cba6f7;
-    color: #1e1e2e;
+    background-color: #cba6f7; /* Mauve */
+    color: #1e1e2e; /* Base */
     font-weight: bold;
 }
 
 tab:hover:not(:selected) {
-    background-color: #313244;
-    color: #cdd6f4;
+    background-color: #313244; /* Surface0 */
+    color: #cdd6f4; /* Text */
 }
+
