@@ -64,7 +64,6 @@ arch_pacman_packages:
   - hyprland
   - dunst
   - hyprpaper
-  - grim
   - wl-clipboard
   - hyprpicker
   - hyprpolkitagent
