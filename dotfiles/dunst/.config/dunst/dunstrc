@@ -22,8 +22,8 @@
     horizontal_padding = 8
     text_icon_padding = 0
 
-    frame_width = 3
-    frame_color = "#181825"
+    frame_width = 2
+    frame_color = "#cba6f7"
     gap_size = 10
     separator_color = frame
 
@@ -65,6 +65,7 @@
 [urgency_low]
     background = "#181825"
     foreground = "#CDD6F4"
+    frame_color = "#45475a"
     timeout = 10
     min_icon_size = 80
     max_icon_size = 80
@@ -77,6 +78,6 @@
 [urgency_critical]
     background = "#181825"
     foreground = "#CDD6F4"
-    frame_color = "#FAB387"
+    frame_color = "#f38ba8"
     timeout = 0
 
