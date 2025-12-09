@@ -4,3 +4,8 @@ window-decoration = none
 
 font-family = "Monaspace Neon Var"
 font-size = 10
+
+gtk-custom-css = tab-style.css
+
+gtk-wide-tabs = false
+gtk-tabs-location = bottom

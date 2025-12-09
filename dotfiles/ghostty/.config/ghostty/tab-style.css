@@ -1,0 +1,40 @@
+/*
+debug: env GTK_DEBUG=interactive ghostty
+https://docs.gtk.org/gtk4/css-overview.html
+https://docs.gtk.org/gtk4/css-properties.html
+*/
+
+
+headerbar {
+  min-height: 0px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: #1e1e2e;
+}
+
+tabbar {
+    background-color: #11111b;
+}
+
+tab {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 2px 10px;
+    color: #a6adc8;
+    transition: all 0.2s ease;
+    font-family: "Monaspace Neon Var";
+    font-size: 13px;
+}
+
+tab:selected {
+    background-color: #cba6f7;
+    color: #1e1e2e;
+    font-weight: bold;
+}
+
+tab:hover:not(:selected) {
+    background-color: #313244;
+    color: #cdd6f4;
+}
