@@ -8,8 +8,8 @@ return {
     settings = {
         ty = {
             diagnosticMode = "workspace",
-            experimental = {
-                rename = true,
+            inlayHints = {
+                callArgumentNames = true,
             },
         }
     }
