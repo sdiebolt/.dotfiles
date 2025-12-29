@@ -70,6 +70,10 @@ arch_pacman_packages:
   - hyprlock
   - hypridle
   - waybar
+  - qt5-wayland
+  - qt6-wayland
+  - xdg-desktop-portal-hyprland
+  - xdg-desktop-portal-gtk
 
   # Audio
   - pipewire
