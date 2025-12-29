@@ -16,6 +16,9 @@ arch_pacman_packages:
   - docker
   - docker-compose
   - bluetui
+  - gnome-keyring
+  - libsecret
+  - seahorse
 
   # Fonts
   - noto-fonts-emoji 

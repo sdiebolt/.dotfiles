@@ -19,3 +19,6 @@
 
 - name: Set zsh as default shell
   ansible.builtin.import_tasks: zsh-defaults.yml
+
+- name: Configure gnome-keyring SSH agent
+  ansible.builtin.import_tasks: gnome-keyring.yml

@@ -43,3 +43,6 @@ export PATH=/home/sdiebolt/.opencode/bin:$PATH
 
 # Sheldon completions
 . <( sheldon completions --shell zsh )
+
+# GNOME Keyring SSH agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"

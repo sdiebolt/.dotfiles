@@ -1,0 +1,25 @@
+---
+# PAM configuration for gnome-keyring (required for console login without display manager)
+- name: Add pam_gnome_keyring auth to /etc/pam.d/login
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/login
+    line: "auth       optional     pam_gnome_keyring.so"
+    insertafter: "^auth"
+    state: present
+
+- name: Add pam_gnome_keyring session to /etc/pam.d/login
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/login
+    line: "session    optional     pam_gnome_keyring.so auto_start"
+    insertafter: "^session"
+    state: present
+
+# Enable the GCR SSH agent socket
+- name: Enable gcr-ssh-agent socket for user
+  ansible.builtin.systemd:
+    name: gcr-ssh-agent.socket
+    scope: user
+    enabled: true
+    state: started
