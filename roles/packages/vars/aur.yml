@@ -5,3 +5,4 @@ arch_aur_packages:
   - lazygit
   - tlrc
   - grimblast
+  - brave-bin
