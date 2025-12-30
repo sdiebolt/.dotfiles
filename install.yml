@@ -6,10 +6,6 @@
         name: dotfiles
       tags: dotfiles
 
-    - ansible.builtin.import_role:
-        name: system-configs
-      tags: system-configs
-
     # Install all standard packages (pacman, AUR)
     - ansible.builtin.import_role:
         name: packages
@@ -35,3 +31,7 @@
     - ansible.builtin.import_role:
         name: ufw
       tags: ufw
+
+    - ansible.builtin.import_role:
+        name: greetd
+      tags: greetd

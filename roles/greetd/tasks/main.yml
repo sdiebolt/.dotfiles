@@ -1,0 +1,41 @@
+---
+# Install and configure greetd with agreety for minimal autologin
+# with gnome-keyring automatic unlocking support
+
+- name: Install greetd
+  become: true
+  community.general.pacman:
+    name: greetd
+    state: present
+
+- name: Deploy greetd configuration
+  become: true
+  ansible.builtin.template:
+    src: "{{ role_path }}/files/config.toml"
+    dest: /etc/greetd/config.toml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart greetd
+
+- name: Add pam_gnome_keyring auth to /etc/pam.d/greetd
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/greetd
+    line: "auth       optional     pam_gnome_keyring.so"
+    insertafter: "^auth.*system-local-login"
+    state: present
+
+- name: Add pam_gnome_keyring session to /etc/pam.d/greetd
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/greetd
+    line: "session    optional     pam_gnome_keyring.so auto_start"
+    insertafter: "^session.*system-local-login"
+    state: present
+
+- name: Enable greetd service
+  become: true
+  ansible.builtin.systemd:
+    name: greetd.service
+    enabled: true
