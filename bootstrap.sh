@@ -133,7 +133,6 @@ list_tags() {
     echo "  custom-installs - Install tools requiring custom installation"
     echo "  opencode      - Install OpenCode editor"
     echo "  fonts         - Install fonts"
-    echo "  x11           - Install X11 utilities"
     echo "  ufw           - Install and configure UFW firewall"
     echo ""
     print_info "Example usage:"

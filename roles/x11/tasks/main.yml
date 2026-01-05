@@ -1,8 +1,0 @@
----
-- name: Install X11 utilities
-  become: true
-  community.general.pacman:
-    name:
-      - xorg-xinit
-      - xorg-xrdb
-    state: present

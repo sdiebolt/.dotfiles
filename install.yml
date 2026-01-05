@@ -25,10 +25,6 @@
       tags: fonts
 
     - ansible.builtin.import_role:
-        name: x11
-      tags: x11
-
-    - ansible.builtin.import_role:
         name: ufw
       tags: ufw
 
