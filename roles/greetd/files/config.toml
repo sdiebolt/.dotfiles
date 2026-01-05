@@ -2,9 +2,9 @@
 vt = 1
 
 [default_session]
-command = "agreety --cmd Hyprland"
+command = "agreety --cmd start-hyprland"
 user = "greeter"
 
 [initial_session]
-command = "Hyprland"
+command = "start-hyprland"
 user = "sdiebolt"
