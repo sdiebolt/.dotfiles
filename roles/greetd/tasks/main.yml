@@ -16,7 +16,13 @@
     owner: root
     group: root
     mode: '0644'
-  notify: Restart greetd
+  register: greetd_config
+  notify: Enable greetd
+
+- name: Notify user if greetd config changed
+  ansible.builtin.debug:
+    msg: "greetd configuration changed. Please reboot for changes to take effect."
+  when: greetd_config.changed
 
 - name: Add pam_gnome_keyring auth to /etc/pam.d/greetd
   become: true
