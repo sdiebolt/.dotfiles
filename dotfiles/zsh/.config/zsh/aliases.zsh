@@ -1,6 +1,3 @@
-# bat
-alias cat="bat --theme "Dracula" --color always"
-
 # dust
 alias du="dust"
 
