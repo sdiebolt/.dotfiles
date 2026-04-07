@@ -5,7 +5,6 @@ return {
 
     opts = {
         options = {
-            theme = "catppuccin",
             disabled_filetypes = { "packer", "NVimTree", "neo-tree" },
         },
         sections = {
