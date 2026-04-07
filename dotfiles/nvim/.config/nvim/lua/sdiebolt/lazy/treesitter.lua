@@ -3,11 +3,11 @@ return {
 
     lazy = false,
 
-    brain = "main",
+    branch = "main",
 
     build = ":TSUpdate",
 
-    main = "nvim-treesitter.configs",
+    main = "nvim-treesitter",
 
     opts = {
         ensure_installed = {
