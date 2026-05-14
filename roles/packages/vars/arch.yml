@@ -49,7 +49,6 @@ arch_pacman_packages:
   - github-cli
   - tree-sitter-cli
   - bash-language-server
-  - ansible-language-server
   - lua-language-server
   - yaml-language-server
   - harper

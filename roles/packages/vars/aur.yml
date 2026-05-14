@@ -1,6 +1,7 @@
 ---
 # AUR packages installable via paru
 arch_aur_packages:
+  - ansible-language-server
   - lsd
   - lazygit
   - tlrc
