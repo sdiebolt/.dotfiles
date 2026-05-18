@@ -16,6 +16,10 @@ vim.lsp.enable({
     "ansible",
     -- yaml
     "yaml",
+    -- astro
+    "astro",
+    -- typescript
+    "biome",
 })
 
 -- Disable LSP logging, as the LSP log file will otherwise grow indefinitely.

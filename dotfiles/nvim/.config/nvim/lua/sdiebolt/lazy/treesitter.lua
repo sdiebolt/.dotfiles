@@ -19,6 +19,7 @@ return {
             "javascript",
             "bash",
             "html",
+            "astro",
             "css",
             "python",
             "typescript",
