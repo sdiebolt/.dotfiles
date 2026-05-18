@@ -1,0 +1,8 @@
+{
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.3-codex",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "https://github.com/JuliusBrussee/caveman"
+  ]
+}
