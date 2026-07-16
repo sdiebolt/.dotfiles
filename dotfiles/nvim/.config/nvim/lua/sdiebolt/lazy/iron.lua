@@ -13,7 +13,11 @@ return {
                         command = { "zsh" },
                     },
                     python = {
-                        command = { "uv", "run", "ipython", "--no-autoindent" },
+                        command = {
+                            "uv", "run", "ipython", "--no-autoindent",
+                            "--ext", "autoreload",
+                            "--InteractiveShellApp.exec_lines=%autoreload 2",
+                        },
                         format = require("iron.fts.common").bracketed_paste_python,
                     },
                 },
