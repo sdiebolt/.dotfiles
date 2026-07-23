@@ -20,6 +20,8 @@ vim.lsp.enable({
     "astro",
     -- typescript
     "biome",
+    -- c/c++
+    "clangd",
 })
 
 -- Disable LSP logging, as the LSP log file will otherwise grow indefinitely.
