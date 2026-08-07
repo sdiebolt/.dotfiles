@@ -1,8 +1,13 @@
 {
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.3-codex",
-  "defaultThinkingLevel": "medium",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "high",
   "packages": [
-    "https://github.com/JuliusBrussee/caveman"
-  ]
+    "https://github.com/JuliusBrussee/caveman",
+    "git:github.com/otahontas/pi-coding-agent-catppuccin",
+    "git:github.com/DietrichGebert/ponytail"
+  ],
+  "theme": "catppuccin-mocha",
+  "lastChangelogVersion": "0.83.0",
+  "hideThinkingBlock": true
 }
