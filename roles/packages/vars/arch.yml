@@ -55,6 +55,7 @@ arch_pacman_packages:
   - yaml-language-server
   - harper
   - tinymist
+  - typst
 
   # GUI applications
   - ghostty
