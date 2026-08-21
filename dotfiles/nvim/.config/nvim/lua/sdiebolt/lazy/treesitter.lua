@@ -7,8 +7,6 @@ return {
 
     build = ":TSUpdate",
 
-    main = "nvim-treesitter",
-
     opts = {
         ensure_installed = {
             "c",
@@ -35,5 +33,18 @@ return {
         auto_install = true,
         indent = { enable = true },
         highlight = { enable = true },
-    }
+    },
+
+    config = function(_, opts)
+        local ts = require("nvim-treesitter")
+
+        ts.setup()
+        ts.install(opts.ensure_installed)
+
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function()
+                pcall(vim.treesitter.start)
+            end,
+        })
+    end,
 }

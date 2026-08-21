@@ -19,6 +19,12 @@ vim.opt.smartindent = true
 -- Disable wrapping.
 vim.opt.wrap = false
 
+-- Treesitter code folding.
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldenable = false -- start unfolded
+vim.opt.foldlevel = 99
+
 -- Set swap file
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
