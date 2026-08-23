@@ -2,6 +2,8 @@ local keyboard_layout = "us,fr"
 local terminal = "ghostty"
 local menu = "rofi -combi-modi window,drun -show drun"
 local file_manager = "nautilus"
+local screen_off_cmd = [[hyprctl dispatch 'hl.dsp.dpms({action = "off"})']]
+local lock_and_screen_off_cmd = "hyprlock & sleep 1; " .. screen_off_cmd
 
 hl.monitor({
     output = "",
@@ -118,7 +120,8 @@ hl.bind(mod_shift .. " + M", hl.dsp.exit())
 hl.bind(mod .. " + S", hl.dsp.exec_cmd("grimblast copy screen"))
 hl.bind(mod_shift .. " + S", hl.dsp.exec_cmd("grimblast copy area"))
 hl.bind(mod_shift .. " + C", hl.dsp.exec_cmd("hyprpicker --no-fancy --autocopy --render-inactive"))
-hl.bind(mod_shift .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mod_shift .. " + O", hl.dsp.dpms({ action = "off" }))
+hl.bind(mod_shift .. " + L", hl.dsp.exec_cmd(lock_and_screen_off_cmd))
 
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
