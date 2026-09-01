@@ -91,7 +91,9 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default
 
 local mod = "SUPER"
 local shift = "SHIFT"
+local alt = "ALT"
 local mod_shift = mod .. " + " .. shift
+local mod_alt = mod .. " + " .. alt
 
 for i = 1, 9 do
     hl.bind(mod .. " + " .. i, hl.dsp.focus({ workspace = i }))
@@ -117,8 +119,9 @@ hl.bind(mod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mod .. " + E", hl.dsp.exec_cmd(file_manager))
 
 hl.bind(mod_shift .. " + M", hl.dsp.exit())
-hl.bind(mod .. " + S", hl.dsp.exec_cmd("grimblast copy screen"))
-hl.bind(mod_shift .. " + S", hl.dsp.exec_cmd("grimblast copy area"))
+hl.bind(mod .. " + S", hl.dsp.exec_cmd("hyprshot -m output -m active --clipboard-only"))
+hl.bind(mod_shift .. " + S", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
+hl.bind(mod_alt .. " + S", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
 hl.bind(mod_shift .. " + C", hl.dsp.exec_cmd("hyprpicker --no-fancy --autocopy --render-inactive"))
 hl.bind(mod_shift .. " + O", hl.dsp.dpms({ action = "off", monitor = "eDP-1" }))
 hl.bind(mod_shift .. " + L", hl.dsp.exec_cmd(lock_and_screen_off_cmd))
