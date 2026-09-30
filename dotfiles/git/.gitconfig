@@ -31,7 +31,7 @@
   navigate = true
   features = catppuccin-mocha
 [merge]
-  conflictStyle = zdiff3
+  conflictstyle = diff3
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
