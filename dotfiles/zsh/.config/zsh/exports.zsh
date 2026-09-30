@@ -45,3 +45,14 @@ export PATH=/home/sdiebolt/.opencode/bin:$PATH
 
 # GNOME Keyring SSH agent
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+
+# Pixi
+export PATH="/home/sdiebolt/.pixi/bin:$PATH"
+
+# CUDA
+export PATH="/opt/cuda/bin:$PATH"
+export CUDA_HOME="/opt/cuda"
+
+# Vcpkg
+export VCPKG_ROOT=~/vcpkg
+export VCPKG_DEFAULT_TRIPLET=x64-linux
