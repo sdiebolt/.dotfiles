@@ -17,7 +17,6 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # fzf
-export PATH="$HOME/.fzf/bin:$PATH"
 source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 # Preview file content using bat (https://github.com/sharkdp/bat)
