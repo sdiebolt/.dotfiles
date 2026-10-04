@@ -120,7 +120,7 @@ hl.bind(mod .. " + E", hl.dsp.exec_cmd(file_manager))
 
 hl.bind(mod_shift .. " + M", hl.dsp.exit())
 hl.bind(mod .. " + S", hl.dsp.exec_cmd("hyprshot -m output -m active --clipboard-only"))
-hl.bind(mod_shift .. " + S", hl.dsp.exec_cmd("sh ~/.config/hypr/screenshot-region.sh"))
+hl.bind(mod_shift .. " + S", hl.dsp.exec_cmd("hyprshot -z -m region --clipboard-only"))
 hl.bind(mod_alt .. " + S", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
 hl.bind(mod_shift .. " + C", hl.dsp.exec_cmd("hyprpicker --no-fancy --autocopy --render-inactive"))
 hl.bind(mod_shift .. " + O", hl.dsp.dpms({ action = "off", monitor = "eDP-1" }))
