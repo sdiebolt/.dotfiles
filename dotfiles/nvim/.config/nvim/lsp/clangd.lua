@@ -1,5 +1,5 @@
 return {
-    cmd = { "clangd" },
+    cmd = { "clangd", "--background-index", "--clang-tidy" },
 
     filetypes = { "c", "c.doxygen", "cpp", "cpp.doxygen", "objc", "objcpp", "cuda" },
 

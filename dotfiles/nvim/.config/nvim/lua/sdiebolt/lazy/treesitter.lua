@@ -10,6 +10,8 @@ return {
     opts = {
         ensure_installed = {
             "c",
+            "cpp",
+            "cuda",
             "lua",
             "vim",
             "vimdoc",
