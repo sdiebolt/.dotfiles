@@ -14,6 +14,15 @@
 - name: Install prettyping
   ansible.builtin.import_tasks: prettyping.yml
 
+- name: Install OpenCode
+  ansible.builtin.import_tasks: opencode.yml
+
+- name: Install Pi
+  ansible.builtin.import_tasks: pi.yml
+
+- name: Install Claude
+  ansible.builtin.import_tasks: claude.yml
+
 - name: Set Ghostty as default terminal
   ansible.builtin.import_tasks: ghostty-defaults.yml
 

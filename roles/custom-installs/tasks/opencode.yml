@@ -7,8 +7,6 @@
   failed_when: false
 
 - name: Install OpenCode
+  ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
   when: opencode_exists.rc != 0
-  block:
-    - name: Download and install OpenCode
-      ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
-      changed_when: true
+  changed_when: true

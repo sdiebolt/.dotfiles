@@ -4,6 +4,7 @@ arch_pacman_packages:
   # Base system packages
   - base-devel
   - curl
+  - git-lfs
   - jq
   - openssh
   - unzip
@@ -38,6 +39,7 @@ arch_pacman_packages:
   - just
   - less
   - ripgrep
+  - rclone
   - sheldon
   - zellij
   - zoxide
@@ -45,6 +47,7 @@ arch_pacman_packages:
 
   # Development tools
   - neovim
+  - clang
   - imagemagick
   - luarocks
   - python
@@ -56,9 +59,19 @@ arch_pacman_packages:
   - harper
   - tinymist
   - typst
+  - cuda
+  - nsight-compute
+  - nsight-systems
+  - nvidia-container-toolkit
 
   # GUI applications
   - ghostty
+  - calibre
+  - discord
+  - inkscape
+  - libreoffice-fresh
+  - mpv
+  - obs-studio
   - i3-wm
   - i3status
   - rofi
@@ -76,6 +89,7 @@ arch_pacman_packages:
   - hyprlock
   - hypridle
   - waybar
+  - qt5ct
   - qt5-wayland
   - qt6-wayland
   - xdg-desktop-portal-hyprland

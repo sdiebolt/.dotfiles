@@ -1,0 +1,13 @@
+---
+- name: Check if Claude is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.local/bin/claude"
+  register: claude_bin
+
+- name: Install Claude
+  ansible.builtin.shell: curl -fsSL https://claude.ai/install.sh | bash
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_facts.env.HOME }}/.local/bin/claude"
+  when: not claude_bin.stat.exists
+  changed_when: true

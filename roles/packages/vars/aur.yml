@@ -6,3 +6,5 @@ arch_aur_packages:
   - lazygit
   - tlrc
   - brave-bin
+  - slack-desktop
+  - zoom

@@ -1,0 +1,13 @@
+---
+- name: Check if Pi is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.local/bin/pi"
+  register: pi_bin
+
+- name: Install Pi
+  ansible.builtin.shell: curl -fsSL https://pi.dev/install.sh | sh
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_facts.env.HOME }}/.local/bin/pi"
+  when: not pi_bin.stat.exists
+  changed_when: true

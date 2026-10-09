@@ -17,10 +17,6 @@
       tags: custom-installs
 
     - ansible.builtin.import_role:
-        name: opencode
-      tags: opencode
-
-    - ansible.builtin.import_role:
         name: fonts
       tags: fonts
 
