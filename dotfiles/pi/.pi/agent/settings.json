@@ -1,7 +1,7 @@
 {
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
-  "defaultThinkingLevel": "high",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "medium",
   "packages": [
     "https://github.com/JuliusBrussee/caveman",
     "git:github.com/otahontas/pi-coding-agent-catppuccin",
