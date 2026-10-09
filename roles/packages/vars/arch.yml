@@ -51,6 +51,8 @@ arch_pacman_packages:
   - imagemagick
   - luarocks
   - python
+  - nodejs
+  - npm
   - github-cli
   - tree-sitter-cli
   - bash-language-server
