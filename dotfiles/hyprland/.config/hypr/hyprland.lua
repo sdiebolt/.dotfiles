@@ -29,6 +29,8 @@ hl.env("__GL_VRR_ALLOWED", "0")
 
 hl.on("hyprland.start", function()
     for _, cmd in ipairs({
+        "gsettings set org.gnome.desktop.interface color-scheme prefer-dark",
+        "gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark",
         "waybar",
         "dunst",
         "systemctl --user start hyprpolkitagent",
