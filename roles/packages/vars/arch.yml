@@ -4,6 +4,7 @@ arch_pacman_packages:
   # Base system packages
   - base-devel
   - curl
+  - cifs-utils
   - git-lfs
   - jq
   - openssh
