@@ -32,7 +32,7 @@ export VIRTUALENVS="$HOME/.virtualenvs"
 eval "$($HOME/.local/bin/mise activate zsh)"
 
 # opencode
-export PATH=/home/sdiebolt/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # Setup rustup shell
 . "$HOME/.cargo/env"
@@ -47,12 +47,12 @@ export PATH=/home/sdiebolt/.opencode/bin:$PATH
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
 
 # Pixi
-export PATH="/home/sdiebolt/.pixi/bin:$PATH"
+export PATH="$HOME/.pixi/bin:$PATH"
 
 # CUDA
 export PATH="/opt/cuda/bin:$PATH"
 export CUDA_HOME="/opt/cuda"
 
 # Vcpkg
-export VCPKG_ROOT=~/vcpkg
+export VCPKG_ROOT="$HOME/.local/vcpkg"
 export VCPKG_DEFAULT_TRIPLET=x64-linux
