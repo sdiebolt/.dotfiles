@@ -36,6 +36,7 @@ arch_pacman_packages:
   - git-delta
   - dust
   - fd
+  - feh
   - fzf
   - just
   - less
