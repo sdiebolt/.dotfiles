@@ -1,0 +1,19 @@
+---
+- name: Ensure user systemd wants directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/systemd/user/graphical-session.target.wants"
+    state: directory
+    mode: "0755"
+
+# Enabling through symlinks rather than `systemctl --user enable` keeps the
+# role usable when no user manager is running, e.g. inside a container.
+- name: Enable graphical session services
+  ansible.builtin.file:
+    src: "/usr/lib/systemd/user/{{ item }}.service"
+    dest: "{{ ansible_facts.env.HOME }}/.config/systemd/user/graphical-session.target.wants/{{ item }}.service"
+    state: link
+  loop:
+    - waybar
+    - hypridle
+    - hyprpaper
+    - hyprpolkitagent

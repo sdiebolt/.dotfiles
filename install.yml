@@ -16,6 +16,11 @@
         name: custom-installs
       tags: custom-installs
 
+    # Enable systemd user services started with the graphical session
+    - ansible.builtin.import_role:
+        name: user-services
+      tags: user-services
+
     - ansible.builtin.import_role:
         name: fonts
       tags: fonts
