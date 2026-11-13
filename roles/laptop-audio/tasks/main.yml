@@ -1,0 +1,51 @@
+---
+# The ALC287 ADC on the Legion Pro 7 16IAX10H is very hot at its default gain:
+# PipeWire's 27% maps to raw 0x3a (+26.25 dB), while Windows caps the same ADC
+# at 0x25 (+10.5 dB). PipeWire reaches 0x25 at 15%.
+#
+# Setting the volume through PipeWire persists it in WirePlumber's state, so it
+# survives reboots. The role is imported with a DMI guard in install.yml.
+- name: Check whether PipeWire is available in the user session
+  ansible.builtin.command: pactl info
+  register: pactl_info
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Configure the internal microphone
+  when: pactl_info.rc == 0
+  block:
+    - name: List PipeWire audio sources
+      ansible.builtin.command: pactl --format=json list sources
+      register: pactl_sources
+      changed_when: false
+      check_mode: false
+
+    - name: Select the internal microphone source
+      ansible.builtin.set_fact:
+        internal_mic_source: >-
+          {{ pactl_sources.stdout
+             | from_json
+             | selectattr('name', 'match', '^alsa_input\.pci-')
+             | map(attribute='name')
+             | first
+             | default('') }}
+
+    - name: Read the internal microphone volume
+      ansible.builtin.command: "pactl --format=json get-source-volume {{ internal_mic_source }}"
+      register: internal_mic_volume
+      changed_when: false
+      check_mode: false
+      when: internal_mic_source | length > 0
+
+    - name: Set the internal microphone gain to 15%
+      ansible.builtin.command: "pactl set-source-volume {{ internal_mic_source }} 15%"
+      when: >-
+        internal_mic_source | length > 0 and
+        (internal_mic_volume.stdout | from_json).volume['front-left'].value_percent != '15%'
+      check_mode: false
+
+    - name: Warn when no internal microphone source is present
+      ansible.builtin.debug:
+        msg: "No PipeWire ALSA input source found; skipping internal microphone gain setup."
+      when: internal_mic_source | length == 0

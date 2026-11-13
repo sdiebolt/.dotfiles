@@ -11,6 +11,12 @@
         name: packages
       tags: packages
 
+    # Apply hardware tweaks that only apply to known machines
+    - ansible.builtin.import_role:
+        name: laptop-audio
+      tags: laptop-audio
+      when: "'16IAX10H' in (ansible_facts['product_version'] | default(''))"
+
     # Install tools requiring custom installation methods
     - ansible.builtin.import_role:
         name: custom-installs

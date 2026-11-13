@@ -101,6 +101,7 @@ arch_pacman_packages:
   - xdg-desktop-portal-gtk
 
   # Audio
+  - alsa-utils
   - pipewire
   - pipewire-pulse
   - wireplumber
