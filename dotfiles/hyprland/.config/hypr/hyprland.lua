@@ -136,6 +136,7 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tru
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 hl.define_submap("voxtype_recording", "reset", function()
+    hl.bind(mod_shift .. " + V", hl.dsp.exec_cmd("voxtype record toggle"))
     hl.bind("F12", hl.dsp.exec_cmd("voxtype record cancel"))
 end)
 
