@@ -100,6 +100,7 @@ end
 hl.bind(mod .. " + Q", hl.dsp.window.close())
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod_shift .. " + V", hl.dsp.exec_cmd("voxtype record toggle"))
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mod .. " + A", hl.dsp.layout("togglesplit"))
 
@@ -134,3 +135,19 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+
+hl.define_submap("voxtype_recording", "reset", function()
+    hl.bind("F12", hl.dsp.exec_cmd("voxtype record cancel"))
+end)
+
+hl.define_submap("voxtype_suppress", function()
+    for _, key in ipairs({
+        "SUPER_L", "SUPER_R",
+        "Control_L", "Control_R",
+        "Alt_L", "Alt_R",
+        "Shift_L", "Shift_R",
+    }) do
+        hl.bind(key, hl.dsp.exec_cmd("true"))
+    end
+    hl.bind("F12", hl.dsp.submap("reset"))
+end)
