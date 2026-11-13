@@ -8,9 +8,24 @@
     "git:github.com/DietrichGebert/ponytail",
     "npm:pi-web-access",
     "npm:pi-subagents",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:pi-mobile",
+    "npm:pi-multi-pass",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@juicesharp/rpiv-todo"
   ],
   "theme": "catppuccin-mocha",
-  "lastChangelogVersion": "1.1.0",
-  "hideThinkingBlock": true
+  "lastChangelogVersion": "1.5.2",
+  "hideThinkingBlock": true,
+  "extensions": [
+    "-builtin:mcp"
+  ],
+  "deviceId": "76417a34-bc20-4ad9-b76b-b61e9c2f98c7",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.47.0",
+    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.88.1",
+    "{\"source\":\"npm:pi-mcp-adapter\",\"scope\":\"user\"}": "7.0.1"
+  },
+  "steeringMode": "all",
+  "followUpMode": "all"
 }
