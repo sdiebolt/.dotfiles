@@ -13,9 +13,6 @@ arch_pacman_packages:
   - polkit
   - iwd
   - brightnessctl
-  - tlp 
-  - tlp-pd
-  - tlp-rdw
   - fastfetch
   - docker
   - docker-compose

@@ -13,6 +13,23 @@
     name: "{{ arch_pacman_packages }}"
     state: present
 
+- name: Configure TLP on the Lenovo laptop
+  when: "'16IAX10H' in (ansible_facts['product_version'] | default(''))"
+  become: true
+  block:
+    - name: Remove conflicting power-profiles-daemon
+      community.general.pacman:
+        name: power-profiles-daemon
+        state: absent
+
+    - name: Install TLP packages
+      community.general.pacman:
+        name:
+          - tlp
+          - tlp-pd
+          - tlp-rdw
+        state: present
+
 - name: Check if paru is installed
   ansible.builtin.shell: command -v paru
   register: paru_exists
