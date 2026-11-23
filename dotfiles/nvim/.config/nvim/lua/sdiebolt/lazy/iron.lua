@@ -4,22 +4,33 @@ return {
     config = function()
         local iron = require("iron.core")
 
+        local ipython_args = {
+            "--no-autoindent",
+            "--ext", "autoreload",
+            "--InteractiveShellApp.exec_lines=%autoreload 2",
+        }
+        local python = {
+            command = vim.list_extend({ "uv", "run", "ipython" }, ipython_args),
+            format = require("iron.fts.common").bracketed_paste_python,
+        }
+
+        -- Optional machine-local Python REPL integration.
+        local local_config = vim.fn.stdpath("data") .. "/iron-python.lua"
+        local scope
+        if vim.fn.filereadable(local_config) == 1 then
+            scope = dofile(local_config)(python, ipython_args)
+        end
+
         iron.setup {
             config = {
                 scratch_repl = true,
+                scope = scope,
 
                 repl_definition = {
                     sh = {
                         command = { "zsh" },
                     },
-                    python = {
-                        command = {
-                            "uv", "run", "ipython", "--no-autoindent",
-                            "--ext", "autoreload",
-                            "--InteractiveShellApp.exec_lines=%autoreload 2",
-                        },
-                        format = require("iron.fts.common").bracketed_paste_python,
-                    },
+                    python = python,
                 },
                 repl_open_cmd = require("iron.view").split.belowright("20%"),
             },
