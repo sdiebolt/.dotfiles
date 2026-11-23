@@ -14,7 +14,5 @@ return {
                 virt_text_priority = 100,
             },
         })
-
-        require("scrollbar.handlers.gitsigns").setup()
     end,
 }
