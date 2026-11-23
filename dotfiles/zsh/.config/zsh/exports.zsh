@@ -1,23 +1,32 @@
 export ZSHRC="$HOME/.zshrc"
 export TERMINAL="ghostty"
 export EDITOR="nvim"
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
 export PATH="$HOME/.local/bin":$PATH
-export TERM=xterm-256color
+
+if [[ $OSTYPE == linux* ]]; then
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    export LANGUAGE=en_US.UTF-8
+    export TERM=xterm-256color
+fi
 
 # Fix pip SSL cert validation.
 export NODE_TLS_REJECT_UNAUTHORIZED=1
 
 # Starship prompt
-eval "$(starship init zsh)"
+if (( $+commands[starship] )); then
+    eval "$(starship init zsh)"
+fi
 
 # zoxide
-eval "$(zoxide init zsh)"
+if (( $+commands[zoxide] )); then
+    eval "$(zoxide init zsh)"
+fi
 
 # fzf
-source <(fzf --zsh)
+if (( $+commands[fzf] )); then
+    source <(fzf --zsh)
+fi
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
@@ -29,30 +38,33 @@ export FZF_CTRL_T_OPTS="
 export VIRTUALENVS="$HOME/.virtualenvs"
 
 # mise
-eval "$($HOME/.local/bin/mise activate zsh)"
+if (( $+commands[mise] )); then
+    eval "$(mise activate zsh)"
+fi
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
 
-# Setup rustup shell
-. "$HOME/.cargo/env"
-
 # Zellij completions
-. <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
+if (( $+commands[zellij] )); then
+    . <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
+fi
 
 # Sheldon completions
 . <( sheldon completions --shell zsh )
 
-# GNOME Keyring SSH agent
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
-
 # Pixi
 export PATH="$HOME/.pixi/bin:$PATH"
 
-# CUDA
-export PATH="/opt/cuda/bin:$PATH"
-export CUDA_HOME="/opt/cuda"
+if [[ $OSTYPE == linux* ]]; then
+    # GNOME Keyring SSH agent
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
 
-# Vcpkg
-export VCPKG_ROOT="$HOME/.local/vcpkg"
-export VCPKG_DEFAULT_TRIPLET=x64-linux
+    # CUDA
+    export PATH="/opt/cuda/bin:$PATH"
+    export CUDA_HOME="/opt/cuda"
+
+    # Vcpkg
+    export VCPKG_ROOT="$HOME/.local/vcpkg"
+    export VCPKG_DEFAULT_TRIPLET=x64-linux
+fi

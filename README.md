@@ -1,9 +1,23 @@
 # Personal dotfiles
 
 > [!NOTE]
-> These dotfiles are tested and working on Arch Linux.
+> The full workstation setup targets Arch Linux. macOS has a separate installer for the shared developer tools.
 
 ## Quick Start
+
+### macOS
+
+Install [Homebrew](https://brew.sh/) first. From a checkout of this repository, use the macOS installer.
+
+```bash
+./macos/install.sh
+```
+
+The installer checks for Stow conflicts before installing the Brewfile packages or
+linking configs. If Stow reports a conflict, review and back up the existing file before
+moving it aside or merging its contents.
+
+### Arch Linux
 
 The easiest way to install is using the bootstrap script, which will automatically:
 - Detect your OS (Arch Linux)
@@ -11,13 +25,13 @@ The easiest way to install is using the bootstrap script, which will automatical
 - Clone this repository
 - Run the Ansible playbook
 
-### One-line install
+#### One-line install
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdiebolt/.dotfiles/master/bootstrap.sh | bash
 ```
 
-### Or clone and run locally
+#### Or clone and run locally
 
 ```bash
 git clone https://github.com/sdiebolt/.dotfiles.git ~/.dotfiles
@@ -59,6 +73,21 @@ ansible-playbook -K install.yml --skip-tags fonts
 
 ### Check what would change (dry-run)
 
+On Arch, the bootstrap passes `--check` to Ansible.
+
+```bash
+./bootstrap.sh --check
+```
+
+If you already have the bootstrap dependencies, you can run the playbook directly.
+
 ```bash
 ansible-playbook -K install.yml --check
+```
+
+On macOS, `--check` lists missing Homebrew packages and previews links when Stow
+is available. It exits nonzero for missing dependencies or link conflicts.
+
+```bash
+./macos/install.sh --check
 ```
