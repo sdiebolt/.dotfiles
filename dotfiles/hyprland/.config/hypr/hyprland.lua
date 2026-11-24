@@ -85,6 +85,22 @@ hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "defaul
 hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default", style = "slide" })
 
+hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
+hl.gesture({
+    fingers = 3,
+    direction = "up",
+    action = function()
+        hl.exec_cmd(menu)
+    end,
+})
+hl.gesture({
+    fingers = 3,
+    direction = "down",
+    action = function()
+        hl.exec_cmd("pkill -x rofi")
+    end,
+})
+
 local mod = "SUPER"
 local shift = "SHIFT"
 local alt = "ALT"
