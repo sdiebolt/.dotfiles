@@ -40,7 +40,7 @@ macos_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 bundle_args=(--file="$macos_dir/Brewfile" --no-upgrade)
 shared_stow=(--dir="$macos_dir/../dotfiles" --target="$HOME"
     zsh sheldon starship nvim zellij bat btop lsd mise uv)
-macos_stow=(--dir="$macos_dir/dotfiles" --target="$HOME" git ghostty)
+macos_stow=(--dir="$macos_dir/dotfiles" --target="$HOME" git ghostty rex)
 
 preview_links() {
     local status=0

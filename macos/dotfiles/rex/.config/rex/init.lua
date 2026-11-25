@@ -1,0 +1,2 @@
+-- Add Rex keybindings and custom actions here. Apply edits with rex config reload.
+-- https://www.superlogical.com/rex/docs/customize/config

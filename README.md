@@ -17,6 +17,11 @@ The installer checks for Stow conflicts before installing the Brewfile packages 
 linking configs. If Stow reports a conflict, review and back up the existing file before
 moving it aside or merging its contents.
 
+The installer links the Rex Lua config at `~/.config/rex/init.lua`. After
+editing it, run `rex config reload` to apply your changes. In Rex, open
+**Settings → Themes → Import Theme** and choose
+`~/.config/rex/themes/Catppuccin Mocha.conf` to use the included dark palette.
+
 ### Arch Linux
 
 The easiest way to install is using the bootstrap script, which will automatically:
